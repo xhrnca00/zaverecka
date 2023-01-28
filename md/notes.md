@@ -18,7 +18,7 @@ Stuff needed for installation
 
 Before writing, I was wondering about the problem of operating systems. Let's look at what choices you have in 2022:  
 
-- Most machine learning is done on Linux. Why? Big models are run on very high performance hardware (many GPUs) - big servers or supercomputers. Operating system of this big machines is pretty much always Linux (Windows tends to crumble with this much compute installed). If you have a Linux OS running on your computer, you will feel right at home with machine learning.
+- Most machine learning is done on Linux. Why? Big models are run on very high performance hardware (many GPUs) - big servers or supercomputers. Operating system of these big machines is pretty much always Linux (Windows tends to crumble with this much compute installed). If you have a Linux OS running on your computer, you will feel right at home with machine learning.
 - On Windows, this is a different story. TensorFlow version 2.10 (the latest one as of writing) is the last one that will support native Windows. This does not mean however, that there is no support for Windows. Tensorflow supports WSL2 - Windows subsystem for Linux - with DirectML. That is (to simplify) a Linux kernel running on top of Windows, meaning that all is very similar to command line Linux.
 - MacOS has the worst support, as Macs don't really have powerful hardware to start with. No GPU training is available there, but CPU is still supported natively.
 
@@ -39,7 +39,7 @@ Another way to solve this problem would be [Google Collab](https://colab.researc
     - Follow instructions on the [Docker website](https://docs.docker.com/desktop/)  
     - On Windows, choose the WSL2 backend
 1. Pull docker TensorFlow image
-    - ![[docker_pull_CPU.png|Left]]
+    - ![Image L](attachments/docker_pull_CPU.png)
     - This pulls the CPU image with Jupyter.
     - Version of the image is the one used to write.
     - Change *2.10.0* to *latest* to pull the latest version (might not be compatible with code).

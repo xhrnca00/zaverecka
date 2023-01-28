@@ -1,0 +1,3 @@
+verbatimEnvironments:
+    rustcode: 1
+    cppcode: 1
