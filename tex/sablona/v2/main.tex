@@ -6,7 +6,7 @@
 \usepackage{xdipp}
 \usepackage[
      cachedir=./minted/,
-     outputdir=../../TempTeX/sablona/v3, % FIXME: change path
+     outputdir=../../TempTeX/sablona/v2, % FIXME: change path
 ]{minted}
 \usepackage{xcolor}
 
@@ -28,6 +28,9 @@
 \newminted[cppcode]{cpp}{}
 \newmint[cpp]{cpp}{}
 \newmintedfile[cppfile]{cpp}{stripall}
+\newminted[asmcode]{nasm}{}
+\newmint[asm]{nasm}{}
+\newmintedfile[asmfile]{nasm}{stripall}
 
 %* patch minted
 \makeatletter
@@ -65,10 +68,10 @@
 %* colors
 % courtesy of Tailwind CSS (*-100)
 \definecolor{m-bg}{HTML}{f3f4f6}
-\definecolor{m-hg-default}{HTML}{ecfccb}
-\definecolor{m-hg-info}{HTML}{dbeafe}
-\definecolor{m-hg-alert}{HTML}{fef3c7}
-\definecolor{m-hg-error}{HTML}{fee2e2}
+\definecolor{m-hi-default}{HTML}{ecfccb}
+\definecolor{m-hi-info}{HTML}{dbeafe}
+\definecolor{m-hi-alert}{HTML}{fef3c7}
+\definecolor{m-hi-error}{HTML}{fee2e2}
 
 %* last line of the preamble
 \usepackage{subfiles}

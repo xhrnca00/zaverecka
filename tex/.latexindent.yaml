@@ -1,3 +1,7 @@
 verbatimEnvironments:
     rustcode: 1
+    rustcode*: 1
     cppcode: 1
+    cppcode*: 1
+    asmcode: 1
+    asmcode*: 1
