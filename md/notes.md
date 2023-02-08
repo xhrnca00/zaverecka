@@ -1,45 +1,50 @@
-# Notes
+# Programovací jazyk Rust jako alternativa k C++
 
 ## Osnova
 
-- introduction  
-    - #TODO: fill this in
+1. Připomenutí jazyka C++
+    - Historie, vychází z C, 1980 Bjarne Stroustrup
+    - [Pevně nadefinovaný standard](https://www.iso.org/standard/79358.html), podle kterého je vytvořeno více kompilátorů (gcc, clang, MSVC)
+    - Osvědčeno v praxi (prohlížeče, game enginy, embedded, ...)
+    - Komplexní syntax, spousta nových featur méně intuitivní, protože backwards compatibility (iterátory, range-based for loop)
+1. Programovací jazyk Rust
+    - Graydon Hoare 2006, Mozilla jako první sponzor, 2020 Rust Foundation
+    - [Pevně daná specifikace neexistuje](https://doc.rust-lang.org/reference/index.html), i když je "někdy" v plánu
+    - Mladý, vyvíjející se jazyk (pomocí RFC), přesto už hodně známý ([Stack Overflow most loved lang 7 times in a row](https://survey.stackoverflow.co/2022/#overview)); Web tech (Prisma, SWC), aplikace (Figma), AWS, Dropbox, Firefox CSS engine, OS (Linux, Android, ...)
+    - striktní typový systém, borrow checking, runtime safety, unsafe bloky
+1. Praktická část
+    1. Úvod - co budeme programovat, metodika
+        - Rust i Cpp, počítáme compiler errory a celkový čas, jak těžké to bylo (subjektivní), rychlost spuštění, alternativní implementace
+    1. jednoduchý konzolový prográmek - větší menší nebo tak něco
+    1. datová struktura - linked list? (mem management, ukazatele, struktury + impl vs. znalost jazyka)
+    1. soutěžní programování - nějaká úloha z Kasiopey/Advent of Code (standardní knihovna, další packages, input parsing)
+    1. něco multithreaded/async?
+    1. Shrnutí - co rychlejší, grafy/tabulky?
+1. DX
+    1. kompilátor
+        - kompilátor Rustu, cargo, rust-analyzer jsou open source vs. na C++ většinou IDE, protože jejich linter/lang-server
+        - více errorů u Rustu může být bad ("ale v Cpp to funguje") - proč se to může hodit, ale je to mnohem těžší
+        - jinak fungující importy - nejsou potřeba .h soubory
+    1. build systémy
+        - cross-platform problémy, dependency management
+        - u C++ není first-party solution - cmake, make, premake, ...
+        - u Rustu prostě Cargo, ezzz
+    1. dependencies
+        - crates.io, jeden způsob jak formátovat kód (compiler warning), jednotný způsob vytváření dokumentace, na docs.rs je dokumentace všech externích cratů
+        - Cpp distribuce často binárek/compile yourself - klonování z GitHubu, problém s linkováním/cross-compiler-compat
+        - vcpkg a podobné dependency managery (vyzkoušet prakticky)
+    1. testing
+        - cargo first-party support vs. CTest a další third-party řešení
+1. Rozdíly v praxi
+    - OOP v Rustu - traits vs. classal inheritance (cpp zase nemá interface, jen pure virtual class, což je ale dost podobné)
+    - Rust je známý pro svou bezpečnost, známý rychlostí oproti jazykům jako Go (proč *asi*)
+    - Cpp se používá (hned) když je potřeba rychlost, pro nové projekty ale dnes již často právě Rust/Zig apod., **proč**?? (asi lepší maintainabilita, bezpečnost, méně bugů, lepší DX)
+    - Rust má stále problémy, které C++ dávno vyřešilo (proto nutnost se stále rapidně vyvíjet), possible unsoundness, některé věci nedořešené
+    - borrow checker občas trollí, i když aplikace je safe (protože full analysis je nemožné) - potřeba ho obcházet (`Rc<T>` a podobné smart pointery)
+1. Nízkoúrovňové rozdíly
+    - panic strategie vs. throw/catch, všechno LLVM (tedy ne tak velké rozdíly), jiný name mangling (`#[no_mangle]`, `#[repr(C)]` apod.), UTF-8 vs. ascii a stím dané problémy
 
-## Installation
+## Other
 
-Stuff needed for installation
-
-### Prerequisites
-
-1. A working computer (tablets not great, but you could Collab)
-1. For training more complex models, you will need a graphics card, so it does not take ages. Tensorflow comes with support for Nvidia CUDA and the cuDNN (CUDA Deep Neural Network) library. Unfortunately, only Nvidia GPUs support CUDA, so you will need to find a solution for yourself to use a different GPU.
-
-### Operating System
-
-Before writing, I was wondering about the problem of operating systems. Let's look at what choices you have in 2022:  
-
-- Most machine learning is done on Linux. Why? Big models are run on very high performance hardware (many GPUs) - big servers or supercomputers. Operating system of these big machines is pretty much always Linux (Windows tends to crumble with this much compute installed). If you have a Linux OS running on your computer, you will feel right at home with machine learning.
-- On Windows, this is a different story. TensorFlow version 2.10 (the latest one as of writing) is the last one that will support native Windows. This does not mean however, that there is no support for Windows. Tensorflow supports WSL2 - Windows subsystem for Linux - with DirectML. That is (to simplify) a Linux kernel running on top of Windows, meaning that all is very similar to command line Linux.
-- MacOS has the worst support, as Macs don't really have powerful hardware to start with. No GPU training is available there, but CPU is still supported natively.
-
-If you plan to do machine learning, but don't want to commit to a new OS, there is a different way - arguably even better than installing TensorFlow natively.
-
-### Solution
-
-The solution is **Docker containers**! Docker is a program that creates virtual machines (called *containers*), that are completely isolated from the outer operating systems. It has a lot of premade configurations including official *docker images* ("recipes" how to create containers with all needed installed) from TensorFlow.  
-This allows us to have the same virtualized environment (Linux) on every operating system, while being easy to download and replicate.
-
-#### Secondary Solution
-
-Another way to solve this problem would be [Google Collab](https://colab.research.google.com/), that provides Jupyter Notebook kernels running on Google's servers. They also have a GPU/TPU runtimes specifically for ML that are probably faster than your hardware at home. Collab has a free tier with before said features included, but it has limited compute time per day and is not as "hands-on" in my opinion, so I will not be using it in this tutorial.
-
-### Steps to Install TensorFlow and Others
-
-1. First install docker  
-    - Follow instructions on the [Docker website](https://docs.docker.com/desktop/)  
-    - On Windows, choose the WSL2 backend
-1. Pull docker TensorFlow image
-    - ![Image L](attachments/docker_pull_CPU.png)
-    - This pulls the CPU image with Jupyter.
-    - Version of the image is the one used to write.
-    - Change *2.10.0* to *latest* to pull the latest version (might not be compatible with code).
+- macros
+- copy paste includes vs. file/module lookup
