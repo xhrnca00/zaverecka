@@ -1,4 +1,4 @@
-use std::{cmp::Ordering, error::Error, io::Write, ops::RangeInclusive};
+use std::{cmp::Ordering, error::Error, io::Write};
 
 use rand::prelude::*;
 
