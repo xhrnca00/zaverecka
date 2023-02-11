@@ -42,7 +42,7 @@
     - Rust má stále problémy, které C++ dávno vyřešilo (proto nutnost se stále rapidně vyvíjet), possible unsoundness, některé věci nedořešené
     - borrow checker občas trollí, i když aplikace je safe (protože full analysis je nemožné) - potřeba ho obcházet (`Rc<T>` a podobné smart pointery)
 1. Nízkoúrovňové rozdíly
-    - panic strategie vs. throw/catch, všechno LLVM (tedy ne tak velké rozdíly), jiný name mangling (`#[no_mangle]`, `#[repr(C)]` apod.), UTF-8 vs. ascii a stím dané problémy
+    - panic strategie vs. throw/catch, všechno LLVM (tedy ne tak velké rozdíly), jiný name mangling (`#[no_mangle]`, `#[repr(C)]` apod.), UTF-8 vs. ascii a s tím dané problémy
 
 ## Other
 
