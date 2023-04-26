@@ -1,0 +1,119 @@
+\documentclass[twoside,12pt]{article}
+% pro tisk po jedné straně papíru je potřebné odstranit volbu twoside
+% !TEX program = xelatex
+
+%* packages
+\usepackage{xdipp}
+\usepackage[
+     cachedir=./minted/,
+     outputdir=./TempTeX/,
+]{minted}
+\usepackage{xcolor}
+
+%* minted options
+\setminted{autogobble,
+     % linenos, % line numbers
+     % xleftmargin=25pt, % space for line numbers to fit inside
+     mathescape,
+     texcomments,
+     obeytabs,
+     style=tango, % algol_nu
+     bgcolor=m-bg,
+     highlightcolor=m-hg-default,
+     tabsize=4,
+}
+\newminted[rustcode]{rust}{}
+\newmint[rust]{rust}{}
+\newmintedfile[rustfile]{rust}{stripall}
+\newminted[cppcode]{cpp}{}
+\newmint[cpp]{cpp}{}
+\newmintedfile[cppfile]{cpp}{stripall}
+\newminted[asmcode]{nasm}{}
+\newmint[asm]{nasm}{}
+\newmintedfile[asmfile]{nasm}{stripall}
+
+%* patch minted
+\makeatletter
+% replace \medskip before and after the box with nothing, i.e., remove it
+\patchcmd{\minted@colorbg}{\medskip}{}{}{}
+\patchcmd{\endminted@colorbg}{\medskip}{}{}{}
+\makeatother
+
+%* setting options
+% \cestina % implicitní
+% \slovencina
+% \english
+% \pismo{LModern}
+\pismo{Lora} % nic (=LModern), Academica, Baskerville, Bookman, Cambria, Comenia, Constantia, Palatino, Times
+% \dvafonty % implicitně je \jedenfont
+% \technika
+% \beletrie % implicitní
+\popiskyzkr{}
+% \popisky % implicitní
+\pagestyle{headings} % implicitní
+\cislovat{2}
+% \bakalarska % implicitní
+\zaverecna{}
+% \diplomova
+% \disertacni
+\brokenpenalty=10000
+
+%* debugging
+% \usepackage{showframe}
+\overfullrule=4cm % shows slight overfulls as big black rectangles
+
+%* hyphenation
+\hyphenation{troj-úhel-ník}
+
+%* colors
+% courtesy of Tailwind CSS (*-100)
+\definecolor{m-bg}{HTML}{f3f4f6}
+\definecolor{m-hi-default}{HTML}{ecfccb}
+\definecolor{m-hi-info}{HTML}{dbeafe}
+\definecolor{m-hi-alert}{HTML}{fef3c7}
+\definecolor{m-hi-error}{HTML}{fee2e2}
+
+%* last line of the preamble
+\usepackage{subfiles}
+
+\begin{document}
+
+%* title pages and abstract
+\titul{Programovací jazyk Rust jako náhrada za jazyk C++}
+{Adam Hrnčárek}{Mgr. Marek Blaha}{Brno 2023}
+
+\podekovani{Děkuji mamince, že mi vařila.}
+
+\prohlasenimuz{V~Brně dne \today}
+
+\abstract{Rybička, J. The \XeLaTeX{} style xdipp.sty for theses preparation.
+    Example of Bachelor
+    thesis. Brno, 2013.}{The typesetting style was developed and
+    presented on bachelor thesis example.}
+
+\abstrakt{Rybička, J. Styl xdipp.sty pro sazbu závěrečných prací v~systému
+    \XeLaTeX. Bakalářská práce (příklad). Brno, 2013.}{Je zde popsán sazební styl
+    přizpůsobený pro systém \XeLaTeX{} a~příklad jeho aplikace na bakalářskou práci.
+    Sazební styl lze použít na běžné závěrečné
+    práce (bakalářské, diplomové a~disertační). Do stylu verze 2.0 byly nově zavedeny
+    různé volby umožňující větší flexibilitu výstupu a~využití možností fontového
+    aparátu.}
+
+\klslova{\XeLaTeX, závěrečná práce, sázecí styl}
+\keywords{\XeLaTeX, thesis, typesetting style}
+
+%* tables of contents
+\obsah{}
+\listoffigures
+\listoftables
+
+\kapitola{Úvod a~cíl práce}
+
+\begin{literatura}
+    % V Lora nejsou kapitálky, takže je nutné je vložit ručně
+    \citace{texonweb}{TeXonWeb, 2019}{\nazev{\TeX{}onWeb} [online] [vid. 12.\,3.\,2019].
+        Dostupné z: https://tex.mendelu.cz/new}
+
+\end{literatura}
+
+\end{document}

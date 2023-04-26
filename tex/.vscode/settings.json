@@ -141,5 +141,8 @@
             "args": ["--synctex", "--keep-logs", "%DOC%.tex"],
             "env": {}
         }
-    ]
+    ],
+    "editor.indentSize": "tabSize",
+    "editor.tabSize": 4,
+    "editor.detectIndentation": false
 }

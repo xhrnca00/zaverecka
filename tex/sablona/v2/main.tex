@@ -87,17 +87,17 @@
 \prohlasenimuz{V~Brně dne \today}
 
 \abstract{Rybička, J. The \XeLaTeX{} style xdipp.sty for theses preparation.
-     Example of Bachelor
-     thesis. Brno, 2013.}{The typesetting style was developed and
-     presented on bachelor thesis example.}
+    Example of Bachelor
+    thesis. Brno, 2013.}{The typesetting style was developed and
+    presented on bachelor thesis example.}
 
 \abstrakt{Rybička, J. Styl xdipp.sty pro sazbu závěrečných prací v~systému
-     \XeLaTeX. Bakalářská práce (příklad). Brno, 2013.}{Je zde popsán sazební styl
-     přizpůsobený pro systém \XeLaTeX{} a~příklad jeho aplikace na bakalářskou práci.
-     Sazební styl lze použít na běžné závěrečné
-     práce (bakalářské, diplomové a~disertační). Do stylu verze 2.0 byly nově zavedeny
-     různé volby umožňující větší flexibilitu výstupu a~využití možností fontového
-     aparátu.}
+    \XeLaTeX. Bakalářská práce (příklad). Brno, 2013.}{Je zde popsán sazební styl
+    přizpůsobený pro systém \XeLaTeX{} a~příklad jeho aplikace na bakalářskou práci.
+    Sazební styl lze použít na běžné závěrečné
+    práce (bakalářské, diplomové a~disertační). Do stylu verze 2.0 byly nově zavedeny
+    různé volby umožňující větší flexibilitu výstupu a~využití možností fontového
+    aparátu.}
 
 \klslova{\XeLaTeX, závěrečná práce, sázecí styl}
 \keywords{\XeLaTeX, thesis, typesetting style}
@@ -156,10 +156,10 @@ Formální stránkou dokumentů se zabývá několik zásadních zdrojů. Přede
 problém formální úpravy chápat opět jako složení více rozdílných prvků, které
 musí navzájem tvořit vyvážený a~kompaktní celek. Jedná se o~tyto prvky:
 \begin{itemize}
-     \item písmo a~použité symboly,
-     \item vyjádření odstavců, výčtů, poznámek,
-     \item vložení neodstavcových objektů (tabulek, obrázků, matematických výrazů),
-     \item úprava stránek.
+    \item písmo a~použité symboly,
+    \item vyjádření odstavců, výčtů, poznámek,
+    \item vložení neodstavcových objektů (tabulek, obrázků, matematických výrazů),
+    \item úprava stránek.
 \end{itemize}
 
 Základním zdrojem informací zabývajícím se úpravou dokumentů je bezesporu
@@ -241,47 +241,47 @@ až do konce řádku nebude zpracováván, tvoří poznámku.
 \footnotesize
 \tabcolsep 2.5pt
 \begin{tabular}{|p{.16\textwidth}|p{.48\textwidth}|l|l|} \hline
-     \textbf{Znak}                                           & \textbf{Zápis v~textu}                                            & \textbf{Příklad}            & {\bfseries
-     Vysázeno}                                                                                                                                                              \\ \hline\hline
-     Mezera                                                  & Stisk mezerníku (i~několikanásobný)                               &                             &            \\ \hline
-     Nezlomitelná\newline mezera                             & \texttt{\char126} (ručně nebo spuštěním
-     programu pro \newline automatické vložení za předložky) &
-     \texttt{u\char126okna}                                  & u~okna                                                                                                       \\ \hline
-     Zúžená mezera 1/4 em                                    & \texttt{\bsl,}                                                    & \texttt{P.\bsl,Král}        & P.\,Král   \\ \hline
-     Zúžená mezera 1/6 em                                    & \texttt{\bsl;} -- používá se k~mezerování výpustky                &
-     \texttt{přišel\bsl;\bsl dots}                           & přišel\;\dots                                                                                                \\ \hline
-     Široká mezera                                           & \texttt{\bsl quad} (čtverčík -- 1 em) \texttt{\bsl qquad} (2
-     em)                                                     & \texttt{$a=b$\bsl quad $b=c$}                                     & $a=b$\quad $b=c$                         \\ \hline
-     Odstavec                                                & Vynechaný řádek (i~vícenásobně)                                   &                             &            \\ \hline
-     Tři tečky                                               & \texttt{...} nebo \texttt{\bsl dots}                              & \texttt{zanikl\bsl;\bsl
-     dots}                                                   & zanikl\;\dots                                                                                                \\
-     \hline
-     Spojovník                                               & \texttt{-} (přímo z~klávesnice)                                   & \texttt{bude-li}            & bude-li    \\ \hline
-     Spojovník                                               & \texttt{\bsl spoj} (tento spojovník se při řádkovém zlomu\newline
-     přetahuje na začátek následujícího řádku)               & \texttt{bude\bsl spoj\lsv\rsv li}                                 &
-     \polet l{bude-                                                                                                                                                         \\-li} \\ \hline
-     Pomlčka                                                 & \texttt{-{}-} (půlčtverčíková) \texttt{-{}-{}-} (čtverčíková)     &
-     \texttt{6-{}-12}                                        & 6--12                                                                                                        \\ \hline
-     Pomlčka \newline (rozsahová)                            & \texttt{\bsl az} (tato pomlčka se při řádkovém
-     \newline zlomu nahradí slovem \uv{až})                  & \texttt{6\bsl az 12}                                              & 6--12, \polet
-     r{nebo 6                                                                                                                                                               \\až 12} \\ \hline
-     Znak minus                                              & \texttt{\char36-\char36} (v~matematickém režimu)                  &
-     \texttt{\char36-10\char36}                              & $-10$                                                                                                        \\ \hline
-     Znak násobení                                           & \texttt{\char36\bsl times\char36} nebo přímo z~klávesnice ×       & \texttt{\char36 2\bsl
-     times 3\char36\bsl,mm}                                  & $2\times 3$\,mm                                                                                              \\ \hline
-     Stupeň                                                  & \texttt{\char36\char94\bsl circ\char36}                           &
-     \texttt{5\bsl,\char36\char94\bsl circ\char36C}          & 5\,$^{\circ}$C                                                                                               \\ \hline
-     Paragraf                                                & (jen s~číslem) \texttt{\bsl S} nebo přímo z~klávesnice §          & \texttt{\bsl S\bsl,36}      & \S\,36     \\ \hline
-     Značky \newline \#, \$ a~\&                             & \texttt{\bsl\#}, \texttt{\bsl\char36},
-     \texttt{\bsl\&}                                         &                                                                   &                                          \\ \hline
-     Závorky \{ a~\}                                         & \texttt{\bsl\lsv}, \texttt{\bsl\rsv}                              &                             &            \\ \hline
-     Značky $<$ a~$>$                                        & \texttt{\char36\char60\char36}, \texttt{\char36\char62\char36}
-                                                             & \texttt{\char36a\char62 b\char36}                                 & $a>b$                                    \\ \hline
-     Procento                                                & \texttt{\bsl\char37}                                              & \texttt{10\bsl,\bsl\char37} & 10\,\%     \\ \hline
-     Uvozovky                                                & \texttt{\bsl uv\lsv}text\texttt{\rsv}                             & \texttt{\bsl uv\lsv
-     Něco\rsv}                                               & \uv{Něco}                                                                                                    \\ \hline
-     Uvozovky \newline (úhlové)                              & \texttt{\bsl uvv\lsv}text\texttt{\rsv}                            &
-     \texttt{\bsl uvv\lsv Něco\rsv}                          & \uvv{Něco}                                                                                                   \\ \hline
+    \textbf{Znak}                                           & \textbf{Zápis v~textu}                                            & \textbf{Příklad}            & {\bfseries
+    Vysázeno}                                                                                                                                                              \\ \hline\hline
+    Mezera                                                  & Stisk mezerníku (i~několikanásobný)                               &                             &            \\ \hline
+    Nezlomitelná\newline mezera                             & \texttt{\char126} (ručně nebo spuštěním
+    programu pro \newline automatické vložení za předložky) &
+    \texttt{u\char126okna}                                  & u~okna                                                                                                       \\ \hline
+    Zúžená mezera 1/4 em                                    & \texttt{\bsl,}                                                    & \texttt{P.\bsl,Král}        & P.\,Král   \\ \hline
+    Zúžená mezera 1/6 em                                    & \texttt{\bsl;} -- používá se k~mezerování výpustky                &
+    \texttt{přišel\bsl;\bsl dots}                           & přišel\;\dots                                                                                                \\ \hline
+    Široká mezera                                           & \texttt{\bsl quad} (čtverčík -- 1 em) \texttt{\bsl qquad} (2
+    em)                                                     & \texttt{$a=b$\bsl quad $b=c$}                                     & $a=b$\quad $b=c$                         \\ \hline
+    Odstavec                                                & Vynechaný řádek (i~vícenásobně)                                   &                             &            \\ \hline
+    Tři tečky                                               & \texttt{...} nebo \texttt{\bsl dots}                              & \texttt{zanikl\bsl;\bsl
+    dots}                                                   & zanikl\;\dots                                                                                                \\
+    \hline
+    Spojovník                                               & \texttt{-} (přímo z~klávesnice)                                   & \texttt{bude-li}            & bude-li    \\ \hline
+    Spojovník                                               & \texttt{\bsl spoj} (tento spojovník se při řádkovém zlomu\newline
+    přetahuje na začátek následujícího řádku)               & \texttt{bude\bsl spoj\lsv\rsv li}                                 &
+    \polet l{bude-                                                                                                                                                         \\-li} \\ \hline
+    Pomlčka                                                 & \texttt{-{}-} (půlčtverčíková) \texttt{-{}-{}-} (čtverčíková)     &
+    \texttt{6-{}-12}                                        & 6--12                                                                                                        \\ \hline
+    Pomlčka \newline (rozsahová)                            & \texttt{\bsl az} (tato pomlčka se při řádkovém
+    \newline zlomu nahradí slovem \uv{až})                  & \texttt{6\bsl az 12}                                              & 6--12, \polet
+    r{nebo 6                                                                                                                                                               \\až 12} \\ \hline
+    Znak minus                                              & \texttt{\char36-\char36} (v~matematickém režimu)                  &
+    \texttt{\char36-10\char36}                              & $-10$                                                                                                        \\ \hline
+    Znak násobení                                           & \texttt{\char36\bsl times\char36} nebo přímo z~klávesnice ×       & \texttt{\char36 2\bsl
+    times 3\char36\bsl,mm}                                  & $2\times 3$\,mm                                                                                              \\ \hline
+    Stupeň                                                  & \texttt{\char36\char94\bsl circ\char36}                           &
+    \texttt{5\bsl,\char36\char94\bsl circ\char36C}          & 5\,$^{\circ}$C                                                                                               \\ \hline
+    Paragraf                                                & (jen s~číslem) \texttt{\bsl S} nebo přímo z~klávesnice §          & \texttt{\bsl S\bsl,36}      & \S\,36     \\ \hline
+    Značky \newline \#, \$ a~\&                             & \texttt{\bsl\#}, \texttt{\bsl\char36},
+    \texttt{\bsl\&}                                         &                                                                   &                                          \\ \hline
+    Závorky \{ a~\}                                         & \texttt{\bsl\lsv}, \texttt{\bsl\rsv}                              &                             &            \\ \hline
+    Značky $<$ a~$>$                                        & \texttt{\char36\char60\char36}, \texttt{\char36\char62\char36}
+                                                            & \texttt{\char36a\char62 b\char36}                                 & $a>b$                                    \\ \hline
+    Procento                                                & \texttt{\bsl\char37}                                              & \texttt{10\bsl,\bsl\char37} & 10\,\%     \\ \hline
+    Uvozovky                                                & \texttt{\bsl uv\lsv}text\texttt{\rsv}                             & \texttt{\bsl uv\lsv
+    Něco\rsv}                                               & \uv{Něco}                                                                                                    \\ \hline
+    Uvozovky \newline (úhlové)                              & \texttt{\bsl uvv\lsv}text\texttt{\rsv}                            &
+    \texttt{\bsl uvv\lsv Něco\rsv}                          & \uvv{Něco}                                                                                                   \\ \hline
 \end{tabular}
 \endtab
 
@@ -310,20 +310,20 @@ uvedené v~tab.\,\ref{parsazby}.
 \label{parsazby}
 
 \begin{tabular}{|l|l|}\hline
-     \bfseries Parametr               & \bfseries Hodnota      \\\hline
-     Sazební zrcadlo                  & $150\times 220$\,mm    \\
-     Uspořádání dokumentu             & dvoustranný dokument   \\
-     Stránkový design                 & běžná záhlaví s~linkou \\
-     Typ práce                        & bakalářská             \\
-     Jazyk dokumentu                  & čeština                \\
-     Typ základního písma             & Latin Modern           \\
-     Kombinace typů písma v~dokumentu & jeden typ              \\
-     Stupeň základního písma          & 12\,pt                 \\
-     Řádkový proklad základního písma & 2\,pt                  \\
-     Odstavcová zarážka               & 24\,pt                 \\
-     Vertikální odstavcové odsazení   & 0\,pt                  \\
-     Názvy obrázků a~tabulek          & nezkrácené             \\
-     Úroveň číslování nadpisů         & 3                      \\\hline
+    \bfseries Parametr               & \bfseries Hodnota      \\\hline
+    Sazební zrcadlo                  & $150\times 220$\,mm    \\
+    Uspořádání dokumentu             & dvoustranný dokument   \\
+    Stránkový design                 & běžná záhlaví s~linkou \\
+    Typ práce                        & bakalářská             \\
+    Jazyk dokumentu                  & čeština                \\
+    Typ základního písma             & Latin Modern           \\
+    Kombinace typů písma v~dokumentu & jeden typ              \\
+    Stupeň základního písma          & 12\,pt                 \\
+    Řádkový proklad základního písma & 2\,pt                  \\
+    Odstavcová zarážka               & 24\,pt                 \\
+    Vertikální odstavcové odsazení   & 0\,pt                  \\
+    Názvy obrázků a~tabulek          & nezkrácené             \\
+    Úroveň číslování nadpisů         & 3                      \\\hline
 \end{tabular}
 \endtab
 
@@ -333,59 +333,59 @@ V~uvedeném základním tvaru můžeme nařídit změny sazby následujícími
 příkazy:
 
 \begin{itemize}
-     \item Jednostrannou variantu lze nařídit smazáním
-           volitelného parametru \texttt{twoside} u~prvního příkazu celého dokumentu: \\
-           \verb!     \documentclass[12pt]{article}!
+    \item Jednostrannou variantu lze nařídit smazáním
+          volitelného parametru \texttt{twoside} u~prvního příkazu celého dokumentu: \\
+          \verb!     \documentclass[12pt]{article}!
 
-     \item Stránkový design lze změnit na obyčejný, kdy nejsou sázena stránková
-           záhlaví, ale pouze stránkové paty, v~nichž je na vnější straně pouze číslo
-           stránky. Příkaz: \\
-           \verb!     \pagestyle{plain}!
+    \item Stránkový design lze změnit na obyčejný, kdy nejsou sázena stránková
+          záhlaví, ale pouze stránkové paty, v~nichž je na vnější straně pouze číslo
+          stránky. Příkaz: \\
+          \verb!     \pagestyle{plain}!
 
-     \item Typ práce -- ze základního nastavení na bakalářskou práci lze provést změnu
-           příkazem:\\
-           \verb.     \diplomova. -- pro diplomové práce\\
-           \verb.     \disertacni. -- pro disertační práce
+    \item Typ práce -- ze základního nastavení na bakalářskou práci lze provést změnu
+          příkazem:\\
+          \verb.     \diplomova. -- pro diplomové práce\\
+          \verb.     \disertacni. -- pro disertační práce
 
-     \item Jazyk dokumentu -- jeho nastavení určuje výpis jazykově závislých textů
-           (titulní list, prohlášení, obsah apod.), správné dělení slov a~použití některých
-           dalších prvků. Jsou připraveny modifikace pro slovenštinu a~angličtinu:\\
-           \verb!     \slovencina!\\
-           nebo\\
-           \verb!     \english!
+    \item Jazyk dokumentu -- jeho nastavení určuje výpis jazykově závislých textů
+          (titulní list, prohlášení, obsah apod.), správné dělení slov a~použití některých
+          dalších prvků. Jsou připraveny modifikace pro slovenštinu a~angličtinu:\\
+          \verb!     \slovencina!\\
+          nebo\\
+          \verb!     \english!
 
-     \item Typ písma dokumentu -- pro sazbu jiným písmem než Latin Modern je možné
-           využít připravené sady. Příkaz:\\
-           \verb!     \pismo{!{\itshape název}\verb!}!\\
-           Jako {\itshape název} lze použít některou ze sad:
-           Academica, Baskerville, Bookman, Cambria, Comenia, Constantia, Palatino, Times. U~každé sady je
-           vyřešen základní typ a~jeho použití ve všech částech dokumentu včetně vybraných
-           matematických symbolů a~případných strojopisných částí.
+    \item Typ písma dokumentu -- pro sazbu jiným písmem než Latin Modern je možné
+          využít připravené sady. Příkaz:\\
+          \verb!     \pismo{!{\itshape název}\verb!}!\\
+          Jako {\itshape název} lze použít některou ze sad:
+          Academica, Baskerville, Bookman, Cambria, Comenia, Constantia, Palatino, Times. U~každé sady je
+          vyřešen základní typ a~jeho použití ve všech částech dokumentu včetně vybraných
+          matematických symbolů a~případných strojopisných částí.
 
-     \item Kombinace typů písma v~dokumentu -- základní tvar předpokládá, že celý
-           dokument je vysázen jedním typem písma. Někteří uživatelé preferují doplnit
-           základní písmo druhým (bezserifovým) písmem na nadpisy apod. U~každé sady je
-           tedy definována i~kompatibilní bezserifová varianta. Její aktivace se provede
-           příkazem \\
-           \verb.      \dvafonty.
+    \item Kombinace typů písma v~dokumentu -- základní tvar předpokládá, že celý
+          dokument je vysázen jedním typem písma. Někteří uživatelé preferují doplnit
+          základní písmo druhým (bezserifovým) písmem na nadpisy apod. U~každé sady je
+          tedy definována i~kompatibilní bezserifová varianta. Její aktivace se provede
+          příkazem \\
+          \verb.      \dvafonty.
 
-     \item Základní vzhled odstavců -- pro běžný text se často používá odlišení
-           odstavců zarážkami, mezi odstavci je pak nulová mezera. Chcete-li změnit tento
-           tvar na odlišení odstavců svislými mezerami místo zarážek (což se používá
-           v~technických a~odborných textech s~menším množstvím souvislého textu a~mnoha
-           tabulkami, obrázky a~dalšími prvky), lze to nařídit příkazem\\
-           \verb.      \technika.
+    \item Základní vzhled odstavců -- pro běžný text se často používá odlišení
+          odstavců zarážkami, mezi odstavci je pak nulová mezera. Chcete-li změnit tento
+          tvar na odlišení odstavců svislými mezerami místo zarážek (což se používá
+          v~technických a~odborných textech s~menším množstvím souvislého textu a~mnoha
+          tabulkami, obrázky a~dalšími prvky), lze to nařídit příkazem\\
+          \verb.      \technika.
 
-     \item Popisky obrázků a~tabulek -- vypisují se automaticky podle nastaveného
-           jazyka, a~to implicitně v~nezkrácené podobě (Obrázek/Obrázok/Figure). Chcete-li
-           tyto texty vypisovat zkráceně, použijte příkaz\\
-           \verb.      \popiskyzkr.\\
-           a~bude se vypisovat Obr./Obr./Fig.
+    \item Popisky obrázků a~tabulek -- vypisují se automaticky podle nastaveného
+          jazyka, a~to implicitně v~nezkrácené podobě (Obrázek/Obrázok/Figure). Chcete-li
+          tyto texty vypisovat zkráceně, použijte příkaz\\
+          \verb.      \popiskyzkr.\\
+          a~bude se vypisovat Obr./Obr./Fig.
 
-     \item Úroveň číslování nadpisů je nastavena na 3, číslují se tedy kapitoly, sekce
-           i~podsekce, zároveň jsou tyto úrovně zařazeny do obsahu. Chcete-li číslovat
-           a~zařazovat do obsahu méně úrovní, použijte příkaz:\\
-           \verb.      \cislovat{2}. nebo \verb. \cislovat{1}.
+    \item Úroveň číslování nadpisů je nastavena na 3, číslují se tedy kapitoly, sekce
+          i~podsekce, zároveň jsou tyto úrovně zařazeny do obsahu. Chcete-li číslovat
+          a~zařazovat do obsahu méně úrovní, použijte příkaz:\\
+          \verb.      \cislovat{2}. nebo \verb. \cislovat{1}.
 
 \end{itemize}
 
@@ -393,49 +393,49 @@ příkazy:
 Pro standardní stránky závěrečné práce jsou připraveny následující příkazy:
 
 \begin{itemize}
-     \item Titulní stránka -- příkaz \\
-           \verb!     \titul{název práce}{autor}{vedoucí práce}{místo a~rok}! \\
-           Vytvoří se titulní stránka s~předepsanými údaji.
-           Pokud je potřeba změnit název školy a~fakulty, je možné uvést makro
-           \verb!\skola{text}!, resp. \verb!\fakulta{text}!. Tato makra uvedeme
-           před makrem \verb!\titul!. Implicitně je vypisována Provozně ekonomická fakulta
-           a~Mendelova univerzita v~Brně, tyto texty podléhají nastavení jazyka práce.
-     \item Poděkování -- příkaz \\
-           \verb!     \podekovani{libovolný text}!\\
-           Vytvoří se nová stránka, v~jejíž dolní části je
-           formátován text uvedený v~parametru příkazu.
-     \item Prohlášení podle směrnice rektora -- má dvě varianty: pro ženu a~pro muže\\
-           \verb!     \prohlasenizena{místo a~datum}!\\
-           \verb!     \prohlasenimuz{místo a~datum}!\\
-           Vytvoří se nová stránka, v~dolní části
-           je kompletní text prohlášení podle vyhlášky s~automatickým dosazením
-           názvu práce, pod textem je vlevo místo a~datum z~parametru makra a~vpravo
-           tečky pro podpis.
-     \item Abstrakty -- příkazy \\
-           \verb!     \abstract{úvodní údaje}{text v~angličtině}!\\
-           a\\
-           \verb!     \abstrakt{úvodní údaje}{text v~češtině nebo slovenštině}!\\
-           Na pořadí uvedení těchto příkazů nezáleží, budou vypisovány v~pořadí, které je
-           dáno nastaveným jazykem práce. V~pracích psaných v~češtině a~slovenštině se
-           nejprve vypisuje anglický abstrakt, v~pracích psaných v~angličtině se nejprve
-           vypisuje abstrakt v~češtině (slovenštině).
+    \item Titulní stránka -- příkaz \\
+          \verb!     \titul{název práce}{autor}{vedoucí práce}{místo a~rok}! \\
+          Vytvoří se titulní stránka s~předepsanými údaji.
+          Pokud je potřeba změnit název školy a~fakulty, je možné uvést makro
+          \verb!\skola{text}!, resp. \verb!\fakulta{text}!. Tato makra uvedeme
+          před makrem \verb!\titul!. Implicitně je vypisována Provozně ekonomická fakulta
+          a~Mendelova univerzita v~Brně, tyto texty podléhají nastavení jazyka práce.
+    \item Poděkování -- příkaz \\
+          \verb!     \podekovani{libovolný text}!\\
+          Vytvoří se nová stránka, v~jejíž dolní části je
+          formátován text uvedený v~parametru příkazu.
+    \item Prohlášení podle směrnice rektora -- má dvě varianty: pro ženu a~pro muže\\
+          \verb!     \prohlasenizena{místo a~datum}!\\
+          \verb!     \prohlasenimuz{místo a~datum}!\\
+          Vytvoří se nová stránka, v~dolní části
+          je kompletní text prohlášení podle vyhlášky s~automatickým dosazením
+          názvu práce, pod textem je vlevo místo a~datum z~parametru makra a~vpravo
+          tečky pro podpis.
+    \item Abstrakty -- příkazy \\
+          \verb!     \abstract{úvodní údaje}{text v~angličtině}!\\
+          a\\
+          \verb!     \abstrakt{úvodní údaje}{text v~češtině nebo slovenštině}!\\
+          Na pořadí uvedení těchto příkazů nezáleží, budou vypisovány v~pořadí, které je
+          dáno nastaveným jazykem práce. V~pracích psaných v~češtině a~slovenštině se
+          nejprve vypisuje anglický abstrakt, v~pracích psaných v~angličtině se nejprve
+          vypisuje abstrakt v~češtině (slovenštině).
 
-     \item Klíčová slova -- příkazy\\
-           \verb.     \klslova{seznam klíčových slov v~češtině/slovenštině}.\\
-           \verb.     \keywords{seznam klíčových slov v~angličtině}.
+    \item Klíčová slova -- příkazy\\
+          \verb.     \klslova{seznam klíčových slov v~češtině/slovenštině}.\\
+          \verb.     \keywords{seznam klíčových slov v~angličtině}.
 
-     \item Obsah -- příkaz \\
-           \verb.     \obsah. \\
-           Příkaz vytvoří novou stránku, na níž bude vysázen obsah složený z~údajů
-           titulků. Do obsahu budou implicitně zahrnuty jen číslované titulky. Úroveň
-           číslování (tj.\ jak důležitý titulek bude zahrnut do obsahu) se řídí příkazem
-           \\ \verb!\cislovat{úroveň}! \\
-           kde \texttt{úroveň} je číslice 1, 2 nebo 3. Hodnota 1 -- číslují se jen
-           kapitoly, 2 -- číslují se kapitoly a~sekce, 3 -- číslují se kapitoly, sekce
-           a~podsekce.
-     \item Seznam obrázků nebo tabulek -- příkazy \verb.\listoffigures., resp.
-           \verb.\listoftables.. Tyto příkazy lze uvést do místa v~textu, kam chcete
-           seznam vysázet. Logicky patří za \verb.\obsah., jako je tomu v~tomto textu.
+    \item Obsah -- příkaz \\
+          \verb.     \obsah. \\
+          Příkaz vytvoří novou stránku, na níž bude vysázen obsah složený z~údajů
+          titulků. Do obsahu budou implicitně zahrnuty jen číslované titulky. Úroveň
+          číslování (tj.\ jak důležitý titulek bude zahrnut do obsahu) se řídí příkazem
+          \\ \verb!\cislovat{úroveň}! \\
+          kde \texttt{úroveň} je číslice 1, 2 nebo 3. Hodnota 1 -- číslují se jen
+          kapitoly, 2 -- číslují se kapitoly a~sekce, 3 -- číslují se kapitoly, sekce
+          a~podsekce.
+    \item Seznam obrázků nebo tabulek -- příkazy \verb.\listoffigures., resp.
+          \verb.\listoftables.. Tyto příkazy lze uvést do místa v~textu, kam chcete
+          seznam vysázet. Logicky patří za \verb.\obsah., jako je tomu v~tomto textu.
 \end{itemize}
 
 \podsekce{Oddíly textu}
@@ -511,7 +511,7 @@ zpracování textu automaticky kontroluje.
 \podsekce{Křížové odkazy}
 Na jakékoliv místo v~textu (číslo kapitoly, sekce a~podsekce), obrázek,
 tabulku nebo číslovaný výraz se lze odvolat pomocí tzv. \textit{křížového
-     odkazu}. Základní princip spočívá v~symbolickém pojmenování daného místa
+    odkazu}. Základní princip spočívá v~symbolickém pojmenování daného místa
 pomocí příkazu \verb.\label{návěští}. Na toto návěští se pak odvoláváme
 příkazem \verb.\ref{návěští}. (dostaneme příslušné číslo) nebo příkazem
 \verb!\pageref{návěští}! (dostaneme číslo stránky, na níž se nachází značka
@@ -533,59 +533,59 @@ platí pro jakýkoliv publikační systém.
 
 Pro vložení obrázku do sazby jsou vhodné tyto formáty:
 \begin{itemize}
-     \item JPG -- rastrový obraz vhodný zejména pro fotografie. Vyniká silnou
-           kompresí, zabírá tedy relativně málo prostoru. Velikost výsledného obrazu
-           je dána také požadovanou kvalitou. Pro tiskové výstupy je potřebné obrazy
-           připravit tak, aby jejich barevná hloubka a~hustota odpovídaly kvalitě tisku.
-           Pro tisk se doporučuje hustota min.\,300\,dpi. Barevná hloubka je u~barevné
-           fotografie typicky v~pravých barvách.
-           Je ovšem velmi vhodné provést zkušební tisk takto připravených obrázků, neboť jen
-           na papíře lze odpovědně posoudit, jak kvalitní obrázek je.
-     \item PNG -- rastrový obraz vhodný pro monochromatické obrazy nebo nižší
-           barevné hloubky. Nepoužívá ztrátovou kompresi, opět je však velmi vhodné
-           vyzkoušet tiskem na papír, s~jakou hustotou by měly být obrázky připraveny,
-           aby byl výsledek dostatečně kvalitní.
-     \item PDF -- vektorový obraz. Pozor ovšem na obrazy, které jsou sice uloženy
-           ve formátu PDF, ale vnitřně obsahují pouze rastrový obraz, například výstupy
-           ze skenerů a~různých jiných programů.
+    \item JPG -- rastrový obraz vhodný zejména pro fotografie. Vyniká silnou
+          kompresí, zabírá tedy relativně málo prostoru. Velikost výsledného obrazu
+          je dána také požadovanou kvalitou. Pro tiskové výstupy je potřebné obrazy
+          připravit tak, aby jejich barevná hloubka a~hustota odpovídaly kvalitě tisku.
+          Pro tisk se doporučuje hustota min.\,300\,dpi. Barevná hloubka je u~barevné
+          fotografie typicky v~pravých barvách.
+          Je ovšem velmi vhodné provést zkušební tisk takto připravených obrázků, neboť jen
+          na papíře lze odpovědně posoudit, jak kvalitní obrázek je.
+    \item PNG -- rastrový obraz vhodný pro monochromatické obrazy nebo nižší
+          barevné hloubky. Nepoužívá ztrátovou kompresi, opět je však velmi vhodné
+          vyzkoušet tiskem na papír, s~jakou hustotou by měly být obrázky připraveny,
+          aby byl výsledek dostatečně kvalitní.
+    \item PDF -- vektorový obraz. Pozor ovšem na obrazy, které jsou sice uloženy
+          ve formátu PDF, ale vnitřně obsahují pouze rastrový obraz, například výstupy
+          ze skenerů a~různých jiných programů.
 \end{itemize}
 Pro vložení do dokumentu jsou v~sazebním stylu předdefinovány tři příkazy:
 %\draft
 \begin{itemize}
-     \item Příkaz \verb!\vlozobr{jméno souboru}{měřítko}!, jeho prvním parametrem je
-           jméno souboru s~obrázkem, druhým parametrem pak koeficient, kterým se upraví
-           výsledná velikost (hodnota 1 = beze změny, hodnota $<1$ = zmenšení, hodnota
-           $>1$ = zvětšení). Tento koeficient je zapisován jako číslo v~anglickém pravopisu,
-           tedy s~desetinnou tečkou. Příklad:\\
-           \verb!\vlozobr{motyl.jpg}{0.75}! \\
-           příkaz vloží fotografii ze souboru {\ttfamily motyl.jpg} zmenšenou na 75\,\%
-           původní velikosti.
+    \item Příkaz \verb!\vlozobr{jméno souboru}{měřítko}!, jeho prvním parametrem je
+          jméno souboru s~obrázkem, druhým parametrem pak koeficient, kterým se upraví
+          výsledná velikost (hodnota 1 = beze změny, hodnota $<1$ = zmenšení, hodnota
+          $>1$ = zvětšení). Tento koeficient je zapisován jako číslo v~anglickém pravopisu,
+          tedy s~desetinnou tečkou. Příklad:\\
+          \verb!\vlozobr{motyl.jpg}{0.75}! \\
+          příkaz vloží fotografii ze souboru {\ttfamily motyl.jpg} zmenšenou na 75\,\%
+          původní velikosti.
 
-     \item Pokud je potřebné obrázky přizpůsobit na určitý rozměr, lze použít
-           příkaz\\
-           \verb!\vlozobrbox{jméno souboru}{rozměr-x}{rozměr-y}!\\
-           kde {\ttfamily rozměr-x} nebo {\ttfamily rozměr-y} je požadovaný rozměr
-           v~daném směru, uvádí se jako číslo s~délkovou jednotkou\footnote{Délkovými
-                jednotkami mohou být cm -- centimetry, mm -- milimetry, pt -- anglické
-                typografické body, bp -- tzv.\,\uv{velké} (též monotypové) anglické typografické body,
-                pc -- picas, dd -- evropské typografické body, cc -- cicera,
-                in -- palce. Lze použít také relativní jednotky: em -- čtverčík, ex -- půlčtverčík.}.
-           Každý rozměr může být také zadán pomocí délkového
-           registru.\footnote{Délkovým registrem může být předdefinovaný nebo vlastní
-           registr, pro zadání rozměru může být registr ještě násoben libovolným
-           koeficientem. Například šířka sazby je v~délkovém registru
-                {\ttfamily\bsl textwidth}, můžeme tedy obrázek upravit přesně na 90\,\%
-           šířky sazby
-           příkazem {\ttfamily\bsl vlozobrbox\lsv schema.pdf\rsv{}\lsv{}0.9\bsl textwidth\rsv
-           \lsv!\rsv}.}
-           Jsou-li uvedeny oba rozměry, obrázek se může tvarově změnit.
-           Pokud chceme definovat pouze jeden z~rozměrů a~druhý necháme spočítat tak,
-           aby se nezměnil původní poměr stran, uvedeme místo druhého rozměru znak
-           vykřičník. Například příkaz: \\
-           \verb:\vlozobrbox{schema.pdf}{130mm}{!}:\\
-           vloží do sazby obrázek v~souboru {\ttfamily schema.pdf}, upraví jeho
-           vodorovný rozměr na 130\,mm a~svislý rozměr nastaví tak, aby původní poměr
-           stran obrázku zůstal zachován.
+    \item Pokud je potřebné obrázky přizpůsobit na určitý rozměr, lze použít
+          příkaz\\
+          \verb!\vlozobrbox{jméno souboru}{rozměr-x}{rozměr-y}!\\
+          kde {\ttfamily rozměr-x} nebo {\ttfamily rozměr-y} je požadovaný rozměr
+          v~daném směru, uvádí se jako číslo s~délkovou jednotkou\footnote{Délkovými
+              jednotkami mohou být cm -- centimetry, mm -- milimetry, pt -- anglické
+              typografické body, bp -- tzv.\,\uv{velké} (též monotypové) anglické typografické body,
+              pc -- picas, dd -- evropské typografické body, cc -- cicera,
+              in -- palce. Lze použít také relativní jednotky: em -- čtverčík, ex -- půlčtverčík.}.
+          Každý rozměr může být také zadán pomocí délkového
+          registru.\footnote{Délkovým registrem může být předdefinovaný nebo vlastní
+          registr, pro zadání rozměru může být registr ještě násoben libovolným
+          koeficientem. Například šířka sazby je v~délkovém registru
+              {\ttfamily\bsl textwidth}, můžeme tedy obrázek upravit přesně na 90\,\%
+          šířky sazby
+          příkazem {\ttfamily\bsl vlozobrbox\lsv schema.pdf\rsv{}\lsv{}0.9\bsl textwidth\rsv
+          \lsv!\rsv}.}
+          Jsou-li uvedeny oba rozměry, obrázek se může tvarově změnit.
+          Pokud chceme definovat pouze jeden z~rozměrů a~druhý necháme spočítat tak,
+          aby se nezměnil původní poměr stran, uvedeme místo druhého rozměru znak
+          vykřičník. Například příkaz: \\
+          \verb:\vlozobrbox{schema.pdf}{130mm}{!}:\\
+          vloží do sazby obrázek v~souboru {\ttfamily schema.pdf}, upraví jeho
+          vodorovný rozměr na 130\,mm a~svislý rozměr nastaví tak, aby původní poměr
+          stran obrázku zůstal zachován.
 
 \end{itemize}
 
@@ -625,7 +625,7 @@ Příklady obrázků: Obrázek~\ref{prikobr1} byl vložen následujícími pří
 \obrazek
 \vlozobrbox{susic.png}{0.7\textwidth}{!}
 \endobrl{Schematické znázornění hlavní funkce sušiče
-     \obrzdroj{Bek, 1982, s.\,36}}{prikobr1}
+    \obrzdroj{Bek, 1982, s.\,36}}{prikobr1}
 Obrázek~\ref{prikobr2} byl vložen těmito příkazy:
 \begin{verbatim}
      \obrazek
@@ -649,7 +649,7 @@ můžeme odvolat příkazem {\ttfamily\bsl ref\lsv sjmeno\rsv}. Příklad: u~obr
 použijeme příkaz\\
 \verb!\endobrl{Schéma rozvodu v~měřítku $1:50$}{schema}!\\
 v~textu se pak na obrázek odvoláme: \\\uv{{\ttfamily Detaily jsou viditelné
-               na obr.\,\bsl ref\lsv schema\rsv}}.
+            na obr.\,\bsl ref\lsv schema\rsv}}.
 
 U~tabulek je situace obdobná, popisek je však \textit{nad} tabulkou, proto se
 uvádí na začátku: \\
@@ -685,10 +685,10 @@ Příklad tabulky -- následující příkazy slouží k~vysazení tabulky~\ref{
 \vykricnik % vykřičník nyní nahrazuje číslicovou mezeru
 \def\arraystretch{1.2}
 \begin{tabular}{|l|c|c|} \hline
-     \textbf{Druh algoritmu} & \textbf{\pole c{Charakter                  \\testu}} &
-     \textbf{Frekvence}                                                   \\ \hline
-     Vyhledávání             & čas. + prost.             & $25\cdot 10^3$ \\
-     Řazení                  & čas.                      & $!6\cdot 10^4$ \\ \hline
+    \textbf{Druh algoritmu} & \textbf{\pole c{Charakter                  \\testu}} &
+    \textbf{Frekvence}                                                   \\ \hline
+    Vyhledávání             & čas. + prost.             & $25\cdot 10^3$ \\
+    Řazení                  & čas.                      & $!6\cdot 10^4$ \\ \hline
 \end{tabular}
 \tabzdroj{sumarizováno podle výzkumů provedených na ČVUT (Kratochvíl, 2017, s.\,338)}
 \endtab
@@ -731,11 +731,11 @@ zvyšuje hladina světového oceánu.
 
 \noindent Ekologické iniciativy argumentují obvykle následujícími tvrzeními:
 \begin{itemize}
-     \item Prostředí se zhoršuje vlivem spalování ropy v~automobilech.
-     \item Exhalacemi CO$_2$ se zvyšuje skleníkový efekt.
-     \item Přestože zvýšení teploty je na první pohled malé, dochází k~tání většího
-           množství arktického a~antarktického ledu, čímž se zvyšuje hladina světového
-           oceánu.
+    \item Prostředí se zhoršuje vlivem spalování ropy v~automobilech.
+    \item Exhalacemi CO$_2$ se zvyšuje skleníkový efekt.
+    \item Přestože zvýšení teploty je na první pohled malé, dochází k~tání většího
+          množství arktického a~antarktického ledu, čímž se zvyšuje hladina světového
+          oceánu.
 \end{itemize}
 
 Druhý příklad:
@@ -754,10 +754,10 @@ Pořadí, v~němž je nutné postupovat v~bakalářském semináři:
 
 \noindent Pořadí, v~němž je nutné postupovat v~bakalářském semináři:
 \begin{enumerate} \itemsep 0pt
-     \item Výběr tématu.
-     \item Oslovení učitele -- vedoucího práce.
-     \item Vytvoření záměru bakalářské práce.
-     \item Vypracování rešerše.
+    \item Výběr tématu.
+    \item Oslovení učitele -- vedoucího práce.
+    \item Vytvoření záměru bakalářské práce.
+    \item Vypracování rešerše.
 \end{enumerate}
 
 \podsekce{Matematické výrazy}
@@ -767,18 +767,18 @@ nejkvalitnější a~nejjednodušší systém právě \TeX{} a~všechny jeho nads
 Například výraz definující parciální derivaci
 
 \begin{equation}
-     \frac{\partial f(x_1,x_2)}{\partial x_1}=\lim_{\Delta x_1\rightarrow 0}
-     \frac{f(x_1+\Delta x_1, x_2) - f(x_1, x_2)}{\Delta x_1}
+    \frac{\partial f(x_1,x_2)}{\partial x_1}=\lim_{\Delta x_1\rightarrow 0}
+    \frac{f(x_1+\Delta x_1, x_2) - f(x_1, x_2)}{\Delta x_1}
 \end{equation}
 nebo také známý výraz
 \begin{equation}
-     \hbox{Mezní míra substituce}=\frac{\hbox{malá změna } \Delta x_2}{\hbox{malá
-               změna } \Delta x_1}
+    \hbox{Mezní míra substituce}=\frac{\hbox{malá změna } \Delta x_2}{\hbox{malá
+            změna } \Delta x_1}
 \end{equation}
 kde \begin{tabular}[t]{l}
-     $x_1$ je množství statku 1, \\
-     $x_2$ je množství statku 2, \\
-     $\Delta$ je značka pro diferenci (změnu)
+    $x_1$ je množství statku 1, \\
+    $x_2$ je množství statku 2, \\
+    $\Delta$ je značka pro diferenci (změnu)
 \end{tabular} \\
 jsou zapsatelné velmi pohodlně, čitelně a~robustně, výsledek je dokonalý.
 Výrazy mohou být automaticky číslovány (jako v~této ukázce) a~na tato čísla
@@ -832,49 +832,49 @@ V~případě jakýchkoliv dotazů, námětů nebo nalezených chyb pište na adr
 \verb"rybicka@mendelu.cz".
 
 \begin{literatura}
-     % V Lora nejsou kapitálky, takže je nutné je vložit ručně
-     \citace{beran}{Beran, 1994}{\autor{Beran, V.} \nazev{Typografický manuál.}
-          Náchod: Nakladatelství Manuál, 1994. \\ ISBN 80-901824-0-2}
+    % V Lora nejsou kapitálky, takže je nutné je vložit ručně
+    \citace{beran}{Beran, 1994}{\autor{Beran, V.} \nazev{Typografický manuál.}
+        Náchod: Nakladatelství Manuál, 1994. \\ ISBN 80-901824-0-2}
 
-     \citace{csn010166}{ČSN 01\,0166, 1992}{\nazev{ČSN 01\,0166 Nakladatelská
-               (vydavatelská) úprava knih a~některých dalších druhů neperiodických
-               publikací.} Praha: Federální úřad pro normalizaci a~měření, 1992}
+    \citace{csn010166}{ČSN 01\,0166, 1992}{\nazev{ČSN 01\,0166 Nakladatelská
+            (vydavatelská) úprava knih a~některých dalších druhů neperiodických
+            publikací.} Praha: Federální úřad pro normalizaci a~měření, 1992}
 
-     \citace{csn016910}{ČSN 01\,6910, 2014}{\nazev{ČSN 01\,6910 Úprava dokumentů
-               zpracovaných textovými procesory.} Praha: ÚNMZ, 2014}
+    \citace{csn016910}{ČSN 01\,6910, 2014}{\nazev{ČSN 01\,6910 Úprava dokumentů
+            zpracovaných textovými procesory.} Praha: ÚNMZ, 2014}
 
-     \citace{csniso690}{ČSN ISO 690, 2011}{\nazev{ČSN ISO 690 -- Bibliografické
-               citace. Obsah, forma a~struktura}. Praha: ÚNMZ, 2011}
+    \citace{csniso690}{ČSN ISO 690, 2011}{\nazev{ČSN ISO 690 -- Bibliografické
+            citace. Obsah, forma a~struktura}. Praha: ÚNMZ, 2011}
 
-     \citace{csn7144}{ČSN ISO 7144, 1996}{\nazev{ČSN ISO 7144 Dokumentace --
-               Formální úprava disertací a~podobných dokumentů.} Praha: Český normalizační
-          institut, 1996}
+    \citace{csn7144}{ČSN ISO 7144, 1996}{\nazev{ČSN ISO 7144 Dokumentace --
+            Formální úprava disertací a~podobných dokumentů.} Praha: Český normalizační
+        institut, 1996}
 
-     \citace{csn80000}{ČSN ISO 80000-1}{\nazev{ČSN ISO 80000-1 Veličiny a~jednotky --
-               Část 1: Obecně}. Praha: ÚNMZ, 2011}
+    \citace{csn80000}{ČSN ISO 80000-1}{\nazev{ČSN ISO 80000-1 Veličiny a~jednotky --
+            Část 1: Obecně}. Praha: ÚNMZ, 2011}
 
-     \citace{csn80000m}{ČSN ISO 80000-2}{\nazev{ČSN ISO 80000-2 Veličiny a~jednotky --
-               Část 2: Matematická znaménka a~značky pro použití ve fyzikálních vědách
-               a~v~technice}. Praha: ÚNMZ, 2011}
+    \citace{csn80000m}{ČSN ISO 80000-2}{\nazev{ČSN ISO 80000-2 Veličiny a~jednotky --
+            Část 2: Matematická znaménka a~značky pro použití ve fyzikálních vědách
+            a~v~technice}. Praha: ÚNMZ, 2011}
 
-     \citace{Nohel}{Nohel, 1972}{\autor{Nohel, F.} \nazev{Sazba matematická
-               a~chemická}. Praha: SNTL, 1972}
+    \citace{Nohel}{Nohel, 1972}{\autor{Nohel, F.} \nazev{Sazba matematická
+            a~chemická}. Praha: SNTL, 1972}
 
-     \citace{pop}{Pop, Fléger a~Pop, 1989}{\autor{Pop, P., Flégr, J., Pop, V.}
-          \nazev{Sazba I~-- Ruční sazba.} Praha: SPN, 1989}
+    \citace{pop}{Pop, Fléger a~Pop, 1989}{\autor{Pop, P., Flégr, J., Pop, V.}
+        \nazev{Sazba I~-- Ruční sazba.} Praha: SPN, 1989}
 
-     \citace{pravidla}{ÚJČ, 2019}{\autor{ÚJČ}. \nazev{Internetová jazyková příručka}
-          [online] [vid. 10.\,3.\,2019]. Dostupné z: \texttt{prirucka.ujc.cas.cz}}
+    \citace{pravidla}{ÚJČ, 2019}{\autor{ÚJČ}. \nazev{Internetová jazyková příručka}
+        [online] [vid. 10.\,3.\,2019]. Dostupné z: \texttt{prirucka.ujc.cas.cz}}
 
-     \citace{latzac}{Rybička, 2003}{\autor{Rybička, J.} \nazev{\LaTeX{} pro
-               začátečníky.} 3.\,vyd. Brno: Konvoj, 2003}
+    \citace{latzac}{Rybička, 2003}{\autor{Rybička, J.} \nazev{\LaTeX{} pro
+            začátečníky.} 3.\,vyd. Brno: Konvoj, 2003}
 
-     \citace{TalDipl}{Talandová, 2006}{\autor{Talandová, P.} \nazev{Přístupy ve
-               zpracování tabulek v~systémech DTP}. Diplomová práce. Brno: PEF MZLU v~Brně,
-          2006}
+    \citace{TalDipl}{Talandová, 2006}{\autor{Talandová, P.} \nazev{Přístupy ve
+            zpracování tabulek v~systémech DTP}. Diplomová práce. Brno: PEF MZLU v~Brně,
+        2006}
 
-     \citace{texonweb}{TeXonWeb, 2019}{\nazev{\TeX onWeb} [online] [vid. 12.\,3.\,2019].
-          Dostupné z: https://tex.mendelu.cz/new}
+    \citace{texonweb}{TeXonWeb, 2019}{\nazev{\TeX onWeb} [online] [vid. 12.\,3.\,2019].
+        Dostupné z: https://tex.mendelu.cz/new}
 
 \end{literatura}
 
