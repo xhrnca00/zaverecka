@@ -144,5 +144,8 @@
     ],
     "editor.indentSize": "tabSize",
     "editor.tabSize": 4,
-    "editor.detectIndentation": false
+    "editor.detectIndentation": false,
+    "[latex]": {
+        "editor.rulers": [{ "column": 90 }]
+    }
 }

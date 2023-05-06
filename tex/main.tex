@@ -82,35 +82,47 @@
 \titul{Programovací jazyk Rust jako náhrada za jazyk C++}
 {Adam Hrnčárek}{Mgr. Marek Blaha}{Brno 2023}
 
-\podekovani{Děkuji mamince, že mi vařila.}
+\podekovani{Chtěl bych poděkovat Rust komunitě za skvělé učební materiály,
+    díky kterým Rustu rozumím. Také bych chtěl poděkovat YouTuberovi TheCherno,
+    jehož C++ série mě naučila všechny koncepty uvedené v této práci.
+    Na závěr bych rád poděkoval svému profesoru informatiky a vedoucímu práce
+    Marku Blahovi.
+}
 
 \prohlasenimuz{V~Brně dne \today}
 
-\abstract{Rybička, J. The \XeLaTeX{} style xdipp.sty for theses preparation.
-    Example of Bachelor
-    thesis. Brno, 2013.}{The typesetting style was developed and
-    presented on bachelor thesis example.}
+\abstract{This thesis investigates the pros and cons of the Rust programming
+    language compared to C++. This thesis tries to focus more on larger project,
+    as the differences are more apparent.
+}{Specifically, this thesis focuses on the safety features of Rust, developer tooling,
+    (testing, language servers, documentation, package management) and productivity
+    with them. It also looks at reliability of these languages in the future.
+}
+\abstrakt{Tato závěrečná práce posuzuje výhody a nevýhody programovacího jazyka Rust
+    v~porovnání s~C++. Práce se snaží soustředit spíše na větší projekty, při kterých
+    se rozdíly mezi jazyky projeví více.
+}{Specificky se práce soustředí na bezpečnostní prvky Rustu, nástroje pro vývojáře
+    (testování, language servery, dokumentace, package management) a produktivitu
+    s~nimi. Také se zabírá spolehlivostí těchto jazyků do~budoucna.
+}
 
-\abstrakt{Rybička, J. Styl xdipp.sty pro sazbu závěrečných prací v~systému
-    \XeLaTeX. Bakalářská práce (příklad). Brno, 2013.}{Je zde popsán sazební styl
-    přizpůsobený pro systém \XeLaTeX{} a~příklad jeho aplikace na bakalářskou práci.
-    Sazební styl lze použít na běžné závěrečné
-    práce (bakalářské, diplomové a~disertační). Do stylu verze 2.0 byly nově zavedeny
-    různé volby umožňující větší flexibilitu výstupu a~využití možností fontového
-    aparátu.}
-
-\klslova{\XeLaTeX, závěrečná práce, sázecí styl}
-\keywords{\XeLaTeX, thesis, typesetting style}
+\klslova{Programovací Jazyk Rust, C++, porovnání jazyků, vývojářské nástroje,
+    vývojářská produktivita, softwarová spolehlivost a bezpečnost
+}
+\keywords{The Rust Programming Language, C++, language comparison, developer tooling,
+    developer productivity, software reliability and safety
+}
 
 %* tables of contents
 \obsah{}
+% TODO: delete at the end if necessary
 \listoffigures
 \listoftables
 
-\kapitola{Úvod a~cíl práce}
+\subfile{introduction.tex}
 
 \begin{literatura}
-    % V Lora nejsou kapitálky, takže je nutné je vložit ručně
+    % V Lora nejsou kapitálky, takže je nutné je vložit ručně!
     \citace{texonweb}{TeXonWeb, 2019}{\nazev{\TeX{}onWeb} [online] [vid. 12.\,3.\,2019].
         Dostupné z: https://tex.mendelu.cz/new}
 
