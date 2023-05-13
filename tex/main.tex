@@ -3,12 +3,14 @@
 % !TEX program = xelatex
 
 %* packages
+% \usepackage{indentfirst} % indent first paragraph
 \usepackage{xdipp}
 \usepackage[
      cachedir=./minted/,
      outputdir=./TempTeX/,
 ]{minted}
 \usepackage{xcolor}
+\usepackage{hyperref}
 
 %* minted options
 \setminted{autogobble,
@@ -17,7 +19,7 @@
      mathescape,
      texcomments,
      obeytabs,
-     style=tango, % algol_nu
+     style=tango, % algol_nu, % tango,
      bgcolor=m-bg,
      highlightcolor=m-hg-default,
      tabsize=4,
@@ -25,12 +27,15 @@
 \newminted[rustcode]{rust}{}
 \newmint[rust]{rust}{}
 \newmintedfile[rustfile]{rust}{stripall}
+\newmintinline[irust]{rust}{stripall,bgcolor={}}
 \newminted[cppcode]{cpp}{}
 \newmint[cpp]{cpp}{}
 \newmintedfile[cppfile]{cpp}{stripall}
+\newmintinline[icpp]{cpp}{stripall,bgcolor={}}
 \newminted[asmcode]{nasm}{}
 \newmint[asm]{nasm}{}
 \newmintedfile[asmfile]{nasm}{stripall}
+\newmintinline[iasm]{nasm}{stripall,bgcolor={}}
 
 %* patch minted
 \makeatletter
@@ -120,6 +125,7 @@
 \listoftables
 
 \subfile{introduction.tex}
+\subfile{syntax.tex}
 
 \begin{literatura}
     % V Lora nejsou kapitálky, takže je nutné je vložit ručně!

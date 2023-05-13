@@ -1,0 +1,159 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+\kapitola{Základní syntax}
+
+Základní syntax jazyka Rust se tolik neliší od jazyka C++. Klíčová slova \irust{for},
+\irust{while}, \irust{if} apod. jsou stejná. V~této kapitole shrnu pouze základní
+informace, nebudu zacházet do hloubky. Rust syntax ale nevyužívá přetěžování operátorů
+do takové míry jako C++, nemělo by se tedy stát, že v~příkladech bude něco příliš
+nečekaného (jako například spojování iterátorů pomocí operátoru \icpp{|} v~C++).
+
+\sekce{Proměnné}
+
+Na rozdíl od deklarování proměnných jejich typem (popřípadě slovem \icpp{auto}) používá
+Rust klíčové slovo \irust{let}. \emph{Proměnné v~Rustu jsou defaultně konstantní}, aby
+šla hodnota proměnné měnit, musíme v~deklaraci přidat klíčové slovo \irust{mut}.
+
+Rust má i~klíčové slovo \irust{const}, které ale slouží stejnému účelu jako
+\icpp{constexpr} v~jazyce C++ (deklarování compile-time konstanty).
+Pokud chceme vytvořit statickou proměnnou (=globální), musíme použít klíčové slovo
+\irust{static}, popřípadě \irust{static mut}. Jedním slovem není možné deklarovat více
+proměnných.
+
+Většinou je vhodné uvést při deklaraci i~počáteční hodnotu. U~\irust{let} se ale
+nejedná o~error při kompilaci (error se ale objeví, pokud použíjeme neinicializovanou
+proměnnou). Hodnotu přiřazujeme klasickým použitím znaku \texttt{=}.
+
+V~Rustu často není potřeba udávat typ vytvářené proměnné -- velmi dobře si umí typy
+proměnných odvodit z~hodnot, popřípadě jejich dalšího používání. Toto ale platí pouze
+pro deklarace pomocí slova \irust{let} -- u~ostatních je typová anotace povinná. Pokud
+si kompilátor neumí typ odvodit, je nutné typ explicitně uvést. Toho docílíme pomocí
+dnes častějšího \uv{dvojtečkového syntaxu}. Celá deklarace proměnné tedy vypadá takto:
+
+\obrazek
+\rust{let mut variable_name: i32 = 5;}
+\endobrl{Ukázka deklarace nekonstantní proměnné typu \irust{i32} (\icpp{int} v~C++)}
+{variable declaration showcase}
+
+\sekce{Funkce}
+
+Stejně jako u~proměnných nezačínají deklarace funkcí jejich návratovým typem, ale
+klíčovým slovem \irust{fn}. Následuje syntax velmi podobný C++, až na \uv{dvojtečkový
+    syntax} deklarace typů. Za uzavírací závorkou následuje šipka (\texttt{->}) a za ní
+návratový typ. Pokud funkce nevrací nic (typ \icpp{void} v~C++), můžeme za šipku napsat
+\uv{prázdný typ} \irust{()} nebo šipku vůbec nepsat.
+
+V~Rustu je povinné zároveň s~deklarací uvést i~definici (tělo) funkce\footnote{Pokud
+    se tedy nejedná o~definici funkce v~Trait definici nebo v~\irust{extern} bloku.
+} To je obsaženo ve~složených závorkách, stejně jako v~C++.
+
+Jednou z~méně intuitivních věcí pro začátečníky jsou takzvané \uv{implicit returns}.
+Pokud nedáme na konec výrazu středník, bude tento výraz vrácen jako hodnota. Toto se
+používá hlavně pro malé funkce s~jednoduchou logikou nebo jako vrácení úplně na posledním
+řádku funkce. Jinak se většinou používá klíčové slovo \irust{return}, stejně jako v~C++.
+Takto by vypadala definice funkce, která sečte dvě čísla a vrátí výsledek:
+
+\obrazek
+\begin{rustcode}
+    fn sum(first: &i32, second: &i32) -> i32 {
+        first + second // implicit return
+    }
+\end{rustcode}
+\endobrl{Ukázka definice funkce}{function definition showcase}
+
+\sekce{Pattern matching}
+
+Rust má velmi silný pattern matching. Pomocí něj je možné \uv{vytahovat} hodnoty
+z~enumů, datových struktur a n-tic (anglicky tuple). Vždy je nutné použít klíčové
+slovo \irust{let}.
+
+\obrazek
+\begin{rustcode}
+    let (number, text) = (12, "Hello world!");
+\end{rustcode}
+\endobrl{Ukázka jednoduchého pattern matchingu}{simple pattern matching showcase}
+
+Po tomto řádku můžeme používat proměnnou \irust{number}, která je typu \irust{i32} a
+proměnnou \irust{text} typu \irust{&str} (práci se stringy je věnována vlastní kapitola).
+
+Rust má také klíčové slovo \irust{match}:
+
+\obrazek
+\begin{rustcode}
+    let is_two_or_three: bool = match number {
+        2 | 3 => true,
+        12 => false,
+        _ => false,
+    };
+\end{rustcode}
+\endobrl{Ukázka pattern matchingu pomocí \irust{match}}{match pattern matching showcase}
+
+V tomto případě používáme \irust{match} na proměnnou \irust{number}. Pokud je hodnota
+2 nebo 3, vratí \irust{match} hodnotu \irust{true}. Znak \irust{_} znamená
+\uv{vše ostatní}, rameno s~hodnotou 12 je tedy zbytečné. Výsledek se zde uloží do
+proměnné, v~jednotlivých ramenech (anglicky match arms) lze ale napsat libovolný kód.
+
+V~tomto případě se jedná o~zbytečnou komplikaci kódu. \irust{match} a pattern matching
+obecně je ale velmi užitečný pří implementování komplexnější logiky.
+
+\sekce{Smyčky a kontrolní bloky}
+
+\podsekce{Smyčky a kontrolní bloky shodné s~C++}
+
+Klíčová slova \irust{while} a \irust{if}, \irust{else if}, \irust{else} fungují stejně
+jako v~jazyce C++. Jediným rozdílem je, že závorky kolem výrazů za klíčovými slovy
+nejsou povinné (a nepoužívají se).
+
+Dalším detailem je využitelnost pattern matchingu. Ke~zjištění struktury můžeme použít
+slova \irust{if let} a \irust{while let}. Pokud se match podaří, výraz vrátí
+\irust{true} a proměnná je k~dispozici k~použití v~daném bloku. Toto se často vyskytuje
+při práci s~možnými errory. Následuje ukázka použítí \irust{if let} bloku. V~proměnné
+\irust{calculation_result} je uložen enum \irust{Option<i32>} -- jedná se o~návratovou
+hodnotu nějaké funkce, která \emph{může} (ale nemusí) vrátit výsledek. Pokud výsledek
+existuje (proměnná má hodnotu \irust{Some}), vypíšeme jej do konzole.
+
+\obrazek
+\begin{rustcode}
+    let calculation_result = Some(5);
+    if let Some(num) = calculation_result {
+        // print result to standard output
+        println!("Success! The result is {}", num);
+    } else {
+        println!("Calculation not successful");
+    }
+\end{rustcode}
+\endobrl{Ukázka \irust{if let} výrazu}{if let showcase}
+
+\podsekce{Smyčka for}
+
+Smyčka \irust{for} funguje jinak než v~C++. Používá se na cyklení přes tzv. iterátory.
+Iterátory jako takové jsou návrhovým vzorem, který se částečně vyskytuje i~v~C++.
+V~Rustu jsou ale daleko mocnější -- jedná se o~nejpoužívanější návrhový vzor tohoto
+jazyka. \uv{Klasický} for loop přes čísla můžeme napsat pomocí tzv. rozsahu
+(anglicky range). Jeho syntax je následující:
+
+\obrazek
+\begin{rustcode}
+    for i in 0..10 {
+        println!("{i}");
+    }
+\end{rustcode}
+\endobrl{Ukázka for smyčky přes Range objekt}{for loop over range showcase}
+
+Tato smyčka vypíše celá čísla od 0 do 9 včetně. Pokud bychom chtěli vypsat i~hodnotu 10,
+museli bychom range napsat takto: \irust{0..=10}. Můžeme si všimnout, že proměnná
+\irust{i} se postupně nastaví na každou hodnotu iterátoru. Lze zde použít i~pattern
+matching.
+
+\podsekce{smyčka loop}
+
+V~Rustu se nachází ještě jeden typ smyčky. Jedná se o~nekonečnou smyčku, vytvořenou
+pomocí klíčového slova \irust{loop}. Funguje stejně jako \icpp{while (true)} v~C++.
+
+% TODO: makra
+% TODO: importy
+% TODO: typy (i32 vs int)
+% TODO: poznámka o generikách
+
+\end{document}
