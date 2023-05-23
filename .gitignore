@@ -1,4 +1,6 @@
 TempTeX
+missfont.long # when latex is missing a font
+__latexindent*.tex
 target
 build
 bin

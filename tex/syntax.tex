@@ -45,7 +45,7 @@ návratový typ. Pokud funkce nevrací nic (typ \icpp{void} v~C++), můžeme za 
 \uv{prázdný typ} \irust{()} nebo šipku vůbec nepsat.
 
 V~Rustu je povinné zároveň s~deklarací uvést i~definici (tělo) funkce\footnote{Pokud
-    se tedy nejedná o~definici funkce v~Trait definici nebo v~\irust{extern} bloku.
+    se tedy nejedná o~deklaraci funkce v~Trait definici nebo v~\irust{extern} bloku.
 } To je obsaženo ve~složených závorkách, stejně jako v~C++.
 
 Jednou z~méně intuitivních věcí pro začátečníky jsou takzvané \uv{implicit returns}.
@@ -93,6 +93,7 @@ V tomto případě používáme \irust{match} na proměnnou \irust{number}. Poku
 2 nebo 3, vratí \irust{match} hodnotu \irust{true}. Znak \irust{_} znamená
 \uv{vše ostatní}, rameno s~hodnotou 12 je tedy zbytečné. Výsledek se zde uloží do
 proměnné, v~jednotlivých ramenech (anglicky match arms) lze ale napsat libovolný kód.
+Pokud \irust{match} nepočítá s~každou možností, kód se nezkompiluje.
 
 V~tomto případě se jedná o~zbytečnou komplikaci kódu. \irust{match} a pattern matching
 obecně je ale velmi užitečný pří implementování komplexnější logiky.
@@ -151,8 +152,39 @@ matching.
 V~Rustu se nachází ještě jeden typ smyčky. Jedná se o~nekonečnou smyčku, vytvořenou
 pomocí klíčového slova \irust{loop}. Funguje stejně jako \icpp{while (true)} v~C++.
 
-% TODO: makra
-% TODO: importy
+\sekce{Makra}
+
+Makra se syntakticky liší od C++. Mají více typů, nejčastěji se ale používají tzv.
+function-like makra. Volání těchto maker vypadá stejně jako volání funkci, akorát je za
+názvem znak \irust{!}. Tato makra, na rozdíl od funkcí, mohou brát libovolný počet
+parametrů. Asi nejčastěji používané makro je \irust{println!}, které řeší tisknutí do
+konzole bez toho, aniž bychom se museli starat o~konvertování proměnných na řetězec.
+
+Deklarace maker je složitější, protože pracují přímo s~abstraktním syntaktickým stromem
+svého vstupu a modifikovaný strom vrací. Do vytváření maker tato práce nezachází.
+
+\sekce{Importování}
+
+Používání symbolů (funkcí, proměnných, objektů,~\dots) je mnohem jednodušší než v~C++.
+Pro importování symbolu nám stačí použít klíčové slovo \irust{use}, za kterým napíšeme
+cestu k~symbolu pomocí namespace operátorů \irust{::}. Nepotřebujeme žádné hlavičkové
+soubory, stačí nám pouze soubory s~kódem. Při externím linkování se ale deklarováním
+symbolů a funkcí bez těla nevyhneme.
+
+V~následujícím příkladu importujeme typ \irust{LinkedList} z~modulu \irust{collections}
+knihovny \irust{std}. Dále voláme metodu \irust{new} tohoto typu.
+
+\obrazek
+\begin{rustcode}
+    use std::collections::LinkedList;
+
+    fn main() {
+        let mut list = LinkedList::new();
+        list.push_back(0);
+    }
+\end{rustcode}
+\endobrl{Ukázka importování a používání namespace operátoru}{use showcase}
+
 % TODO: typy (i32 vs int)
 % TODO: poznámka o generikách
 
