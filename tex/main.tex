@@ -1,4 +1,8 @@
-\documentclass[twoside,12pt]{article}
+\documentclass[
+    % FIXME: add twoside back when printing
+    % twoside,
+    12pt
+]{article}
 % pro tisk po jedné straně papíru je potřebné odstranit volbu twoside
 % !TEX program = xelatex
 
@@ -97,7 +101,7 @@
 \prohlasenimuz{V~Brně dne \today}
 
 \abstract{This thesis investigates the pros and cons of the Rust programming
-    language compared to C++. This thesis tries to focus more on larger project,
+    language compared to C++. This thesis tries to focus more on larger projects,
     as the differences are more apparent.
 }{Specifically, this thesis focuses on the safety features of Rust, developer tooling,
     (testing, language servers, documentation, package management) and productivity
