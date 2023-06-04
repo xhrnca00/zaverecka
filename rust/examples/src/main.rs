@@ -48,6 +48,34 @@ fn main() {
     }
     // ------------------------------------
 
+    //* vector and array initialization
+    let mut array: [i32; 3] = [0; 3];
+    array[0] = 1;
+    let vector1: Vec<i32> = Vec::new();
+    let vector2: Vec<i32> = Vec::with_capacity(10);
+    let mut vector = vec![1, 2, 3];
+    vector.push(4);
+    // ------------------------------------
+
+    //* references and slices
+    {
+        fn change_number(number: &mut u64) {
+            *number = 0;
+        }
+
+        fn main() {
+            let mut number = 5;
+            change_number(&mut number);
+            println!("{}", number); // 0
+            let mut vector = vec![1, 2, 3];
+            let number_slice: &mut [i32] = &mut vector[..];
+            number_slice[0] = 0;
+            println!("{}", vector[0]); // 0
+        }
+        main();
+    }
+    // ------------------------------------
+
     //* string initialization
     let hello1: &str = "Hello world!";
     let hello2: String = "Hello world!".to_string();

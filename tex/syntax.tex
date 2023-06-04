@@ -25,9 +25,9 @@ Většinou je vhodné uvést při deklaraci i~počáteční hodnotu. U~\irust{le
 nejedná o~error při kompilaci (error se ale objeví, pokud použíjeme neinicializovanou
 proměnnou). Hodnotu přiřazujeme klasickým použitím znaku \texttt{=}.
 
-V~Rustu často není potřeba udávat typ vytvářené proměnné -- velmi dobře si umí typy
+V~Rustu často není potřeba udávat typ vytvářené proměnné~-- velmi dobře si umí typy
 proměnných odvodit z~hodnot, popřípadě jejich dalšího používání. Toto ale platí pouze
-pro deklarace pomocí slova \irust{let} -- u~ostatních je typová anotace povinná. Pokud
+pro deklarace pomocí slova \irust{let}~-- u~ostatních je typová anotace povinná. Pokud
 si kompilátor neumí typ odvodit, je nutné typ explicitně uvést. Toho docílíme pomocí
 dnes častějšího \uv{dvojtečkového syntaxu}. Celá deklarace proměnné tedy vypadá takto:
 
@@ -98,7 +98,7 @@ Dalším detailem je využitelnost pattern matchingu. Ke~zjištění struktury m
 slova \irust{if let} a \irust{while let}. Pokud se match podaří, výraz vrátí
 \irust{true} a proměnná je k~dispozici k~použití v~daném bloku. Toto se často vyskytuje
 při práci s~možnými errory. Následuje ukázka použítí \irust{if let} bloku. V~proměnné
-\irust{calculation_result} je uložen enum \irust{Option<i32>} -- jedná se o~návratovou
+\irust{calculation_result} je uložen enum \irust{Option<i32>}~-- jedná se o~návratovou
 hodnotu nějaké funkce, která \emph{může} (ale nemusí) vrátit výsledek. Pokud výsledek
 existuje (proměnná má hodnotu \irust{Some}), vypíšeme jej do konzole.
 
@@ -110,7 +110,7 @@ existuje (proměnná má hodnotu \irust{Some}), vypíšeme jej do konzole.
 
 Smyčka \irust{for} funguje jinak než v~C++. Používá se na cyklení přes tzv. iterátory.
 Iterátory jako takové jsou návrhovým vzorem, který se částečně vyskytuje i~v~C++.
-V~Rustu jsou ale daleko mocnější -- jedná se o~nejpoužívanější návrhový vzor tohoto
+V~Rustu jsou ale daleko mocnější~-- jedná se o~nejpoužívanější návrhový vzor tohoto
 jazyka. \uv{Klasický} for loop přes čísla můžeme napsat pomocí tzv. rozsahu
 (anglicky range). Jeho syntax je následující:
 
@@ -135,6 +135,9 @@ function-like makra. Volání těchto maker vypadá stejně jako volání funkci
 názvem znak \irust{!}. Tato makra, na rozdíl od funkcí, mohou brát libovolný počet
 parametrů. Asi nejčastěji používané makro je \irust{println!}, které řeší tisknutí do
 konzole bez toho, aniž bychom se museli starat o~konvertování proměnných na řetězec.
+
+Existují také derivační a atributová makra. Derivační se používají při OOP, atributová
+přidávají nějaký compile-time atribut k~symbolu (funkci, proměnné,\dots).
 
 Deklarace maker je složitější, protože pracují přímo s~abstraktním syntaktickým stromem
 svého vstupu a modifikovaný strom vrací. Do vytváření maker tato práce nezachází.
@@ -178,12 +181,58 @@ jejich velikost v~paměti.
 \podsekce{Pole}
 
 Pole jsou podobná objektu \icpp{std::array}. Jejich typ je \irust{[T; N]}, kde T~je typ
-ukládaný v~poli a N~je délka pole.
+ukládaný v~poli a N~je délka pole. Když pole vytváříme, musíme vždy uvést počáteční
+hodnotu. Do pole můžeme indexovat stejně jako v~C++ pomocí \icpp{[]}.
 
-Pokud je chceme poslat do funkce jako ukazatel, pošleme tzv. řez (anglicky slice). Jedná
-se o speciální objekt, který si pamatuje ukazatel na začátek a délku úseku.
+Rust má také dynamické pole. Jeho název je z~\icpp{std::vector} zkrácen na \irust{Vec}.
+Vytvářet vektory můžeme buď voláním jednoho z~konstruktorů, nebo voláním makra
+\irust{vec![]}, které bere počáteční hodnoty.
+
+\obrazek
+\rustfile[firstline=52,lastline=57]{../rust/examples/src/main.rs}
+\endobrl{Ukázka vytváření pole a vektoru}{vector and array initialization showcase}
+
+V~ukázce nastavujeme hodnotu proměnné \irust{array} na \irust{[0; 3]}, což je pole délky~3
+vyplněné nulami.
+
+Samotný typ u~proměnné \irust{array} by šlo vynechat (byl by implicitní). U~vektorů je ale
+\emph{nutné} uvést typy, protože z~konstruktoru nejde poznat, jaký typ do vektoru
+ukládáme. Kdybychom je ale dále nějak používali, nebylo by nutné typ uvádět.
+
+\podsekce{Reference}
+
+Když chceme předat hodnotu proměnné bez jejího kopírování nebo umožnit jiné části programu
+přepsat její hodnotu, použijeme reference. Rust sice má i~ukazatele, ale kvůli problémům
+s~bezpečností se prakticky nepoužívají (jdou plně používat pouze v~tzv. unsafe blocích).
+
+Stejně jako u proměnných máme dva typy referencí~-- \irust{&T} a \irust{&mut T} (kde T je
+typ proměné). \irust{&T} nám neumožňuje jakkoliv modifikovat proměnnou na kterou ukazuje.
+Když chceme poslat referenci, musíme to explicitně uvést (viz ukázka níže). Reference
+umožňující modifikaci jdou dělat pouze na modifikovatelné proměnné.
+
+Pokud chceme referenci na blok paměti, pošleme tzv. řez (anglicky slice). Jedná se
+o~speciální objekt, který si pamatuje ukazatel na začátek a délku úseku. Jeho zápis je
+\irust{&[T]} a \irust{&mut [T]}. Získáme jej pomocí operátoru \irust{[]}, ve kterém ale
+neuvedeme přímo index, ale range.
+
+\obrazek
+\rustfile[firstline=62,lastline=74]{../rust/examples/src/main.rs}
+\endobrl{Ukázka použití referencí a řezů}{references showcase}
+
+V~ukázce vytváříme modifikovatelnou proměnnou \irust{number}, posíláme její referenci
+funkci, ta změní její hodnotu na 0. Následně tiskneme hodnotu proměnné do \irust{stdout}.
+Typ proměnné je \irust{u64}. Explicitně jsme jej neuvedli, ale kompilátor si to odvodil
+z~toho, že referenci na proměnnou posíláme funkci, která bere referenci na \irust{u64}.
+
+Dále vytváříme vektor o~třech prvcích. Referenci na všechny \emph{stávající}\footnote{
+    Kdybychom do vektoru poté přidali nový prvek, řez by měl stále délku~3.
+} prvky vektoru ukládáme do proměnné \irust{number_slice}. Používáme \irust{..}~--
+nekonečný range (když neuvedeme jeden krajní prvek, bude range tím směrem zasahovat do
+nekonečna). Po změně tiskneme nultý prvek vektoru (nikoliv přes referenci).
 
 \podsekce{Řetězce}
+
+% TODO: b'a' apod.
 
 Situace s~řetězci je dost podobná C++. Existují dva typy: \irust{&str} a \irust{String}.
 Protože Rust používá UTF-8, velikost typu \irust{char} jsou 4\,byty. Pokud chceme typ
@@ -199,12 +248,11 @@ stejně jako v~C++, akorát jeho buffer je \irust{Vec<u8>} (tj. dynamické pole 
 Vytvářet řetězce můžeme více způsoby:
 
 \obrazek
+% FIXME: line numbers
 \rustfile[firstline=52,lastline=54]{../rust/examples/src/main.rs}
 \endobrl{Ukázka vytváření řetězců}{string initialization showcase}
 
 \podsekce{Vlastní typy}
-
-\podsekce{Ukazatele a reference}
 
 % TODO: poznámka o generikách
 
