@@ -32,7 +32,9 @@ si kompilátor neumí typ odvodit, je nutné typ explicitně uvést. Toho docíl
 dnes častějšího \uv{dvojtečkového syntaxu}. Celá deklarace proměnné tedy vypadá takto:
 
 \obrazek
-\rustfile[firstline=5,lastline=5]{../rust/examples/src/main.rs}
+\begin{rustcode}
+    let mut variable_name: i32 = 5;
+\end{rustcode}
 \endobrl{Ukázka deklarace nekonstantní proměnné typu \irust{i32} (\icpp{int} v~C++)}
 {variable declaration showcase}
 
@@ -55,7 +57,11 @@ používá hlavně pro malé funkce s~jednoduchou logikou nebo jako vrácení ú
 Takto by vypadala definice funkce, která sečte dvě čísla a vrátí výsledek:
 
 \obrazek
-\rustfile[firstline=9,lastline=11]{../rust/examples/src/main.rs}
+\begin{rustcode}
+    fn sum(first: &i32, second: &i32) -> i32 {
+        first + second // implicit return
+    }
+\end{rustcode}
 \endobrl{Ukázka definice funkce}{function definition showcase}
 
 \sekce{Pattern matching}
@@ -65,7 +71,9 @@ z~enumů, datových struktur a n-tic (anglicky tuple). Vždy je nutné použít 
 slovo \irust{let}.
 
 \obrazek
-\rustfile[firstline=15,lastline=15]{../rust/examples/src/main.rs}
+\begin{rustcode}
+    let (number, text) = (12, "Hello world!");
+\end{rustcode}
 \endobrl{Ukázka jednoduchého pattern matchingu}{simple pattern matching showcase}
 
 Po tomto řádku můžeme používat proměnnou \irust{number}, která je typu \irust{i32} a
@@ -74,7 +82,13 @@ proměnnou \irust{text} typu \irust{&str} (práci se stringy je věnována vlast
 Rust má také klíčové slovo \irust{match}:
 
 \obrazek
-\rustfile[firstline=19,lastline=23]{../rust/examples/src/main.rs}
+\begin{rustcode}
+    let is_two_or_three: bool = match number {
+        2 | 3 => true,
+        12 => false,
+        _ => false,
+    };
+\end{rustcode}
 \endobrl{Ukázka pattern matchingu pomocí \irust{match}}{match pattern matching showcase}
 
 V tomto případě používáme \irust{match} na proměnnou \irust{number}. Pokud je hodnota
@@ -103,7 +117,15 @@ hodnotu nějaké funkce, která \emph{může} (ale nemusí) vrátit výsledek. P
 existuje (proměnná má hodnotu \irust{Some}), vypíšeme jej do konzole.
 
 \obrazek
-\rustfile[firstline=27,lastline=33]{../rust/examples/src/main.rs}
+\begin{rustcode}
+    let calculation_result = Some(5);
+    if let Some(num) = calculation_result {
+        // print result to standard output
+        println!("Success! The result is {}", num);
+    } else {
+        println!("Calculation not successful");
+    }
+\end{rustcode}
 \endobrl{Ukázka \irust{if let} výrazu}{if let showcase}
 
 \podsekce{Smyčka for}
@@ -115,7 +137,11 @@ jazyka. \uv{Klasický} for loop přes čísla můžeme napsat pomocí tzv. rozsa
 (anglicky range). Jeho syntax je následující:
 
 \obrazek
-\rustfile[firstline=37,lastline=39]{../rust/examples/src/main.rs}
+\begin{rustcode}
+    for i in 0..10 {
+        println!("{}", i);
+    }
+\end{rustcode}
 \endobrl{Ukázka for smyčky přes Range objekt}{for loop over range showcase}
 
 Tato smyčka vypíše celá čísla od 0 do 9 včetně. Pokud bychom chtěli vypsat i~hodnotu 10,
@@ -155,7 +181,14 @@ V~následujícím příkladu importujeme typ \irust{LinkedList} z~modulu \irust{
 knihovny \irust{std}. Dále voláme statickou metodu \irust{new} tohoto typu.
 
 \obrazek
-\rustfile[firstline=43,lastline=48]{../rust/examples/src/main.rs}
+\begin{rustcode}
+    use std::collections::LinkedList;
+
+    fn main() {
+        let mut list = LinkedList::new();
+        list.push_back(0);
+    }
+\end{rustcode}
 \endobrl{Ukázka importování a používání namespace operátoru}{use showcase}
 
 \sekce{Typy}
@@ -189,7 +222,14 @@ Vytvářet vektory můžeme buď voláním jednoho z~konstruktorů, nebo volán�
 \irust{vec![]}, které bere počáteční hodnoty.
 
 \obrazek
-\rustfile[firstline=52,lastline=57]{../rust/examples/src/main.rs}
+\begin{rustcode}
+    let mut array: [i32; 3] = [0; 3];
+    array[0] = 1;
+    let vector1: Vec<i32> = Vec::new();
+    let vector2: Vec<i32> = Vec::with_capacity(10);
+    let mut vector = vec![1, 2, 3];
+    vector.push(4);
+\end{rustcode}
 \endobrl{Ukázka vytváření pole a vektoru}{vector and array initialization showcase}
 
 V~ukázce nastavujeme hodnotu proměnné \irust{array} na \irust{[0; 3]}, což je pole délky~3
@@ -216,7 +256,22 @@ o~speciální objekt, který si pamatuje ukazatel na začátek a délku úseku. 
 neuvedeme přímo index, ale range.
 
 \obrazek
-\rustfile[firstline=62,lastline=74]{../rust/examples/src/main.rs}
+\begin{rustcode}
+        fn change_number(number: &mut u64) {
+            *number = 0;
+        }
+
+        fn main() {
+            let mut number = 5;
+            change_number(&mut number);
+            println!("{}", number); // 0
+            let mut vector = vec![1, 2, 3];
+            let number_slice: &mut [i32] = &mut vector[1..];
+            number_slice[1] = 0;
+            println!("{}", vector[2]); // 0
+        }
+        main();
+\end{rustcode}
 \endobrl{Ukázka použití referencí a řezů}{references showcase}
 
 V~ukázce vytváříme modifikovatelnou proměnnou \irust{number}, posíláme její referenci
@@ -226,18 +281,18 @@ z~toho, že referenci na proměnnou posíláme funkci, která bere referenci na 
 
 Dále vytváříme vektor o~třech prvcích. Referenci na všechny \emph{stávající}\footnote{
     Kdybychom do vektoru poté přidali nový prvek, řez by měl stále délku~3.
-} prvky vektoru ukládáme do proměnné \irust{number_slice}. Používáme \irust{..}~--
-nekonečný range (když neuvedeme jeden krajní prvek, bude range tím směrem zasahovat do
-nekonečna). Po změně tiskneme nultý prvek vektoru (nikoliv přes referenci).
+} prvky vektoru ukládáme do proměnné \irust{number_slice}. Používáme \irust{1..}~--
+zprava nekonečný range (když neuvedeme jeden krajní prvek, bude range tím směrem zasahovat
+do nekonečna). Měníme druhý prvek range (tedy třetí prvek vektoru), ten následně tiskneme
+(pomocí vektoru, ne řezu).
 
 \podsekce{Řetězce}
-
-% TODO: b'a' apod.
 
 Situace s~řetězci je dost podobná C++. Existují dva typy: \irust{&str} a \irust{String}.
 Protože Rust používá UTF-8, velikost typu \irust{char} jsou 4\,byty. Pokud chceme typ
 reprezentující jeden byte (a tedy i~paměť do které se řetězce ukládají), použijeme
-\irust{u8}.
+\irust{u8}. Pokud chceme používat ASCII, můžeme používat \uv{byte string} (\irust{b""}).
+Jeho charaktery můžeme psát jako \irust{b'a'} apod.
 
 \irust{&str} je reference na konstantní řetězec, podobně jako \icpp{const char *}.
 Na~pozadí se jedná o~\irust{&[u8]}, kde je vždy uložena \emph{validní} UTF-8 sekvence.
@@ -248,8 +303,11 @@ stejně jako v~C++, akorát jeho buffer je \irust{Vec<u8>} (tj. dynamické pole 
 Vytvářet řetězce můžeme více způsoby:
 
 \obrazek
-% FIXME: line numbers
-\rustfile[firstline=52,lastline=54]{../rust/examples/src/main.rs}
+\begin{rustcode}
+    let hello1: &str = "Hello world!";
+    let hello2: String = "Hello world!".to_string();
+    let hello3: String = String::from("Hello world!");
+\end{rustcode}
 \endobrl{Ukázka vytváření řetězců}{string initialization showcase}
 
 \podsekce{Vlastní typy}
