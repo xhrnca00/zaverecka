@@ -178,7 +178,11 @@ Nepotřebujeme žádné hlavičkové soubory, stačí nám pouze soubory s~kóde
 linkování se ale deklarováním symbolů a funkcí bez těla nevyhneme.
 
 V~následujícím příkladu importujeme typ \irust{LinkedList} z~modulu \irust{collections}
-knihovny \irust{std}. Dále voláme statickou metodu \irust{new} tohoto typu.
+knihovny \irust{std}. Dále voláme statickou metodu \irust{new} tohoto typu. Můžeme si také
+všimnout, že nikde neuvádíme typ proměnné. Ukládáme do ní \uv{nový} linked list~-- hlavní
+type je tedy \irust{LinkedList}, ale neuvádíme ani v~něm ukládaný typ. Je totiž odvozen
+z~toho, že později ukládáme do listu hodnotu typu \irust{i32}. Plný typ proměnné
+\irust{list} je tedy \irust{LinkedList<i32>}.
 
 \obrazek
 \begin{rustcode}
@@ -253,24 +257,23 @@ umožňující modifikaci jdou dělat pouze na modifikovatelné proměnné.
 Pokud chceme referenci na blok paměti, pošleme tzv. řez (anglicky slice). Jedná se
 o~speciální objekt, který si pamatuje ukazatel na začátek a délku úseku. Jeho zápis je
 \irust{&[T]} a \irust{&mut [T]}. Získáme jej pomocí operátoru \irust{[]}, ve kterém ale
-neuvedeme přímo index, ale range.
+neuvedeme index, ale range.
 
 \obrazek
 \begin{rustcode}
-        fn change_number(number: &mut u64) {
-            *number = 0;
-        }
+    fn change_number(number: &mut u64) {
+        *number = 0;
+    }
 
-        fn main() {
-            let mut number = 5;
-            change_number(&mut number);
-            println!("{}", number); // 0
-            let mut vector = vec![1, 2, 3];
-            let number_slice: &mut [i32] = &mut vector[1..];
-            number_slice[1] = 0;
-            println!("{}", vector[2]); // 0
-        }
-        main();
+    fn main() {
+        let mut number = 5;
+        change_number(&mut number);
+        println!("{}", number); // 0
+        let mut vector = vec![1, 2, 3];
+        let number_slice: &mut [i32] = &mut vector[1..];
+        number_slice[1] = 0;
+        println!("{}", vector[2]); // 0
+    }
 \end{rustcode}
 \endobrl{Ukázka použití referencí a řezů}{references showcase}
 
@@ -280,11 +283,11 @@ Typ proměnné je \irust{u64}. Explicitně jsme jej neuvedli, ale kompilátor si
 z~toho, že referenci na proměnnou posíláme funkci, která bere referenci na \irust{u64}.
 
 Dále vytváříme vektor o~třech prvcích. Referenci na všechny \emph{stávající}\footnote{
-    Kdybychom do vektoru poté přidali nový prvek, řez by měl stále délku~3.
-} prvky vektoru ukládáme do proměnné \irust{number_slice}. Používáme \irust{1..}~--
-zprava nekonečný range (když neuvedeme jeden krajní prvek, bude range tím směrem zasahovat
-do nekonečna). Měníme druhý prvek range (tedy třetí prvek vektoru), ten následně tiskneme
-(pomocí vektoru, ne řezu).
+    Kdybychom do vektoru poté přidali nový prvek, řez by měl stále délku~2.
+} prvky vektoru s~indexem~1 a dále ukládáme do proměnné \irust{number_slice}. Používáme
+\irust{1..}~-- zprava nekonečný range (když neuvedeme jeden krajní prvek, bude range tím
+směrem zasahovat do nekonečna). Měníme druhý prvek range (tedy třetí prvek vektoru), ten
+následně tiskneme (pomocí vektoru, ne řezu).
 
 \podsekce{Řetězce}
 
@@ -312,6 +315,85 @@ Vytvářet řetězce můžeme více způsoby:
 
 \podsekce{Vlastní typy}
 
-% TODO: poznámka o generikách
+Podobně jako C++, Rust má klíčové slovo \irust{struct}, které umožňuje vytvářet vlastní
+typy. Ve složených závorkách se nachází \emph{pouze členské proměnné} oddělené čárkami.
+
+Příklad struktury \irust{Person}:
+
+\obrazek
+\begin{rustcode}
+    struct Person {
+        name: String,
+        age: u8,
+    }
+\end{rustcode}
+\endobrl{Ukázka vytvoření struktury}{struct showcase}
+
+Pokud chceme přidat \uv{metody}, uděláme tak v~tzv. \irust{impl} bloku. Můžeme zde
+vytvářet funkce, které jako první parametr berou \irust{self}, \irust{&self} nebo
+\irust{&mut self}. Abychom měli přistup k~datům ve~struktuře, musíme to udělat právě přes
+jednu z~těchto možností. Pokud funkce nebere žádnou z~nich, jedná se o~statickou metodu.
+
+Příklad funkcí na struktuře \irust{Person}:
+
+\obrazek
+\begin{rustcode}
+    impl Person {
+        fn new(name: &str, age: u8) -> Person {
+            Person {
+                name: name.to_string(),
+                age, // equivalent to `age: age`
+            }
+        }
+
+        fn add_year(&mut self) {
+            self.age += 1;
+        }
+    }
+\end{rustcode}
+\endobrl{Ukázka impl bloku}{struct impl showcase}
+
+Nemáme speciální syntax pro konstruktor. Místo toho existuje konvence, že každá struktura
+má statickou metodu \irust{new}, která vrací vytvořenou strukturu.
+
+Rust má také enumy. Oproti C++ ale mohou držet i~další hodnoty, a to buď jako n-tici, nebo
+jako strukturu. Můžeme jim také přidávat asociované funkce pomocí \irust{impl} bloků.
+Následuje příklad:
+
+\obrazek
+\begin{rustcode}
+    enum FileError {
+        // An `enum` variant may either be `unit-like`,
+        NotFound,
+        // like tuple structs,
+        TooBig(u64),
+        // or c-like structures.
+        DifferentOwner { user: String },
+    }
+
+    impl FileError {
+        fn description(&self) -> String {
+            match self {
+                FileError::NotFound => "File not found".to_string(),
+                FileError::TooBig(max_size) => {
+                    format!("File too big, max size is {}", max_size)
+                }
+                FileError::DifferentOwner { user } => {
+                    format!("Different owner: {}", user)
+                }
+            }
+        }
+    }
+\end{rustcode}
+\endobrl{Ukázka enumů}{enum showcase}
+
+\sekce{Generiky}
+
+Na spoustě míst lze použít generiky~-- kompilátor dosadí přesný typ až při kompilaci,
+stejně jako v~C++. Používání generik je poněkud jednodušší (není potřeba psát
+\icpp{template<typename T>}, ale na správném místě stačí pouze \irust{<T>}), zato ale
+častěji a komplikovaněji používané. Ke generikám můžeme (a většinou musíme) přidat i~tzv.
+trait bound~-- typ~T musí implementovat určitý trait (popř. jejich kombinaci), tj. musí
+mít určitou funkcionalitu. Více v~kapitole o~OOP.
 
 \end{document}
