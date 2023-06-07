@@ -15,6 +15,7 @@
 ]{minted}
 \usepackage{xcolor}
 \usepackage{hyperref}
+% \newcommand{\url}[1]{\texttt{#1}}
 
 %* minted options
 \setminted{autogobble,
@@ -131,14 +132,33 @@
 \subfile{introduction.tex}
 \subfile{syntax.tex}
 \subfile{oop.tex}
+\kapitola{Práce s~řetězci}
+\kapitola{Tisknutí do standartního výstupu}
+\kapitola{Bezpečnost programů}
+\sekce{Borrow checker}
+\sekce{Práce s~errory}
+\sekce{Paralelní programování}
+\kapitola{Vývojářské nástroje}
+\sekce{Language server}
+\sekce{Dependency management}
+\sekce{Testování}
+\kapitola{Závěr}
 
 \begin{literatura}
     % V Lora nejsou kapitálky, takže je nutné je vložit ručně!
-    \citace{thebook}{The Book}{\autor{KLABNIK, Steve} a \autor{Carol NICHOLS}. \nazev{The
-            Rust programming language} [online]. 2nd Edition. San Francisco: No Starch Press,
-        2023 [cit. 2023-06-06]. ISBN 9781718503106. Dostupné z:
-        \url{https://doc.rust-lang.org/book/}}
-    % TODO: std docs, cargo docs (maybe), rust by example?
+    \citace{thebook}{The Book}{\autor{KLABNIK, Steve} a \autor{Carol NICHOLS}.
+        \nazev{The Rust programming language} [online]. 2nd\,Edition.
+        San Francisco: No Starch Press, 2023 [cit. 2023-06-06]. ISBN~9781718503106.
+        Dostupné z: \url{https://doc.rust-lang.org/book/}}
+    \citace{cppreference}{C++ reference}{\nazev{C++ reference} [online].
+    [cit. 2023-06-07]. Dostupné~z: \url{https://en.cppreference.com/w/}}
+    \citace{ruststd}{Rust STD}{\nazev{The Rust Standard Library} [online].
+    [cit. 2023-06-07]. Dostupné~z: \url{https://doc.rust-lang.org/std/}}
+    \citace{cargobook}{The Cargo Book}{\nazev{The Cargo Book} [online].
+    [cit. 2023-06-07]. Dostupné~z: \url{https://doc.rust-lang.org/cargo/}}
+    \citace{reference}{The Rust Reference}{\nazev{The Rust Reference} [online].
+    [cit. 2023-06-07]. Dostupné~z: \url{https://doc.rust-lang.org/reference/}}
+    % TODO: rust by example?
 
 \end{literatura}
 

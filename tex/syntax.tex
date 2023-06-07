@@ -24,12 +24,16 @@ proměnných.
 Většinou je vhodné uvést při deklaraci i~počáteční hodnotu. U~\irust{let} se ale
 nejedná o~error při kompilaci (error se ale objeví, pokud použíjeme neinicializovanou
 proměnnou). Hodnotu přiřazujeme klasickým použitím znaku \texttt{=}.
+\cite[sekce~3.1]{thebook}
+% FIXME: shadowing
 
 V~Rustu často není potřeba udávat typ vytvářené proměnné~-- velmi dobře si umí typy
 proměnných odvodit z~hodnot, popřípadě jejich dalšího používání. Toto ale platí pouze
 pro deklarace pomocí slova \irust{let}~-- u~ostatních je typová anotace povinná. Pokud
 si kompilátor neumí typ odvodit, je nutné typ explicitně uvést. Toho docílíme pomocí
-dnes častějšího \uv{dvojtečkového syntaxu}. Celá deklarace proměnné tedy vypadá takto:
+dnes častějšího \uv{dvojtečkového syntaxu}. \cite[sekce~3.2]{thebook}
+
+Celá deklarace proměnné tedy vypadá takto:
 
 \obrazek
 \begin{rustcode}
@@ -52,8 +56,9 @@ V~Rustu je povinné zároveň s~deklarací uvést i~definici (tělo) funkce\foot
 
 Jednou z~méně intuitivních věcí pro začátečníky jsou takzvané \uv{implicit returns}.
 Pokud nedáme na konec výrazu středník, bude tento výraz vrácen jako hodnota. Toto se
-používá hlavně pro malé funkce s~jednoduchou logikou nebo jako vrácení úplně na posledním
-řádku funkce. Jinak se většinou používá klíčové slovo \irust{return}, stejně jako v~C++.
+používá jako vrácení úplně na posledním řádku funkce. Jinak se používá klíčové slovo
+\irust{return}, stejně jako v~C++. \cite[sekce 3.3]{thebook}
+
 Takto by vypadala definice funkce, která sečte dvě čísla a vrátí výsledek:
 
 \obrazek
@@ -78,6 +83,7 @@ slovo \irust{let}.
 
 Po tomto řádku můžeme používat proměnnou \irust{number}, která je typu \irust{i32} a
 proměnnou \irust{text} typu \irust{&str} (práci se stringy je věnována vlastní kapitola).
+\cite[sekce 18.1]{thebook}
 
 Rust má také klíčové slovo \irust{match}:
 
@@ -96,6 +102,7 @@ V tomto případě používáme \irust{match} na proměnnou \irust{number}. Poku
 \uv{vše ostatní}, rameno s~hodnotou 12 je tedy zbytečné. Výsledek se zde uloží do
 proměnné, v~jednotlivých ramenech (anglicky match arms) lze ale napsat libovolný kód.
 Pokud \irust{match} nepočítá s~každou možností, kód se nezkompiluje.
+\cite[sekce 8.2.16]{reference}
 
 V~tomto případě se jedná o~zbytečnou komplikaci kódu. \irust{match} a pattern matching
 obecně je ale velmi užitečný pří implementování komplexnější logiky.
@@ -147,7 +154,7 @@ jazyka. \uv{Klasický} for loop přes čísla můžeme napsat pomocí tzv. rozsa
 Tato smyčka vypíše celá čísla od 0 do 9 včetně. Pokud bychom chtěli vypsat i~hodnotu 10,
 museli bychom range napsat takto: \irust{0..=10}. Můžeme si všimnout, že proměnná
 \irust{i} se postupně nastaví na každou hodnotu iterátoru. Lze zde použít i~pattern
-matching.
+matching. \cite[sekce 8.2.13]{reference}
 
 \podsekce{smyčka loop}
 
@@ -164,6 +171,7 @@ konzole bez toho, aniž bychom se museli starat o~konvertování proměnných na
 
 Existují také derivační a atributová makra. Derivační se používají při OOP, atributová
 přidávají nějaký compile-time atribut k~symbolu (funkci, proměnné,\dots).
+\cite[sekce 19.5]{thebook}
 
 Deklarace maker je složitější, protože pracují přímo s~abstraktním syntaktickým stromem
 svého vstupu a modifikovaný strom vrací. Do vytváření maker tato práce nezachází.
@@ -174,8 +182,9 @@ Používání symbolů (funkcí, proměnných, objektů,~\dots) je mnohem jednod
 Rust nepotřebuje znát symbol před jeho použitím (jde tedy například použít funkci, i~když
 je její definice až níž v~souboru). Pro importování symbolu nám stačí použít klíčové slovo
 \irust{use}, za kterým napíšeme cestu k~symbolu pomocí namespace operátorů~\irust{::}.
-Nepotřebujeme žádné hlavičkové soubory, stačí nám pouze soubory s~kódem. Při externím
-linkování se ale deklarováním symbolů a funkcí bez těla nevyhneme.
+Nepotřebujeme žádné hlavičkové soubory, stačí nám pouze soubory s~kódem.
+\cite[/keyword.use]{ruststd} Při externím linkování se ale deklarováním symbolů a funkcí
+bez těla nevyhneme. \cite[/keyword.extern]{ruststd}
 
 V~následujícím příkladu importujeme typ \irust{LinkedList} z~modulu \irust{collections}
 knihovny \irust{std}. Dále voláme statickou metodu \irust{new} tohoto typu. Můžeme si také
@@ -334,6 +343,7 @@ vytvářet funkce, které jako první parametr berou \irust{self}, \irust{&self}
 \irust{&mut self}. Abychom měli přistup k~datům ve~struktuře, musíme to udělat právě přes
 jednu z~těchto možností. Pokud funkce nebere žádnou z~nich, jedná se o~statickou metodu.
 
+% FIXME: alignment
 Příklad funkcí na struktuře \irust{Person}:
 
 \obrazek
