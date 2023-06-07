@@ -13,5 +13,6 @@ fn main() {
         s[0] = b'h';
         let s = String::from_utf8_unchecked(s);
         println!("{s}");
+        let s = b"Hello";
     }
 }

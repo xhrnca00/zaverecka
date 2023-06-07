@@ -24,8 +24,10 @@ proměnných.
 Většinou je vhodné uvést při deklaraci i~počáteční hodnotu. U~\irust{let} se ale
 nejedná o~error při kompilaci (error se ale objeví, pokud použíjeme neinicializovanou
 proměnnou). Hodnotu přiřazujeme klasickým použitím znaku \texttt{=}.
-\cite[sekce~3.1]{thebook}
-% FIXME: shadowing
+
+Pokud jsme pomocí \irust{let} nadefinovali proměnnou, můžeme opětovným použitím
+\irust{let} nadefinovat \emph{jinou proměnnou} se stejným názvem. Tomuto se říká stínování
+(angl. shadowing). \cite[sekce~3.1]{thebook}
 
 V~Rustu často není potřeba udávat typ vytvářené proměnné~-- velmi dobře si umí typy
 proměnných odvodit z~hodnot, popřípadě jejich dalšího používání. Toto ale platí pouze
@@ -73,7 +75,7 @@ Takto by vypadala definice funkce, která sečte dvě čísla a vrátí výslede
 
 Rust má velmi silný pattern matching. Pomocí něj je možné \uv{vytahovat} hodnoty
 z~enumů, datových struktur a n-tic (anglicky tuple). Vždy je nutné použít klíčové
-slovo \irust{let}.
+slovo \irust{let}. \cite[sekce 18.1]{thebook}
 
 \obrazek
 \begin{rustcode}
@@ -83,7 +85,6 @@ slovo \irust{let}.
 
 Po tomto řádku můžeme používat proměnnou \irust{number}, která je typu \irust{i32} a
 proměnnou \irust{text} typu \irust{&str} (práci se stringy je věnována vlastní kapitola).
-\cite[sekce 18.1]{thebook}
 
 Rust má také klíčové slovo \irust{match}:
 
@@ -156,7 +157,7 @@ museli bychom range napsat takto: \irust{0..=10}. Můžeme si všimnout, že pro
 \irust{i} se postupně nastaví na každou hodnotu iterátoru. Lze zde použít i~pattern
 matching. \cite[sekce 8.2.13]{reference}
 
-\podsekce{smyčka loop}
+\podsekce{Smyčka loop}
 
 V~Rustu se nachází ještě jeden typ smyčky. Jedná se o~nekonečnou smyčku, vytvořenou
 pomocí klíčového slova \irust{loop}. Funguje stejně jako \icpp{while (true)} v~C++.
@@ -183,8 +184,8 @@ Rust nepotřebuje znát symbol před jeho použitím (jde tedy například použ
 je její definice až níž v~souboru). Pro importování symbolu nám stačí použít klíčové slovo
 \irust{use}, za kterým napíšeme cestu k~symbolu pomocí namespace operátorů~\irust{::}.
 Nepotřebujeme žádné hlavičkové soubory, stačí nám pouze soubory s~kódem.
-\cite[/keyword.use]{ruststd} Při externím linkování se ale deklarováním symbolů a funkcí
-bez těla nevyhneme. \cite[/keyword.extern]{ruststd}
+\cite[keyword.use]{ruststd} Při externím linkování se ale deklarováním symbolů a funkcí
+bez těla nevyhneme. \cite[keyword.extern]{ruststd}
 
 V~následujícím příkladu importujeme typ \irust{LinkedList} z~modulu \irust{collections}
 knihovny \irust{std}. Dále voláme statickou metodu \irust{new} tohoto typu. Můžeme si také
@@ -222,17 +223,18 @@ Výhodou tohoto způsobu je, že jsme si vždy vědomi jejich velikosti (napří
 spíš typy jako \icpp{int32_t}, dostupné od C++11.
 
 Pro desetinná čísla existují typy \irust{f32} a \irust{f64}. Čísla opět reprezentují
-jejich velikost v~paměti.
+jejich velikost v~paměti. \cite[sekce 3.2]{thebook}
 
 \podsekce{Pole}
 
 Pole jsou podobná objektu \icpp{std::array}. Jejich typ je \irust{[T; N]}, kde T~je typ
 ukládaný v~poli a N~je délka pole. Když pole vytváříme, musíme vždy uvést počáteční
 hodnotu. Do pole můžeme indexovat stejně jako v~C++ pomocí \icpp{[]}.
+\cite[sekce 3.2]{thebook}
 
 Rust má také dynamické pole. Jeho název je z~\icpp{std::vector} zkrácen na \irust{Vec}.
 Vytvářet vektory můžeme buď voláním jednoho z~konstruktorů, nebo voláním makra
-\irust{vec![]}, které bere počáteční hodnoty.
+\irust{vec![]}, které bere počáteční hodnoty. \cite[sekce 8.1]{thebook}
 
 \obrazek
 \begin{rustcode}
@@ -262,11 +264,12 @@ Stejně jako u proměnných máme dva typy referencí~-- \irust{&T} a \irust{&mu
 typ proměné). \irust{&T} nám neumožňuje jakkoliv modifikovat proměnnou na kterou ukazuje.
 Když chceme poslat referenci, musíme to explicitně uvést (viz ukázka níže). Reference
 umožňující modifikaci jdou dělat pouze na modifikovatelné proměnné.
+\cite[sekce 4.2]{thebook}
 
 Pokud chceme referenci na blok paměti, pošleme tzv. řez (anglicky slice). Jedná se
 o~speciální objekt, který si pamatuje ukazatel na začátek a délku úseku. Jeho zápis je
 \irust{&[T]} a \irust{&mut [T]}. Získáme jej pomocí operátoru \irust{[]}, ve kterém ale
-neuvedeme index, ale range.
+neuvedeme index, ale range. \cite[sekce 4.3]{thebook}
 
 \obrazek
 \begin{rustcode}
@@ -301,16 +304,18 @@ následně tiskneme (pomocí vektoru, ne řezu).
 \podsekce{Řetězce}
 
 Situace s~řetězci je dost podobná C++. Existují dva typy: \irust{&str} a \irust{String}.
-Protože Rust používá UTF-8, velikost typu \irust{char} jsou 4\,byty. Pokud chceme typ
-reprezentující jeden byte (a tedy i~paměť do které se řetězce ukládají), použijeme
-\irust{u8}. Pokud chceme používat ASCII, můžeme používat \uv{byte string} (\irust{b""}).
-Jeho charaktery můžeme psát jako \irust{b'a'} apod.
+Protože Rust používá UTF-8, velikost typu \irust{char} jsou 4\,byty.
+\cite[primitive.char]{ruststd} Pokud chceme typ reprezentující jeden byte (a tedy i~paměť
+do které se řetězce ukládají), použijeme \irust{u8}. Pokud chceme používat ASCII, můžeme
+používat \uv{byte string} (\irust{b""}). Jeho charaktery můžeme psát jako \irust{b'a'}
+apod. \cite[sekce 19.3]{byexample}
 
 \irust{&str} je reference na konstantní řetězec, podobně jako \icpp{const char *}.
 Na~pozadí se jedná o~\irust{&[u8]}, kde je vždy uložena \emph{validní} UTF-8 sekvence.
 
 \irust{String}, stejně jako \icpp{std::string} je dynamicky alokovaný řetězec. Funguje
-stejně jako v~C++, akorát jeho buffer je \irust{Vec<u8>} (tj. dynamické pole bytů).
+stejně jako v~C++, akorát jeho buffer je \irust{Vec<u8>} (tj. dynamické pole bytů) a jeho
+velikost je 24\,bytů (nikoliv 32). \cite[sekce 8.2]{thebook}
 
 Vytvářet řetězce můžeme více způsoby:
 
@@ -326,6 +331,7 @@ Vytvářet řetězce můžeme více způsoby:
 
 Podobně jako C++, Rust má klíčové slovo \irust{struct}, které umožňuje vytvářet vlastní
 typy. Ve složených závorkách se nachází \emph{pouze členské proměnné} oddělené čárkami.
+\cite[sekce 5.1]{thebook}
 
 Příklad struktury \irust{Person}:
 
@@ -338,12 +344,19 @@ Příklad struktury \irust{Person}:
 \end{rustcode}
 \endobrl{Ukázka vytvoření struktury}{struct showcase}
 
-Pokud chceme přidat \uv{metody}, uděláme tak v~tzv. \irust{impl} bloku. Můžeme zde
-vytvářet funkce, které jako první parametr berou \irust{self}, \irust{&self} nebo
+Pokud chceme přidat metody, uděláme tak v~tzv. \irust{impl} bloku. Můžeme zde vytvářet
+funkce, které jako první parametr berou \irust{self}, \irust{&self} nebo
 \irust{&mut self}. Abychom měli přistup k~datům ve~struktuře, musíme to udělat právě přes
-jednu z~těchto možností. Pokud funkce nebere žádnou z~nich, jedná se o~statickou metodu.
+jednu z~těchto možností. Pokud funkce nebere žádnou z~nich, jedná se
+o~\uv{statickou metodu}\footnote{Všechny funkce nadefinované v~\irust{impl} bloku
+    se nazývají \emph{asociované funkce} (asociované s~typem). Protože první parametr
+    takové asociované funkce není \irust{self}, nejedná se o~metodu.
+}. Když použijeme přímo \irust{self}, ztratí volající přístup k~objektu (Rust implicitně
+nekopíruje, ale přesunuje hodnoty). \cite[sekce 5.3]{thebook}
 
-% FIXME: alignment
+Nemáme speciální syntax pro konstruktor. Místo toho existuje konvence, že každá struktura
+má statickou metodu \irust{new}, která vrací vytvořenou strukturu.
+
 Příklad funkcí na struktuře \irust{Person}:
 
 \obrazek
@@ -361,14 +374,11 @@ Příklad funkcí na struktuře \irust{Person}:
         }
     }
 \end{rustcode}
-\endobrl{Ukázka impl bloku}{struct impl showcase}
-
-Nemáme speciální syntax pro konstruktor. Místo toho existuje konvence, že každá struktura
-má statickou metodu \irust{new}, která vrací vytvořenou strukturu.
+\endobrl{Ukázka \irust{impl} bloku}{struct impl showcase}
 
 Rust má také enumy. Oproti C++ ale mohou držet i~další hodnoty, a to buď jako n-tici, nebo
 jako strukturu. Můžeme jim také přidávat asociované funkce pomocí \irust{impl} bloků.
-Následuje příklad:
+\cite[sekce 6.1]{thebook} Příklad na obr.\,\ref{enum showcase}.
 
 \obrazek
 \begin{rustcode}
@@ -405,5 +415,9 @@ stejně jako v~C++. Používání generik je poněkud jednodušší (není potř
 častěji a komplikovaněji používané. Ke generikám můžeme (a většinou musíme) přidat i~tzv.
 trait bound~-- typ~T musí implementovat určitý trait (popř. jejich kombinaci), tj. musí
 mít určitou funkcionalitu. Více v~kapitole o~OOP.
+
+\sekce{Přenosová sémantika}
+% TODO: finish
+\cite[sekce 15.2]{byexample}
 
 \end{document}
