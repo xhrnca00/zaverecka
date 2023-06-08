@@ -1,3 +1,5 @@
+#[allow(dead_code, unused_variables, unused_mut)]
+
 fn main() {
     // confirming non-null string termination
     let text = "Oh hello there";

@@ -27,13 +27,13 @@ proměnnou). Hodnotu přiřazujeme klasickým použitím znaku \texttt{=}.
 
 Pokud jsme pomocí \irust{let} nadefinovali proměnnou, můžeme opětovným použitím
 \irust{let} nadefinovat \emph{jinou proměnnou} se stejným názvem. Tomuto se říká stínování
-(angl. shadowing). \cite[sekce~3.1]{thebook}
+(angl. shadowing). \cite[sekce\,3.1]{thebook}
 
 V~Rustu často není potřeba udávat typ vytvářené proměnné~-- velmi dobře si umí typy
 proměnných odvodit z~hodnot, popřípadě jejich dalšího používání. Toto ale platí pouze
 pro deklarace pomocí slova \irust{let}~-- u~ostatních je typová anotace povinná. Pokud
 si kompilátor neumí typ odvodit, je nutné typ explicitně uvést. Toho docílíme pomocí
-dnes častějšího \uv{dvojtečkového syntaxu}. \cite[sekce~3.2]{thebook}
+dnes častějšího \uv{dvojtečkového syntaxu}. \cite[sekce\,3.2]{thebook}
 
 Celá deklarace proměnné tedy vypadá takto:
 
@@ -59,7 +59,7 @@ V~Rustu je povinné zároveň s~deklarací uvést i~definici (tělo) funkce\foot
 Jednou z~méně intuitivních věcí pro začátečníky jsou takzvané \uv{implicit returns}.
 Pokud nedáme na konec výrazu středník, bude tento výraz vrácen jako hodnota. Toto se
 používá jako vrácení úplně na posledním řádku funkce. Jinak se používá klíčové slovo
-\irust{return}, stejně jako v~C++. \cite[sekce 3.3]{thebook}
+\irust{return}, stejně jako v~C++. \cite[sekce\,3.3]{thebook}
 
 Takto by vypadala definice funkce, která sečte dvě čísla a vrátí výsledek:
 
@@ -75,7 +75,7 @@ Takto by vypadala definice funkce, která sečte dvě čísla a vrátí výslede
 
 Rust má velmi silný pattern matching. Pomocí něj je možné \uv{vytahovat} hodnoty
 z~enumů, datových struktur a n-tic (anglicky tuple). Vždy je nutné použít klíčové
-slovo \irust{let}. \cite[sekce 18.1]{thebook}
+slovo \irust{let}. \cite[sekce\,18.1]{thebook}
 
 \obrazek
 \begin{rustcode}
@@ -103,7 +103,7 @@ V tomto případě používáme \irust{match} na proměnnou \irust{number}. Poku
 \uv{vše ostatní}, rameno s~hodnotou 12 je tedy zbytečné. Výsledek se zde uloží do
 proměnné, v~jednotlivých ramenech (anglicky match arms) lze ale napsat libovolný kód.
 Pokud \irust{match} nepočítá s~každou možností, kód se nezkompiluje.
-\cite[sekce 8.2.16]{reference}
+\cite[sekce\,8.2.16]{reference}
 
 V~tomto případě se jedná o~zbytečnou komplikaci kódu. \irust{match} a pattern matching
 obecně je ale velmi užitečný pří implementování komplexnější logiky.
@@ -155,7 +155,7 @@ jazyka. \uv{Klasický} for loop přes čísla můžeme napsat pomocí tzv. rozsa
 Tato smyčka vypíše celá čísla od 0 do 9 včetně. Pokud bychom chtěli vypsat i~hodnotu 10,
 museli bychom range napsat takto: \irust{0..=10}. Můžeme si všimnout, že proměnná
 \irust{i} se postupně nastaví na každou hodnotu iterátoru. Lze zde použít i~pattern
-matching. \cite[sekce 8.2.13]{reference}
+matching. \cite[sekce\,8.2.13]{reference}
 
 \podsekce{Smyčka loop}
 
@@ -172,7 +172,7 @@ konzole bez toho, aniž bychom se museli starat o~konvertování proměnných na
 
 Existují také derivační a atributová makra. Derivační se používají při OOP, atributová
 přidávají nějaký compile-time atribut k~symbolu (funkci, proměnné,\dots).
-\cite[sekce 19.5]{thebook}
+\cite[sekce\,19.5]{thebook}
 
 Deklarace maker je složitější, protože pracují přímo s~abstraktním syntaktickým stromem
 svého vstupu a modifikovaný strom vrací. Do vytváření maker tato práce nezachází.
@@ -223,18 +223,18 @@ Výhodou tohoto způsobu je, že jsme si vždy vědomi jejich velikosti (napří
 spíš typy jako \icpp{int32_t}, dostupné od C++11.
 
 Pro desetinná čísla existují typy \irust{f32} a \irust{f64}. Čísla opět reprezentují
-jejich velikost v~paměti. \cite[sekce 3.2]{thebook}
+jejich velikost v~paměti. \cite[sekce\,3.2]{thebook}
 
 \podsekce{Pole}
 
 Pole jsou podobná objektu \icpp{std::array}. Jejich typ je \irust{[T; N]}, kde T~je typ
 ukládaný v~poli a N~je délka pole. Když pole vytváříme, musíme vždy uvést počáteční
 hodnotu. Do pole můžeme indexovat stejně jako v~C++ pomocí \icpp{[]}.
-\cite[sekce 3.2]{thebook}
+\cite[sekce\,3.2]{thebook}
 
 Rust má také dynamické pole. Jeho název je z~\icpp{std::vector} zkrácen na \irust{Vec}.
 Vytvářet vektory můžeme buď voláním jednoho z~konstruktorů, nebo voláním makra
-\irust{vec![]}, které bere počáteční hodnoty. \cite[sekce 8.1]{thebook}
+\irust{vec![]}, které bere počáteční hodnoty. \cite[sekce\,8.1]{thebook}
 
 \obrazek
 \begin{rustcode}
@@ -264,12 +264,12 @@ Stejně jako u proměnných máme dva typy referencí~-- \irust{&T} a \irust{&mu
 typ proměné). \irust{&T} nám neumožňuje jakkoliv modifikovat proměnnou na kterou ukazuje.
 Když chceme poslat referenci, musíme to explicitně uvést (viz ukázka níže). Reference
 umožňující modifikaci jdou dělat pouze na modifikovatelné proměnné.
-\cite[sekce 4.2]{thebook}
+\cite[sekce\,4.2]{thebook}
 
 Pokud chceme referenci na blok paměti, pošleme tzv. řez (anglicky slice). Jedná se
 o~speciální objekt, který si pamatuje ukazatel na začátek a délku úseku. Jeho zápis je
 \irust{&[T]} a \irust{&mut [T]}. Získáme jej pomocí operátoru \irust{[]}, ve kterém ale
-neuvedeme index, ale range. \cite[sekce 4.3]{thebook}
+neuvedeme index, ale range. \cite[sekce\,4.3]{thebook}
 
 \obrazek
 \begin{rustcode}
@@ -308,14 +308,14 @@ Protože Rust používá UTF-8, velikost typu \irust{char} jsou 4\,byty.
 \cite[primitive.char]{ruststd} Pokud chceme typ reprezentující jeden byte (a tedy i~paměť
 do které se řetězce ukládají), použijeme \irust{u8}. Pokud chceme používat ASCII, můžeme
 používat \uv{byte string} (\irust{b""}). Jeho charaktery můžeme psát jako \irust{b'a'}
-apod. \cite[sekce 19.3]{byexample}
+apod. \cite[sekce\,19.3]{byexample}
 
 \irust{&str} je reference na konstantní řetězec, podobně jako \icpp{const char *}.
 Na~pozadí se jedná o~\irust{&[u8]}, kde je vždy uložena \emph{validní} UTF-8 sekvence.
 
 \irust{String}, stejně jako \icpp{std::string} je dynamicky alokovaný řetězec. Funguje
 stejně jako v~C++, akorát jeho buffer je \irust{Vec<u8>} (tj. dynamické pole bytů) a jeho
-velikost je 24\,bytů (nikoliv 32). \cite[sekce 8.2]{thebook}
+velikost je 24\,bytů (nikoliv 32). \cite[sekce\,8.2]{thebook}
 
 Vytvářet řetězce můžeme více způsoby:
 
@@ -331,7 +331,7 @@ Vytvářet řetězce můžeme více způsoby:
 
 Podobně jako C++, Rust má klíčové slovo \irust{struct}, které umožňuje vytvářet vlastní
 typy. Ve složených závorkách se nachází \emph{pouze členské proměnné} oddělené čárkami.
-\cite[sekce 5.1]{thebook}
+\cite[sekce\,5.1]{thebook}
 
 Příklad struktury \irust{Person}:
 
@@ -352,7 +352,7 @@ o~\uv{statickou metodu}\footnote{Všechny funkce nadefinované v~\irust{impl} bl
     se nazývají \emph{asociované funkce} (asociované s~typem). Protože první parametr
     takové asociované funkce není \irust{self}, nejedná se o~metodu.
 }. Když použijeme přímo \irust{self}, ztratí volající přístup k~objektu (Rust implicitně
-nekopíruje, ale přesunuje hodnoty). \cite[sekce 5.3]{thebook}
+nekopíruje, ale přesunuje hodnoty). \cite[sekce\,5.3]{thebook}
 
 Nemáme speciální syntax pro konstruktor. Místo toho existuje konvence, že každá struktura
 má statickou metodu \irust{new}, která vrací vytvořenou strukturu.
@@ -378,7 +378,7 @@ Příklad funkcí na struktuře \irust{Person}:
 
 Rust má také enumy. Oproti C++ ale mohou držet i~další hodnoty, a to buď jako n-tici, nebo
 jako strukturu. Můžeme jim také přidávat asociované funkce pomocí \irust{impl} bloků.
-\cite[sekce 6.1]{thebook} Příklad na obr.\,\ref{enum showcase}.
+\cite[sekce\,6.1]{thebook} Příklad na obr.\,\ref{enum showcase}.
 
 \obrazek
 \begin{rustcode}
@@ -417,7 +417,23 @@ trait bound~-- typ~T musí implementovat určitý trait (popř. jejich kombinaci
 mít určitou funkcionalitu. Více v~kapitole o~OOP.
 
 \sekce{Přenosová sémantika}
-% TODO: finish
-\cite[sekce 15.2]{byexample}
 
+Když v~C++ nebereme proměnou přes referenci, její hodnota se zkopíruje. V~Rustu tomu tak
+není. Používá totiž tzv. move sémantiku, tj. hodnota se \uv{přesune} do volané funkce a
+dále k~ní nejde přistupovat. Pokud se jedná o~primitiv (například číslo), hodnota se
+kopíruje (protože kopie je triviální)~-- toto tedy platí pouze pro komplexnější typy.
+Viz obr.\,\ref{move semantics showcase}
+\cite[sekce\,15.2]{byexample}
+
+\obrazek
+\begin{rustcode*}{highlightlines={3-3},highlightcolor=m-hi-error}
+    let a = vec![1, 2, 3];
+    let b: Vec<i32> = a; // move `a` into `b`
+    for elem in a {
+        println!("{}", elem);
+    }
+\end{rustcode*}
+\newline
+\vlozobr{images/move-compile-error.png}{0.36}
+\endobrl{Ukázka move sémantiky}{move semantics showcase}
 \end{document}

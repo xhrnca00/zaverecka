@@ -144,4 +144,13 @@ fn main() {
             println!("File too big, max size is {}", value);
         }
     }
+    {
+        //* move semantics
+        let a = vec![1, 2, 3];
+        let b: Vec<i32> = a; // move `a` into `b`
+        for elem in a {
+            println!("{}", elem);
+        }
+        // ------------------------------------
+    }
 }
