@@ -148,9 +148,95 @@ fn main() {
         //* move semantics
         let a = vec![1, 2, 3];
         let b: Vec<i32> = a; // move `a` into `b`
-        for elem in a {
+                             // for elem in a {
+        for elem in b {
             println!("{}", elem);
         }
         // ------------------------------------
+    }
+    {
+        //* trait usage
+        use std::f64::consts::PI;
+
+        trait Shape {
+            fn area(&self) -> f64;
+        }
+
+        struct Rectangle {
+            width: f64,
+            height: f64,
+        }
+
+        struct Circle {
+            radius: f64,
+        }
+
+        impl Shape for Rectangle {
+            fn area(&self) -> f64 {
+                self.width * self.height
+            }
+        }
+
+        impl Shape for Circle {
+            fn area(&self) -> f64 {
+                self.radius * self.radius * PI
+            }
+        }
+        // ------------------------------------
+        let rectangle = Rectangle {
+            width: 2.0,
+            height: 3.0,
+        };
+        let circle = Circle { radius: 2.0 };
+        //* generics
+        fn print_area_generic1<T: Shape>(shape: &T) {
+            println!("This shape has an area of {:.2}", shape.area());
+        }
+
+        fn print_area_generic2<T>(shape: &T)
+        where
+            T: Shape,
+        {
+            println!("This shape has an area of {:.2}", shape.area());
+        }
+        // ------------------------------------
+        //* trait objects
+        fn print_area_tobj(shape: &dyn Shape) {
+            println!("This shape has an area of {:.2}", shape.area());
+        }
+        // ------------------------------------
+        print_area_generic1(&rectangle);
+        print_area_generic2(&rectangle);
+        print_area_tobj(&rectangle);
+        print_area_generic1(&circle);
+        print_area_generic2(&circle);
+        print_area_tobj(&circle);
+    }
+    {
+        //* generic impl
+        trait Average: Iterator<Item = usize> {
+            fn average(mut self) -> f64
+            where
+                Self: Sized,
+            {
+                let mut sum = 0;
+                let mut count = 0;
+                for value in self {
+                    sum += value;
+                    count += 1;
+                }
+                // will be NaN if the iterator is empty
+                sum as f64 / count as f64
+            }
+        }
+
+        impl<T: Iterator<Item = usize>> Average for T {}
+
+        fn main() {
+            let v = vec![1, 2, 3];
+            println!("{}", v.into_iter().average());
+        }
+        // ------------------------------------
+        main();
     }
 }

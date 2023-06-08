@@ -416,14 +416,13 @@ stejně jako v~C++. Používání generik je poněkud jednodušší (není potř
 trait bound~-- typ~T musí implementovat určitý trait (popř. jejich kombinaci), tj. musí
 mít určitou funkcionalitu. Více v~kapitole o~OOP.
 
-\sekce{Přenosová sémantika}
+\sekce{Move sémantika}
 
 Když v~C++ nebereme proměnou přes referenci, její hodnota se zkopíruje. V~Rustu tomu tak
 není. Používá totiž tzv. move sémantiku, tj. hodnota se \uv{přesune} do volané funkce a
 dále k~ní nejde přistupovat. Pokud se jedná o~primitiv (například číslo), hodnota se
 kopíruje (protože kopie je triviální)~-- toto tedy platí pouze pro komplexnější typy.
-Viz obr.\,\ref{move semantics showcase}
-\cite[sekce\,15.2]{byexample}
+Viz obr.\,\ref{move semantics showcase}. \cite[sekce\,15.2]{byexample}
 
 \obrazek
 \begin{rustcode*}{highlightlines={3-3},highlightcolor=m-hi-error}

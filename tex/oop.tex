@@ -2,6 +2,201 @@
 
 \begin{document}
 \kapitola{OOP a Rust}
-hola hej~\cite[kapitola\,17]{thebook}
+
+Objektově orientované programování se hodně liší od C++. Podle některých definic OOP není
+Rust ani objektově orientovaným jazykem \cite[kapitola\,17]{thebook}.
+
+Již jsme viděli, že je možné vytvořit strukturu a dát jí nějaké metody. Objekty tedy
+máme, ale jaké jsou vztahy mezi nimi? \emph{Rust nemá objektovou dědičnost}~-- jeden
+struct nemůže dědit z~jiného. Žádné klíčové slovo class ale neexistuje.
+
+\sekce{Trait systém}
+
+Rust odděluje funkcionalitu od dat. Data jsou definována přímo ve~struktuře. Funkcionalita
+spojená pouze s~daným typem je také definována přímo na něm. Když ale chceme nadefinovat
+sdílenou funkcionalitu mezi typy, použijeme klíčové slovo \irust{trait}.
+
+Trait je něco jako interface v~dalších objektově orientovaných jazycích. Definuje
+asociované funkce (jejich hlavičky, případně i defaultní implementaci), nikoliv však
+proměnné. \cite[sekce\,10.2]{thebook}
+
+Výhodou je, že můžeme implementovat námi vytvořený trait pro cizí strukturu a obráceně.
+Když tedy potřebujeme sdílenou funkcionalitu u~typu, který není náš, \emph{můžeme mu ji
+    přidat}. Například existuje trait \irust{FromStr}, který definuje, jak máme z~řetězce
+vytvořit daný typ. Když tedy chceme umět parsovat nějaký náš typ, stačí nám implementovat
+tento trait (nikoliv přetížením \icpp{std::istream& operator>>}).
+\cite[str/trait.FromStr]{ruststd}
+
+Díky tomuto také najdeme každou funkci, která má co dělat s~daným typem, přímo jako její
+metodu (toto platí i~u~primitivních typů jako \irust{i32}). Náš našeptávač je tedy o~dost
+víc nápomocný než u~C++.
+
+Příklad vytvoření traitu a jeho implementace viz obr.\,\ref{trait creation showcase}
+
+\obrazek
+\begin{rustcode}
+    use std::f64::consts::PI;
+
+    trait Shape {
+        fn area(&self) -> f64;
+    }
+
+    struct Rectangle {
+        width: f64,
+        height: f64,
+    }
+
+    struct Circle {
+        radius: f64,
+    }
+
+    impl Shape for Rectangle {
+        fn area(&self) -> f64 {
+            self.width * self.height
+        }
+    }
+
+    impl Shape for Circle {
+        fn area(&self) -> f64 {
+            self.radius * self.radius * PI
+        }
+    }
+\end{rustcode}
+\endobrl{Ukázka používání traitu}{trait creation showcase}
+
+\sekce{Trait bound a generiky}
+
+Pokud chceme v~generické funkci použít nějakou funkcionalitu, musíme vědět, že typ ji má
+(program se jinak ani nezkompiluje). Toho docílíme tak, že na generický typ dáme tzv.
+trait bound. To znamená, že aby mohl tento typ být použit, musí implementovat daný trait
+(může jich být i~víc). \cite[sekce\,10.2]{thebook}
+
+Tohoto lze docílit buď klíčovým slovem \irust{where}, nebo dvojtečkovým syntaxem přímo
+v~parametru. Pro každý pevně daný typ se vygeneruje \emph{jiná} funkce, kde je za generiku
+dosazena pevná hodnota \cite[sekce\,10.1]{thebook}.
+Ukázka viz obr.\,\ref{generic function showcase}
+
+\obrazek
+\begin{rustcode}
+    fn print_area_generic1<T: Shape>(shape: &T) {
+        println!("This shape has an area of {:.2}", shape.area());
+    }
+
+    fn print_area_generic2<T>(shape: &T)
+    where
+        T: Shape,
+    {
+        println!("This shape has an area of {:.2}", shape.area());
+    }
+\end{rustcode}
+\endobrl{Ukázka generických funkcí s~trait boundem}{generic function showcase}
+
+\sekce{Trait objekty a dynamic dispatch}
+
+Generiky ale mají jeden problém: můžeme je použít, když máme hodnoty pouze daného typu.
+Co když ale máme kolekci ukazatelů na objekty, které všechny implementují daný
+trait\footnote{ukazatelů proto, že každý typ může mít jinou velikost}? Použijeme tzv.
+trait objekty.
+
+Pokud používáme trait objekty, potřebujeme nějak zjistit, jakou implementaci máme zavolat.
+Tomuto se říká dynamic dispatch~-- dynamicky za běhu programu zjišťujeme, kde se nachází
+funkce, kterou máme zavolat. Proto také reference na trait objekty označujeme slovem
+\irust{dyn}. \cite[sekce\,17.2]{thebook} Příklad funkce ekvivalentní s~generickými na
+obr.\,\ref{trait object showcase}
+
+\obrazek
+\begin{rustcode}
+    fn print_area_tobj(shape: &dyn Shape) {
+        println!("This shape has an area of {:.2}", shape.area());
+    }
+\end{rustcode}
+\endobrl{Ukázka trait objektů}{trait object showcase}
+
+\sekce{Derivační makra}
+
+Některé traity nemusíme definovat manuálně, může to za nás udělat derivační makro. Stačí
+nám pouze nad definici struktury napsat \irust{#[derive(TraitName)]} (do závorek můžeme
+napsat více názvů, které oddělíme čárkou). \cite[sekce\,5.2]{thebook}
+
+Tuto funkcionalitu nemá každý trait. Mezi ty, které ji mají patří například
+\irust{Debug} (umožňující tisknutí pro debugování), \irust{Clone} (hluboké kopírování),
+\irust{PartialEq} (částečné porovnávání) a další. \cite[Appendix C]{thebook}
+
+\sekce{Nejpoužívanější traity}
+
+\begin{itemize}
+    \item \irust{Display}~-- tisknutí ve formátovaných řetězcích
+    \item \irust{Debug}~-- tisknutí struktury objektu ve formátovaných řetězcích
+    \item \irust{Iterator}~-- všechny iterátory jej implementují, díky němu lze použít
+          tzv. builder pattern na iterátorech
+    \item \irust{Error}~-- požadavky pro errory
+    \item \irust{PartialEq}~-- částečné porovnání (\irust{==}) (nezaručena ekvivalence)
+    \item \irust{PartialOrd}~-- částečné srovnávání (\irust{< > <= >=})
+    \item \irust{Copy}~-- kopírovací sémantika
+    \item \irust{Clone}~-- hluboká kopie (včetně obsahu ukazatelů), \uv{duplikace}
+    \item \irust{Sized}~-- velikost dané proměnné je možné určit při kompilaci
+    \item \irust{Sync}~-- typy, jejichž reference je bezpečné sdílet mezi vlákny
+    \item \irust{Send}~-- bezpečnost posílání typů mezi vlákny
+    \item \irust{FromStr}~-- parsování hodnoty z~řetězce
+    \item \irust{IntoIterator}~-- převedení na iterátor
+    \item \irust{From<T>}~-- převedení \emph{z}~hodnoty~T
+    \item \irust{Into<T>}~-- prevedení \emph{na}~hodnotu~T
+\end{itemize}
+Každý operátor má také vlastní trait. Díky tomu není potřeba žádný zvláštní syntax pro
+přetěžování operátorů~-- stačí pouze implementovat daný trait (např. \irust{Add} pro
+sčítání). \cite[sekce\,19.2]{thebook}
+
+\sekce{Generické implementace~-- automatické rozšiřování}
+
+Pomocí generik můžeme také implementovat trait pro každý typ splňující generiku. Toto je
+velmi užitečné, například knihovna \texttt{itertools} dělá právě to~-- rozšiřuje
+\irust{Iterator} trait o~další metody \cite[itertools, src/itertools/lib.rs]{docsrs}. Také
+toho využívají traity \irust{From} a \irust{Into}~-- pokud implementujeme \irust{From},
+druhá implementace se vytvoří automaticky (pokud umíme vytvořit \irust{T} z~\irust{E},
+umíme konvertovat \irust{E} na~\irust{T}) \cite[convert/trait.From]{ruststd}.
+
+\obrazek
+\begin{rustcode*}{highlightlines={17-17}}
+    trait Average: Iterator<Item = usize> {
+        fn average(mut self) -> f64
+        where
+            Self: Sized,
+        {
+            let mut sum = 0;
+            let mut count = 0;
+            for value in self {
+                sum += value;
+                count += 1;
+            }
+            // will be NaN if the iterator is empty
+            sum as f64 / count as f64
+        }
+    }
+
+    impl<T: Iterator<Item = usize>> Average for T {}
+
+    fn main() {
+        let v = vec![1, 2, 3];
+        println!("{}", v.into_iter().average());
+    }
+\end{rustcode*}
+\endobrl{
+    Ukázka rozšíření funkcionality pomocí generických implementací
+}{generic impl showcase}
+
+V~ukázce definujeme tzv. supertrait \irust{Average}. Supertrait je to proto, že aby jej
+nějaký typ implementoval, musí už implementovat trait \irust{Iterator}, jehož asociovaný
+typ \irust{Item} je \irust{usize} (toto je řečeno za dvojtečkou po názvu supertraitu)~--
+iteruje tedy prvky typu \irust{usize}.
+
+\irust{Average} definuje jedinou funkci \irust{average}, která konzumuje \irust{self}.
+Protože nebereme \irust{self} přes referenci, musíme vědět jeho velikost při kompilaci
+(proto \irust{Sized}). Tato funkce má defaultní implementaci, která spočítá průměr prvků
+v~iterátoru. Ve~funkci iterujeme \irust{self} (je to uričtě iterátor), proto taky
+potřebujeme \irust{self} měnit (a je tedy označené \irust{mut}).
+
+Na označeném řádku implementujeme \irust{Average} pro všechny iterátory, jejichž prvek je
+\irust{usize}. V~\irust{main} funkci tiskneme průměr čísel ve~vektoru \irust{v}. Typ
+vektoru \irust{v} je \irust{Vec<usize>} (kompilátor vidí, že jiná možnost není).
 
 \end{document}
