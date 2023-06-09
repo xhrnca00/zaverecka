@@ -163,7 +163,7 @@ umíme konvertovat \irust{E} na~\irust{T}) \cite[convert/trait.From]{ruststd}.
             Self: Sized,
         {
             let mut sum = 0;
-            let mut count = 0;
+            let mut count: usize = 0;
             for value in self {
                 sum += value;
                 count += 1;
@@ -193,10 +193,12 @@ iteruje tedy prvky typu \irust{usize}.
 Protože nebereme \irust{self} přes referenci, musíme vědět jeho velikost při kompilaci
 (proto \irust{Sized}). Tato funkce má defaultní implementaci, která spočítá průměr prvků
 v~iterátoru. Ve~funkci iterujeme \irust{self} (je to uričtě iterátor), proto taky
-potřebujeme \irust{self} měnit (a je tedy označené \irust{mut}).
+potřebujeme \irust{self} měnit (a je tedy označené \irust{mut}). Typ obou použitých
+proměnných je \irust{usize}, musíme je tedy převést na \irust{f64} pomocí klíčového slova
+\irust{as}.
 
 Na označeném řádku implementujeme \irust{Average} pro všechny iterátory, jejichž prvek je
 \irust{usize}. V~\irust{main} funkci tiskneme průměr čísel ve~vektoru \irust{v}. Typ
-vektoru \irust{v} je \irust{Vec<usize>} (kompilátor vidí, že jiná možnost není).
+proměnné \irust{v} je \irust{Vec<usize>} (kompilátor vidí, že jiná možnost není).
 
 \end{document}

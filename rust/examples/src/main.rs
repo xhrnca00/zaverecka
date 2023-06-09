@@ -220,7 +220,7 @@ fn main() {
                 Self: Sized,
             {
                 let mut sum = 0;
-                let mut count = 0;
+                let mut count: usize = 0;
                 for value in self {
                     sum += value;
                     count += 1;
@@ -238,5 +238,19 @@ fn main() {
         }
         // ------------------------------------
         main();
+    }
+    {
+        //* format! macro and strings
+        let name: &str = "John";
+        let greeting: String = format!("Hi {}!", name); // Hi John!
+        let some_numbers: Vec<i32> = vec![1, 2, 3];
+        let debug: String = format!("{some_numbers:?}"); // [1, 2, 3]
+        for c in greeting.chars() {
+            // print char by char
+            print!("{c}");
+        }
+        println!(); // end with newline
+        println!("{debug}");
+        // ------------------------------------
     }
 }

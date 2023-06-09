@@ -1,0 +1,75 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+\kapitola{Práce s~řetězci}
+
+Rust pracuje s~UTF-8 řetězci, nikoliv s~ASCII. Z~tohoto plynou komplikace, jelikož ne
+všechny hodnoty jsou platné. Například pokud se pokusíme tisknout neplatnou UTF-8
+sekvenci, program spadne.
+
+\sekce{UTF-8}
+
+Jeden kódový bod (znak) má 1--4\,byty. Jeho velikost je dána pozicí první nuly v~prvním
+bytu. Některé kódové body označují pouze diakritiku~-- je nutné spojit znaky do větších
+celků (angličtina jim říká \uv{grapheme clusters}). Standardní knihovna tuto spojovací
+funkcionalitu nemá (kódovací tabulky jsou hodně velké), je nutné použít externí knihovnu.
+\cite[sekce\,8.2]{thebook}
+
+\sekce{Indexování}
+
+Problém nastává, když indexujeme do řetězce. Mělo by se jednat o~konstantní operaci, ale
+to není možné, když máme různě dlouhé znaky. Mohli bychom indexovat přímo do bytů, ale ne
+vše, co nám takové indexování vrátí, je validní znak. Proto
+\emph{nejde číselně indexovat do řetězců}.
+
+Můžeme ale indexovat pomocí range, což nám vrátí \irust{&str}. \emph{Pokud ale naše
+    indexace nezačne a neskončí na hranicích kódových bodů, program spadne.} Implementace
+různých metod na řetězcích je tedy poněkud komplikovanější. Práci nám poněkud usnadňují
+iterátory, například \irust{chars()} nebo \irust{bytes()}. \cite[sekce\,8.2]{thebook}
+
+\sekce{Formátování a spojování}
+
+Spojovat mnoho řetězců dohromady taky není jednoduché. Můžeme použít \irust{+} operátor a
+příčtíst \irust{&str} k~typu \irust{String}, ale to může (spolu s~konverzemi na řetězec)
+být náročné na vypsání. Proto používáme makro \irust{format!()}. Formátování v~Rustu má
+poměrně jednoduchý princip: kam chceme vložit hodnotu, tam dáme \irust{"{}"}\footnote{
+    Uvozovky na začátku a na konci jsou pouze pro ilustrační funkci (jedná se o~řetězec),
+    když píšeme \texttt{\{\}} v~řetězci, uvozovky nepíšeme.
+}. Toto použije implementaci traitu \irust{Display}. Pokud chceme vypsat strukturu
+proměnné, můžeme napsat \irust{"{:?}"}, což používá \irust{Debug} trait (který je
+derivovatelný pomocí makra). \cite[sekce\,8.2]{thebook}
+
+Proměnné následně uvedeme za formátovací řetězec, podobně jako například u~funkce
+\icpp{printf}. Alternativně můžeme název proměnné uvést přímo do složených závorek. Zde
+také můžeme uvést formátovací možnosti, například již dříve jsme použili \irust{"{:.2}"},
+což znamená, že zaokrouhlujeme na 2\,desetinná místa.
+
+\sekce{Tisknutí do standardního výstupu}
+
+Můžeme použít makra \irust{println!()} a \irust{print!()}. První z~maker je časteji
+používané, protože na konec tisknutého řetězce automaticky přidá nový řádek. Do maker
+dáváme formátovací řetězce. Existuje také makro \irust{eprintln!()}, které tiskne do
+standardního erroru. Tato makra byla často i~v~předhozích kódových ukázkách. Syntax
+tisknutí je poměrně jednodušší než u~streamů v~C++, hlavně pro uživatele jiných jazyků
+jako například Python (f-stringy).
+
+Následuje ukázka konceptů, o~kterých tato kapitola pojednává. Na konci tiskneme proměnnou
+\irust{greeting} po jednotlivých znacích a \irust{debug} přímo přes formátovací řetězec.
+Pro ilustraci jsou proměnné doplněny o~typy, nic by se ale jejich vynecháním nezměnilo.
+
+\obrazek
+\begin{rustcode}
+    let name: &str = "John";
+    let greeting: String = format!("Hi {}!", name); // Hi John!
+    let some_numbers: Vec<i32> = vec![1, 2, 3];
+    let debug: String = format!("{some_numbers:?}"); // [1, 2, 3]
+    for c in greeting.chars() {
+        // print char by char
+        print!("{c}");
+    }
+    println!(); // end with newline
+    println!("{debug}");
+\end{rustcode}
+\endobrl{Ukázka používání řetězců}{strings showcase}
+
+\end{document}
