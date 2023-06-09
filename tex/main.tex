@@ -10,8 +10,8 @@
 % \usepackage{indentfirst} % indent first paragraph
 \usepackage{xdipp}
 \usepackage[
-     cachedir=./minted/,
-     outputdir=./TempTeX/,
+    cachedir=./minted/,
+    outputdir=./TempTeX/,
 ]{minted}
 \usepackage{xcolor}
 \usepackage{hyperref}
@@ -19,15 +19,15 @@
 
 %* minted options
 \setminted{autogobble,
-     % linenos, % line numbers
-     % xleftmargin=25pt, % space for line numbers to fit inside
-     mathescape,
-     texcomments,
-     obeytabs,
-     style=tango, % algol_nu, % tango,
-     bgcolor=m-bg,
-     highlightcolor=m-hi-default,
-     tabsize=4,
+    % linenos, % line numbers
+    % xleftmargin=25pt, % space for line numbers to fit inside
+    mathescape,
+    texcomments,
+    obeytabs,
+    style=tango, % algol_nu, % tango,
+    bgcolor=m-bg,
+    highlightcolor=m-hi-default,
+    tabsize=4,
 }
 \newminted[rustcode]{rust}{}
 \newmint[rust]{rust}{}
@@ -89,38 +89,50 @@
 \begin{document}
 
 %* title pages and abstract
-\titul{Programovací jazyk Rust jako náhrada za jazyk C++}
+\titul{Programovací jazyk Rust jako náhrada za C++}
 {Adam Hrnčárek}{Mgr. Marek Blaha}{Brno 2023}
 
 \podekovani{Chtěl bych poděkovat Rust komunitě za skvělé učební materiály,
     díky kterým Rustu rozumím. Také bych chtěl poděkovat YouTuberovi TheCherno,
-    jehož C++ série mě naučila všechny koncepty uvedené v této práci.
+    jehož C++ série mě naučila všechny koncepty uvedené v~této práci.
     Na závěr bych rád poděkoval svému profesoru informatiky a vedoucímu práce
     Marku Blahovi.
 }
 
 \prohlasenimuz{V~Brně dne \today}
 
-\abstract{This thesis investigates the pros and cons of the Rust programming
-    language compared to C++. This thesis tries to focus more on larger projects,
-    as the differences are more apparent.
-}{Specifically, this thesis focuses on the safety features of Rust, developer tooling,
-    (testing, language servers, documentation, package management) and productivity
-    with them. It also looks at reliability of these languages in the future.
+\abstract{This thesis introduces the Rust programming language and some of it's advantages
+    compared to C++. The thesis contains examples of Rust syntax and assumes no previous
+    knowledge of the language.
+}{Specifically, this thesis focues on major changes in the style of programming (working
+    with strings and errors, object oriented programming).
 }
-\abstrakt{Tato závěrečná práce posuzuje výhody a nevýhody programovacího jazyka Rust
-    v~porovnání s~C++. Práce se snaží soustředit spíše na větší projekty, při kterých
-    se rozdíly mezi jazyky projeví více.
-}{Specificky se práce soustředí na bezpečnostní prvky Rustu, nástroje pro vývojáře
-    (testování, language servery, dokumentace, package management) a produktivitu
-    s~nimi. Také se zabírá spolehlivostí těchto jazyků do~budoucna.
+\abstrakt{Tato závěrečná práce představuje programovací jazyk Rust a některé jeho výhody
+    oproti jazyku C++. Práce obsahuje ukázky syntaxu a nepředpokládá žádnou předchozí
+    znalost Rustu.
+}{Specificky se práce soustředí na zásadnější změny ve~stylu programování (práce
+    s~řetězci a errory, objektově orientované programování).
 }
+% \abstract{This thesis investigates the pros and cons of the Rust programming
+%     language compared to C++. This thesis tries to focus more on larger projects,
+%     as the differences are more apparent.
+% }{Specifically, this thesis focuses on the safety features of Rust, developer tooling,
+%     (testing, language servers, documentation, package management) and productivity
+%     with them. It also looks at reliability of these languages in the future.
+% }
+% \abstrakt{Tato závěrečná práce posuzuje výhody a nevýhody programovacího jazyka Rust
+%     v~porovnání s~C++. Práce se snaží soustředit spíše na větší projekty, při kterých
+%     se rozdíly mezi jazyky projeví více.
+% }{Specificky se práce soustředí na bezpečnostní prvky Rustu, nástroje pro vývojáře
+%     (testování, language servery, dokumentace, package management) a produktivitu
+%     s~nimi. Také se zabírá spolehlivostí těchto jazyků do~budoucna.
+% }
 
-\klslova{Programovací Jazyk Rust, C++, porovnání jazyků, vývojářské nástroje,
-    vývojářská produktivita, softwarová spolehlivost a bezpečnost
+\klslova{Programovací Jazyk Rust, C++, porovnání jazyků, objektově orientované
+    programování, práce s~řetězci, softwarová spolehlivost a bezpečnost
 }
-\keywords{The Rust Programming Language, C++, language comparison, developer tooling,
-    developer productivity, software reliability and safety
+\keywords{The Rust Programming Language, C++, language comparison, object oriented
+    programming, working with strings, software reliability and safety
 }
 
 %* tables of contents
@@ -133,15 +145,9 @@
 \subfile{syntax.tex}
 \subfile{oop.tex}
 \subfile{strings.tex}
-\kapitola{Bezpečnost programů}
-\sekce{Borrow checker}
-\sekce{Práce s~errory}
-\sekce{Paralelní programování}
-\kapitola{Vývojářské nástroje}
-\sekce{Language server}
-\sekce{Dependency management}
-\sekce{Testování}
-\kapitola{Závěr}
+\subfile{safety.tex}
+\subfile{tools.tex}
+\subfile{conclusion.tex}
 
 \begin{literatura}
     % V Lora nejsou kapitálky, takže je nutné je vložit ručně!
@@ -149,8 +155,6 @@
         \nazev{The Rust programming language} [online]. 2nd\,Edition.
         San Francisco: No Starch Press, 2023 [cit. 2023-06-06]. ISBN~9781718503106.
         Dostupné z: \url{https://doc.rust-lang.org/book/}}
-    \citace{cppreference}{C++ reference}{\nazev{C++ reference} [online].
-    [cit. 2023-06-07]. Dostupné~z: \url{https://en.cppreference.com/w/}}
     \citace{ruststd}{Rust STD}{\nazev{The Rust Standard Library} [online].
     [cit. 2023-06-07]. Dostupné~z: \url{https://doc.rust-lang.org/std/}}
     \citace{cargobook}{The Cargo Book}{\nazev{The Cargo Book} [online].
@@ -161,6 +165,8 @@
     [cit. 2023-06-07]. Dostupné~z: \url{https://doc.rust-lang.org/rust-by-example/}}
     \citace{docsrs}{Docs.rs}{\nazev{Docs.rs} [online].
     [cit. 2023-06-08]. Dostupné~z: \url{https://docs.rs/}}
+    \citace{cppreference}{C++ reference}{\nazev{C++ reference} [online].
+    [cit. 2023-06-07]. Dostupné~z: \url{https://en.cppreference.com/w/}}
 
 \end{literatura}
 

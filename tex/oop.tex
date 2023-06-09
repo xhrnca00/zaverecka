@@ -24,8 +24,9 @@ Výhodou je, že můžeme implementovat námi vytvořený trait pro cizí strukt
 Když tedy potřebujeme sdílenou funkcionalitu u~typu, který není náš, \emph{můžeme mu ji
     přidat}. Například existuje trait \irust{FromStr}, který definuje, jak máme z~řetězce
 vytvořit daný typ. Když tedy chceme umět parsovat nějaký náš typ, stačí nám implementovat
-tento trait (nikoliv přetížením \icpp{std::istream& operator>>}).
+tento trait (nikoliv přetížením \icpp{std::basic_istream& operator>>}).
 \cite[str/trait.FromStr]{ruststd}
+\cite[cpp/io/basic\_istream/operator\_gtgt]{cppreference}
 
 Díky tomuto také najdeme každou funkci, která má co dělat s~daným typem, přímo jako její
 metodu (toto platí i~u~primitivních typů jako \irust{i32}). Náš našeptávač je tedy o~dost

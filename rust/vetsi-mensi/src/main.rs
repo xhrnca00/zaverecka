@@ -2,13 +2,6 @@ use std::{cmp::Ordering, error::Error, io::Write};
 
 use rand::prelude::*;
 
-use std::collections::LinkedList;
-
-fn hi() {
-    let mut a = LinkedList::new();
-    a.push_back(0);
-}
-
 const MIN: i32 = 1;
 const MAX: i32 = 1000;
 
