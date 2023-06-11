@@ -52,7 +52,7 @@ klíčovým slovem \irust{fn}. Následuje syntax velmi podobný C++, až na \uv{
 návratový typ. Pokud funkce nevrací nic (typ \icpp{void} v~C++), můžeme za šipku napsat
 \uv{prázdný typ} \irust{()} nebo šipku vůbec nepsat.
 
-V~Rustu je povinné zároveň s~deklarací uvést i~definici (tělo) funkce\footnote{Pokud
+V~Rustu je povinné zároveň s~deklarací uvést i~definici (tělo) funkce\footnote{~Pokud
     se tedy nejedná o~deklaraci funkce v~Trait definici nebo v~\irust{extern} bloku.
 } To je obsaženo ve~složených závorkách, stejně jako v~C++.
 
@@ -294,7 +294,7 @@ funkci, ta změní její hodnotu na 0. Následně tiskneme hodnotu proměnné do
 Typ proměnné je \irust{u64}. Explicitně jsme jej neuvedli, ale kompilátor si to odvodil
 z~toho, že referenci na proměnnou posíláme funkci, která bere referenci na \irust{u64}.
 
-Dále vytváříme vektor o~třech prvcích. Referenci na všechny \emph{stávající}\footnote{
+Dále vytváříme vektor o~třech prvcích. Referenci na všechny \emph{stávající}\footnote{~
     Kdybychom do vektoru poté přidali nový prvek, řez by měl stále délku~2.
 } prvky vektoru s~indexem~1 a dále ukládáme do proměnné \irust{number_slice}. Používáme
 \irust{1..}~-- zprava nekonečný range (když neuvedeme jeden krajní prvek, bude range tím
@@ -348,7 +348,7 @@ Pokud chceme přidat metody, uděláme tak v~tzv. \irust{impl} bloku. Můžeme z
 funkce, které jako první parametr berou \irust{self}, \irust{&self} nebo
 \irust{&mut self}. Abychom měli přistup k~datům ve~struktuře, musíme to udělat právě přes
 jednu z~těchto možností. Pokud funkce nebere žádnou z~nich, jedná se
-o~\uv{statickou metodu}\footnote{Všechny funkce nadefinované v~\irust{impl} bloku
+o~\uv{statickou metodu}\footnote{~Všechny funkce nadefinované v~\irust{impl} bloku
     se nazývají \emph{asociované funkce} (asociované s~typem). Protože první parametr
     takové asociované funkce není \irust{self}, nejedná se o~metodu.
 }. Když použijeme přímo \irust{self}, ztratí volající přístup k~objektu (Rust implicitně

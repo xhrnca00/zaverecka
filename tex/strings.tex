@@ -32,7 +32,7 @@ iterátory, například \irust{chars()} nebo \irust{bytes()}. \cite[sekce\,8.2]{
 Spojovat mnoho řetězců dohromady taky není jednoduché. Můžeme použít \irust{+} operátor a
 příčtíst \irust{&str} k~typu \irust{String}, ale to může (spolu s~konverzemi na řetězec)
 být náročné na vypsání. Proto používáme makro \irust{format!()}. Formátování v~Rustu má
-poměrně jednoduchý princip: kam chceme vložit hodnotu, tam dáme \irust{"{}"}\footnote{
+poměrně jednoduchý princip: kam chceme vložit hodnotu, tam dáme \irust{"{}"}\footnote{~
     Uvozovky na začátku a na konci jsou pouze pro ilustrační funkci (jedná se o~řetězec),
     když píšeme \texttt{\{\}} v~řetězci, uvozovky nepíšeme.
 }. Toto použije implementaci traitu \irust{Display}. Pokud chceme vypsat strukturu

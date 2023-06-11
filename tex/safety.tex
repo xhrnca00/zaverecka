@@ -2,8 +2,176 @@
 
 \begin{document}
 \kapitola{Bezpečnost programů}
-\sekce{Borrow checker}
+
+Hlavní důvod, proč Rust nahrazuje C++, je jeho lepší bezpečnost. C++ jako takové nepatří
+mezi nejbezpečnější jazyky~-- je poměrně jednoduché v~něm vytvořit memory leak a celkově
+je zde hodně věcí, na které si musí programátor dávat pozor.
+
+\sekce{Paměť}
+
+Asi nejunikátnější z~věcí, které Rust přináší, je tzv. \emph{vlastnictví} (angl.
+ownership). Historicky se k~udržování bezpečnosti paměti používaly dva různé způsoby:
+garbage collection (již nepotřebná paměť se \uv{sama uklidí}) a manuální
+alokace/dealokace. Garbage collection je pomalejší, ale zato zaručeně bezpečný. Díky
+konceptu vlastnictví \emph{Rust garantuje paměťovou bezpečnost} bez zpomalení garbage
+collectorem. \cite[kapitola\,4]{thebook}
+
+\podsekce{Pravidla vlastnictví}
+
+Tento koncept se řídí poměrně jednoduchými pravidly \cite[sekce\,4.1]{thebook}:
+\begin{itemize}
+    \item Každá hodnota má \emph{právě jednoho} vlastníka
+    \item Když skončí životnost vlastníka, končí i~životnost hodnoty (a tedy se hodnota
+          bezpečně vyčistí/dealokuje apod.)
+\end{itemize}
+
+Toto také souvisí s~principem RAII (Resource Acquisition Is Initialization), znamým
+i~z~C++ \cite[language/raii]{cppreference}. Když tedy vznikne proměnná, vzniká zároveň
+s~ní i~hodnota (např. se alokuje na haldě).
+
+Jelikož se jedná o~zcela unikátní koncept, je nutné si zvyknout na jiný mentální model.
+Pojďme se znovu podívat na příklad move sémantiky (Obr.\,\ref{move semantics showcase})
+z~dřívější kapitoly, tentokrát z~pohledu vlastnictví:
+
+\obrazek
+\begin{rustcode*}{highlightlines={3-3},highlightcolor=m-hi-error}
+    let a = vec![1, 2, 3];
+    let b: Vec<i32> = a; // move `a` into `b`
+    for elem in a {
+        println!("{}", elem);
+    }
+\end{rustcode*}
+\endobrl{Připomenutí ukázky move sémantiky}{ownership showcase}
+
+Ze začátku vlastní vektor (neboli hodnotu) proměnná \irust{a}. Na dalším řádku ale
+\emph{předáváme vlastnictví vektoru proměnné \irust{b}}. Když tedy později chceme použít
+proměnnou \irust{a}, nejde to, protože \emph{\irust{a} již vektor nevlastní}.
+
+\podsekce{Půjčování}
+
+Vlastnictví představuje nový mentální model a vysvětluje move sémantiku, ale jak do toho
+zapadají reference? Zde přichází koncept \emph{půjčování} (angl. borrowing). Jeho pravidla
+kontroluje část kompilátoru jménem \emph{borrow checker}.
+
+Když vytváříme referenci, \uv{půjčujeme si hodnotu}. \uv{Dívat} na hodnotu se může
+libovolný počet proměnných, problém by ale nastal, kdyby někdo hodnotu měnil. Provádět
+změny proto může pouze jedna proměnná a to pouze v~případě, že nikdo jiný nemá hodnotu
+půjčenou na prohlížení. Formálněji \emph{V~jakýkoliv čas jde mít buď jednu
+    modifikovatelnou referenci (\irust{&mut T}), nebo libovolný počet nemodifikovatelných
+    referencí (\irust{&T}).} \cite[sekce\,4.2]{thebook}
+
+\obrazek
+\begin{rustcode*}{highlightlines={3-3},highlightcolor=m-hi-error}
+    let mut value = 5;
+    let reference = &value;
+    let mut mutable_reference = &mut value;
+    println!("{}", reference);
+\end{rustcode*}
+\newline
+\vlozobr{images/borrow-mut-compile-error.png}{0.26}
+\endobrl{Ukázka půjčování}{borrowing showcase}
+
+V~ukázce vytváříme nejdřív konstantní referenci a potom modifikovatelnou referenci.
+Tiskneme ale pomocí první z~nich~-- obě tedy existují, což je problém. Kdybychom prohodili
+pořadí vytváření referencí nebo tiskli pomocí modifikovatelné reference (nebo přímo
+proměnné s~hodnotou), nejednalo by se o~error.
+
+Druhým pravidlem půjčování je, že \emph{všechny refrence musí být validní}. Občas
+(například když funkce vrací referenci) jsou k~zajištění tohoto pravidla nutné tzv.
+životnostní anotace~-- do těch ale nebudeme zabíhat.
+
+Příklad 2.\,pravidla můžeme vidět na obr.\,\ref{invalid references showcase}. Zde měníme,
+na co reference ukazuje (používáme tedy reference více jako ukazatele v~C++). Problémem
+ale je, že proměnná, na kterou se odkazujeme (kterou jsme si \uv{půjčili}) již neexistuje,
+tedy je naše reference již nevalidní. Kdybychom referenci dále nepoužili, nejednalo by se
+o~error.
+
+\obrazek
+\begin{rustcode*}{highlightlines={5-5},highlightcolor=m-hi-error}
+    let value = 5;
+    let mut reference: &u64 = &value;
+    {
+        let another = 30;
+        reference = &another;
+    }
+    println!("{}", reference);
+\end{rustcode*}
+\newline
+\vlozobr{images/borrow-invalid-compile-error.png}{0.26}
+\endobrl{Ukázka nevalidních refrencí}{invalid references showcase}
+
+\podsekce{Chytré ukazatele a halda}
+
+Zatím jsme (kromě vektorů) alokovali pouze na zásobníku. Jak ale alokujeme na haldě?
+Použijeme tzv. chytré ukazatele. Mohli bychom alokovat i~manuálně, ale to by vyžadovalo
+\irust{unsafe} bloky (o~těch později) a bylo potenciálně nebezpečné. Proto v~Rustu
+\emph{nikdy} nealokujeme manuálně, vždy používáme chytré ukazatele.
+
+Chytré ukazatele v~rámci svého destruktoru dealokují i~svá data (k~modifikaci destruktoru
+manuálně implementujeme \irust{Drop} trait). Nejčastěji používané chytré ukazatele jsou
+\irust{Box<T>}, \irust{Rc<T>}\footnote{~Zkratka znamená \uv{reference counted}} a
+\irust{Weak<T>}. Jejich ekvivalentem jsou \icpp{std::unique_ptr<T>},
+\icpp{std::shared_ptr<T>} a \icpp{std::weak_ptr<T>}. Existují ale i~další chytré
+ukazatele. \cite[kapitola\,15]{thebook}
+
+Důležitý ukazatel je \irust{RefCell<T>}. Umožňuje nám totiž implementovat kód, který by
+jinak nebyl možný bez \irust{unsafe} bloků. Umí dynamicky, během běhu programu, plnit
+úkol borrow checkeru. Používáme jej, když by kompilátoru nebylo jasné, že jsme splnili
+pravidla půjčování.
+
+I~s~pomocí chytrých ukazatelů může vzniknout referenční cyklus a vytvořit memory leak!
+
+Ukázka na obr.\,\ref{smart pointers showcase} by měla být jednoznačná. Pomocí \irust{use}
+nejdříve importujeme \irust{Rc<T>} a \irust{Weak<T>}. \irust{Box<T>} importovat nemusíme,
+protože je dostupný vždy. Vytváříme číslici~5 alokovanou na haldě. Do další proměnné
+ukládáme \irust{Rc} se stejnou hodnotou jako ta, na kterou ukazuje \irust{Box}. Dále
+z~\irust{Rc} vytváříme jednu silnou a jednu slabou referenci. Na posledních řádcích
+vypisujeme počet referencí sdíleného ukazatele. Typy jsou přidány pouze pro pohodlí
+čtenáře, na funkčnosti programu nic nemění.
+
+\obrazek
+\begin{rustcode}
+    use std::rc::{Rc, Weak};
+
+    fn main() {
+        let boxed_value: Box<i32> = Box::new(5);
+        let rc_value: Rc<i32> = Rc::new(*boxed_value);
+        let strong_reference: Rc<i32> = Rc::clone(&rc_value);
+        let weak_reference: Weak<i32> = Rc::downgrade(&rc_value);
+        println!("{}", Rc::strong_count(&rc_value)); // 2
+        println!("{}", Rc::weak_count(&rc_value)); // 1
+    }
+\end{rustcode}
+\endobrl{UKázka chytrých ukazatelů}{smart pointers showcase}
+
+\podsekce{Unsafe bloky}
+
+S~pamětí souvisí i~klíčové slovo \irust{unsafe}. V~blocích označených tímto slovem můžeme,
+kromě klasického \uv{safe} Rustu, provádět následujících 5\,věcí:
+\begin{enumerate}
+    \item \emph{dereferencovat ukazatele}
+    \item volat unsafe metody
+    \item \emph{číst nebo modifikovat statickou měnitelnou proměnnou} (\irust{static mut})
+    \item implementovat unsafe trait
+    \item přistoupit k~hodnotám unionu (abychom mohli interagovat s~uniony jazyka~C)
+\end{enumerate}
+
+Unsafe kód se často nepoužívá, ale jedná se o~způsob jak zvolnit pravidla Rustu, například
+pro vytvoření lepší API nebo zlepšení výkonu. Některé objekty ve standardní knihovně
+(třeba chytré ukazatele) unsafe bloky používají. \cite[sekce\,19.1]{thebook}
+
 \sekce{Práce s~errory}
+\begin{itemize}
+    \item proč exceptions bad
+    \item panic
+    \item Ok/Err + Some/None
+    \item ? operator
+\end{itemize}
 \sekce{Paralelní programování}
+\begin{itemize}
+    \item read/write safety
+    \item traits are cool
+    \item deadlock still possible
+\end{itemize}
 
 \end{document}

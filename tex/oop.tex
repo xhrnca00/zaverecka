@@ -26,7 +26,7 @@ Když tedy potřebujeme sdílenou funkcionalitu u~typu, který není náš, \emp
 vytvořit daný typ. Když tedy chceme umět parsovat nějaký náš typ, stačí nám implementovat
 tento trait (nikoliv přetížením \icpp{std::basic_istream& operator>>}).
 \cite[str/trait.FromStr]{ruststd}
-\cite[cpp/io/basic\_istream/operator\_gtgt]{cppreference}
+\cite[io/basic\_istream/operator\_gtgt]{cppreference}
 
 Díky tomuto také najdeme každou funkci, která má co dělat s~daným typem, přímo jako její
 metodu (toto platí i~u~primitivních typů jako \irust{i32}). Náš našeptávač je tedy o~dost
@@ -96,7 +96,7 @@ Ukázka viz obr.\,\ref{generic function showcase}
 
 Generiky ale mají jeden problém: můžeme je použít, když máme hodnoty pouze daného typu.
 Co když ale máme kolekci ukazatelů na objekty, které všechny implementují daný
-trait\footnote{ukazatelů proto, že každý typ může mít jinou velikost}? Použijeme tzv.
+trait\footnote{~ukazatelů proto, že každý typ může mít jinou velikost}? Použijeme tzv.
 trait objekty.
 
 Pokud používáme trait objekty, potřebujeme nějak zjistit, jakou implementaci máme zavolat.

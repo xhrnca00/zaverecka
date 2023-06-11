@@ -1,4 +1,4 @@
-#[allow(dead_code, unused_variables, unused_mut)]
+#[allow(dead_code, unused_variables, unused_mut, unused_assignments)]
 
 fn main() {
     {
@@ -252,5 +252,38 @@ fn main() {
         println!(); // end with newline
         println!("{debug}");
         // ------------------------------------
+    }
+    {
+        //* borrowing
+        let mut value = 5;
+        let reference = &value;
+        // let mut mutable_reference = &mut value;
+        println!("{}", reference);
+        // ------------------------------------
+    }
+    {
+        //* invalid reference
+        let value = 5;
+        let mut reference: &u64 = &value;
+        {
+            let another = 30;
+            // reference = &another;
+        }
+        println!("{}", reference);
+    }
+    {
+        //* smart pointers
+        use std::rc::{Rc, Weak};
+
+        fn main() {
+            let boxed_value: Box<i32> = Box::new(5);
+            let rc_value: Rc<i32> = Rc::new(*boxed_value);
+            let strong_reference: Rc<i32> = Rc::clone(&rc_value);
+            let weak_reference: Weak<i32> = Rc::downgrade(&rc_value);
+            println!("{}", Rc::strong_count(&rc_value)); // 2
+            println!("{}", Rc::weak_count(&rc_value)); // 1
+        }
+        // ------------------------------------
+        main();
     }
 }
