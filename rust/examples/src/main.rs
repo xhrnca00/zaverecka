@@ -335,4 +335,45 @@ fn main() {
         let x = main();
         println!("{:?}", x);
     }
+    {
+        //* simple parallel programming
+        use std::thread;
+
+        fn main() {
+            let value = 5;
+            let handle = thread::spawn(move || {
+                println!("Hello from a thread!");
+                println!("Value: {}", value);
+            });
+            handle.join().unwrap();
+            println!("Finished!");
+        }
+        // ------------------------------------
+        main();
+    }
+    {
+        //* safe parallel programming
+        use std::sync::{Arc, Mutex};
+        use std::thread;
+
+        fn main() {
+            let mut data = Arc::new(Mutex::new(0));
+            let mut handles = vec![];
+            for x in 0..3 {
+                let data_ref = Arc::clone(&data);
+                let handle = thread::spawn(move || {
+                    let mut data = data_ref.lock().unwrap();
+                    *data += 1;
+                });
+                handles.push(handle);
+            }
+            for handle in handles {
+                handle.join().unwrap();
+            }
+            let data: u64 = *data.lock().unwrap();
+            println!("{}", data); // 3
+        }
+        // ------------------------------------
+        main();
+    }
 }

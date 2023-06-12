@@ -274,10 +274,123 @@ fn main() -> Result<(), String> {
 \endobrl{Ukázka použití \irust{?}}{? operator showcase}
 
 \sekce{Paralelní programování}
-\begin{itemize}
-    \item read/write safety
-    \item traits are cool
-    \item deadlock still possible
-\end{itemize}
+
+Paralelní programování v~jazyce Rust se velmi liší od C++. Kód se totiž nezkompiluje,
+dokud není bezpečný. Rust této vlastnosti říká \emph{fearless concurrency}
+\cite[kapitola\,16]{thebook}.
+
+\podsekce{Syntax vytváření vláken}
+
+Vlákna se, podobně jako v~C++, vytvářejí pomocí \irust{thread::spawn}. Objekt, který
+funkce vrací má metodu \irust{join}, která vrací \irust{Result} (buď s~návratovou
+hodnotou vlákna, nebo s~chybou, se kterou vlákno spadlo).
+
+Funkce \irust{thread::spawn} bere  parametr, který implementuje trait \irust{FnOnce}
+(tedy je funkcí, kterou jde zavolat aspoň jednou). Buď zde můžeme napsat přímo název
+funkce, nebo můžeme vytvořit tzv. closure (anonymní funkci).
+
+Syntax vytváření anonymní funkce je poměrně složitý. Mezi svislé čáry (\texttt{|})
+napíšeme parametry. Za čárami následuje tělo, většinou ohraničené složenými závorkami
+(pokud se nejedná o~jediný výraz). Při vytváření funkcí pro jiná vlákna před první
+svislou čáru píšeme kl. slovo \irust{move}, které říká, že všechny vnější proměnné, které
+anonymní funkce používá, se mají přesunout do funkce. Toto je nutné, protože jinak
+kompilátor nemůže poznat, zda jsou reference validní po celou dobu běhu vlákna.
+\cite[sekce\,13.1]{thebook}
+
+Na obr.\,\ref{simple thread creation showcase} můžeme vidět ukázku vytvoření vlákna, které
+píše do standardního výstupu.
+
+\obrazek
+\begin{rustcode}
+    use std::thread;
+
+    fn main() {
+        let value = 5;
+        let handle = thread::spawn(move || {
+            println!("Hello from a thread!");
+            println!("Value: {}", value);
+        });
+        handle.join().unwrap();
+        println!("Finished!");
+    }
+\end{rustcode}
+\endobrl{Ukázka vytvoření vlákna}{simple thread creation showcase}
+
+\podsekce{Atomické proměnné}
+
+Rust má atomické typy jako \irust{AtomicU32}, podobně jako C++ (\icpp{atomic_uint32_t}).
+Operace s~těmito hodnotami berou parametr typu \irust{Ordering}, jejichž hodnoty jsou stejné jako řazení z~C++20 \cite[sync/atomic]{ruststd}.
+
+\podsekce{Značící traity}
+
+Abychom mohli mezi vlákny posílat hodnoty, musejí implementovat \irust{Send}. Toto
+zaručuje, že se více vláken nedostane k~hodnotě, která na to není připravena. Například se
+jedná o~ukazatel \irust{Rc<T>}, který nepoužívá atomické proměnné pro udržování
+referenčních počtů. Pokud všechny části typu~\irust{T} implementují \irust{Send},
+implementuje jej i~typ~\irust{T}. \cite[marker/trait.Send]{ruststd}
+
+Pro přístup z~více vláken je potřeba trait \irust{Sync}. Typ~\irust{T} implementuje
+\irust{Sync}, pokud \irust{&T} implementuje \irust{Send}.
+\cite[marker/trait.Sync]{ruststd}
+
+Tyto dva traity umožňují kompilátoru zajistit bezpečnost jen pomocí traitů a generik.
+
+\podsekce{Chytré ukazatele}
+
+Pokud chceme z~více vláken modifikovat jednu proměnnou, musíme použít vzájemné vyloučení
+(angl. mutual exclusion, zkráceně mutex). Na rozdíl od C++ se ale nejedná o~\uv{hodnotu},
+ale o~. Metoda \irust{lock} pak vrací hodnotu\footnote{~ve skutečnosti
+    vrací \irust{Result}. O~možnost \irust{Err} se jedná tehdy, když nějaké vlákno spadlo,
+    zatímco mělo vlastnictví zámku.
+} Abychom ale mohli použít hodnotu \irust{Mutex<T>}, musíme ji přesunout do vlákna. Když
+ji ale přesuneme, ztratíme možnost ji poslat do dalšího~-- je tedy potřeba jej zabalit
+do sdíleného ukazatele.
+
+Tento ukazatel je \irust{Arc<T>}\footnote{~atomically reference counted}. Má stejnou
+funkcionalitu jako \irust{Rc<T>}, pouze používá atomické proměnné k~udržování počtů
+referencí. \cite[sekce\,16.3]{thebook}
+
+Na obr.\,\ref{threading showcase} je krátký program, který vytvoří 3\,vlákna, z~nichž
+každé přičte jedničku k~hodnotě uložené v~proměnné \irust{data}. Kdybychom nepoužili
+\irust{Arc<T>} a \irust{Mutex<T>}, \emph{kód by se nezkompiloval}.
+
+\obrazek
+\begin{rustcode}
+    use std::sync::{Arc, Mutex};
+    use std::thread;
+
+    fn main() {
+        let mut data = Arc::new(Mutex::new(0));
+        let mut handles = vec![];
+        for x in 0..3 {
+            let data_ref = Arc::clone(&data);
+            let handle = thread::spawn(move || {
+                let mut data = data_ref.lock().unwrap();
+                *data += 1;
+            });
+            handles.push(handle);
+        }
+        for handle in handles {
+            handle.join().unwrap();
+        }
+        let data: u64 = *data.lock().unwrap();
+        println!("{}", data); // 3
+    }
+\end{rustcode}
+\endobrl{Ukázka používání měnění proměnné z~více vláken}{threading showcase}
+
+\podsekce{Message passing}
+
+Existuje i~druhý typ paralelního programování, kde se používá posílání \uv{zpráv} (hodnot)
+mezi vlákny. Protože standardní knihovna C++ tento způsob nepodporuje (nemá kanály se
+synchronizací \cite{cppreference}), nebudeme do tohoto způsobu moc zabývat. V~Rustu jde
+použít primitiv \irust{mpsc} (multiple producer, single consumer).
+\cite[sekce\,16.2]{thebook}
+
+\podsekce{Uváznutí}
+
+Rust sice garantuje synchronizaci a správné posílání mezi vlákny, ale \emph{negarantuje,
+    že vlákna nebudou čekat na sebe navzájem
+} (uváznutí, nebo také deadlock). \cite[sekce\,16.3]{thebook}
 
 \end{document}
