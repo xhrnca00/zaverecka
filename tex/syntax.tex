@@ -22,7 +22,7 @@ Pokud chceme vytvořit statickou proměnnou (=globální), musíme použít klí
 proměnných.
 
 Většinou je vhodné uvést při deklaraci i~počáteční hodnotu. U~\irust{let} se ale
-nejedná o~error při kompilaci (error se ale objeví, pokud použíjeme neinicializovanou
+nejedná o~chybu při kompilaci (chyba se ale objeví, pokud použíjeme neinicializovanou
 proměnnou). Hodnotu přiřazujeme klasickým použitím znaku \texttt{=}.
 
 Pokud jsme pomocí \irust{let} nadefinovali proměnnou, můžeme opětovným použitím
@@ -119,7 +119,7 @@ nejsou povinné (a nepoužívají se).
 Dalším detailem je využitelnost pattern matchingu. Ke~zjištění struktury můžeme použít
 slova \irust{if let} a \irust{while let}. Pokud se match podaří, výraz vrátí
 \irust{true} a proměnná je k~dispozici k~použití v~daném bloku. Toto se často vyskytuje
-při práci s~možnými errory. Následuje ukázka použítí \irust{if let} bloku. V~proměnné
+při práci s~možnými chybami. Následuje ukázka použítí \irust{if let} bloku. V~proměnné
 \irust{calculation_result} je uložen enum \irust{Option<i32>}~-- jedná se o~návratovou
 hodnotu nějaké funkce, která \emph{může} (ale nemusí) vrátit výsledek. Pokud výsledek
 existuje (proměnná má hodnotu \irust{Some}), vypíšeme jej do konzole.
@@ -189,9 +189,9 @@ bez těla nevyhneme. \cite[keyword.extern]{ruststd}
 
 V~následujícím příkladu importujeme typ \irust{LinkedList} z~modulu \irust{collections}
 knihovny \irust{std}. Dále voláme statickou metodu \irust{new} tohoto typu. Můžeme si také
-všimnout, že nikde neuvádíme typ proměnné. Ukládáme do ní \uv{nový} linked list~-- hlavní
-type je tedy \irust{LinkedList}, ale neuvádíme ani v~něm ukládaný typ. Je totiž odvozen
-z~toho, že později ukládáme do listu hodnotu typu \irust{i32}. Plný typ proměnné
+všimnout, že nikde neuvádíme typ proměnné. Ukládáme do ní \uv{nový} spojový seznam~--
+hlavní typ je tedy \irust{LinkedList}, ale neuvádíme ani v~něm ukládaný typ. Je totiž
+odvozen z~toho, že později ukládáme do listu hodnotu typu \irust{i32}. Plný typ proměnné
 \irust{list} je tedy \irust{LinkedList<i32>}.
 
 \obrazek

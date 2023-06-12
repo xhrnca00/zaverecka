@@ -74,7 +74,7 @@ půjčenou na prohlížení. Formálněji \emph{V~jakýkoliv čas jde mít buď 
 V~ukázce vytváříme nejdřív konstantní referenci a potom modifikovatelnou referenci.
 Tiskneme ale pomocí první z~nich~-- obě tedy existují, což je problém. Kdybychom prohodili
 pořadí vytváření referencí nebo tiskli pomocí modifikovatelné reference (nebo přímo
-proměnné s~hodnotou), nejednalo by se o~error.
+proměnné s~hodnotou), nejednalo by se o~chybu.
 
 Druhým pravidlem půjčování je, že \emph{všechny refrence musí být validní}. Občas
 (například když funkce vrací referenci) jsou k~zajištění tohoto pravidla nutné tzv.
@@ -84,7 +84,7 @@ Příklad 2.\,pravidla můžeme vidět na obr.\,\ref{invalid references showcase
 na co reference ukazuje (používáme tedy reference více jako ukazatele v~C++). Problémem
 ale je, že proměnná, na kterou se odkazujeme (kterou jsme si \uv{půjčili}) již neexistuje,
 tedy je naše reference již nevalidní. Kdybychom referenci dále nepoužili, nejednalo by se
-o~error.
+o~chybu.
 
 \obrazek
 \begin{rustcode*}{highlightlines={5-5},highlightcolor=m-hi-error}
@@ -160,13 +160,119 @@ Unsafe kód se často nepoužívá, ale jedná se o~způsob jak zvolnit pravidla
 pro vytvoření lepší API nebo zlepšení výkonu. Některé objekty ve standardní knihovně
 (třeba chytré ukazatele) unsafe bloky používají. \cite[sekce\,19.1]{thebook}
 
-\sekce{Práce s~errory}
-\begin{itemize}
-    \item proč exceptions bad
-    \item panic
-    \item Ok/Err + Some/None
-    \item ? operator
-\end{itemize}
+\sekce{Zpracování chyb}
+
+V~C++ jsme zvyklí vrhat chybové objekty pomocí \icpp{throw} a chytat je pomocí
+\icpp{catch}. Tento přístup je špatně sledovatelný, jelikož bez pohledu na dokumentaci
+nevíme, která funkce hází jakou chybu. Také můžeme mít problémy, když chybu zachytí nějaká
+centrálnější funkce a nevíme, v~jakém stavu je náš program. Rust proto má zcela jiný
+přístup k~práci s~chybami.
+
+\podsekce{Nenávratné chyby, aneb panika!}
+
+Rust má více typů chyb \cite[kapitola\,9]{thebook}. První z~nich jsou tzv. nenávratné
+chyby. Těmto chybám se říká panika (angl. panic). Vyvolat je můžeme explicitně pomocí
+makra \irust{panic!} (do argumentu makra dáme formátový řetězec, který se zobrazí jako
+chybová hláška), nebo nějakou akcí, jako je například dělení nulou nebo špatná indexace
+do řetězce (a tedy vznik neplatné UTF-8 sekvence). \cite[sekce\,9.1]{thebook} Panika se
+používá, když se nemáme jak vyrovnat s~chybou.
+
+\obrazek
+\begin{rustcode}
+    fn main() {
+        panic!("crash and burn");
+    }
+\end{rustcode}
+\newline
+\vlozobr{images/panic-macro-panic.png}{0.26}
+\endobrl{Ukázka paniky \obrzdroj{\cite[sekce\,9.1]{thebook}}}{panic showcase}
+
+\podsekce{Obnovitelné chyby}
+
+Druhým typem chyb jsou obnovitelné chyby. Funkce, ve kterých se může nějaká taková chyba
+stát nevracejí přímo návratový typ~\texttt{T}, ale vracejí buď \irust{Option<T>}, nebo
+\irust{Result<T, E>}, kde \texttt{E} je typ chyby. Tyto dva typy jsou enumy.
+\cite[sekce\,9.2]{thebook}
+
+Enum \irust{Option<T>} má dvě varianty: \irust{Some(T)} a \irust{None}. Používá se, když
+nevíme, zda funkce vrátí hodnotu, nebo ne. \emph{Tento typ je také náhrada za hodnotu
+    \texttt{null}, která v~Rustu neexistuje}.
+
+\irust{Result<T, E>} má rovněž dvě varianty: \irust{Ok(T)} a \irust{Err(E)}. Tento typ
+použijeme v~případě, že někde může nastat chyba, kterou chceme sdělit volajícímu. Typ
+\texttt{E} může být cokoliv~-- enum (například u~I/O operací), řetězec,\dots
+
+\podsekce{Práce s~chybovými hodnotami}
+
+\emph{Pokud chceme získat typ~T, musíme jej dostat z~vrácené hodnoty}. Díky tomu jsme,
+jakožto volající, \emph{nuceni} něco s~potenciální chybou udělat. Samozřejmě můžeme vždy použít \irust{match}, ale díky velkému množství pomocných metod to většinou není potřeba.
+Jelikož jsou metody na obou typech funkčně ekvivalentní, budeme se dále zabírat pouze
+typem \irust{Result}.
+
+Asi nejlehčí, co můžeme udělat, je použít metodu \irust{unwrap}. Tato metoda nám vrátí typ
+\texttt{T}. Pokud se ale jedná o~chybovou variantu, spustí se panika a program spadne.
+Další metody, jako například \irust{map} a \irust{and_then} nám dovolují řetězit funkce
+vracející \irust{Result}. Pokud chceme hodnotu \texttt{T} nebo nějakou výchozí hodnotu,
+máme metodu \irust{unwrap_or}. \cite[result]{ruststd}
+
+\obrazek
+\begin{rustcode}
+    // match
+    let result: Result<i32, String> = Ok(200);
+    match &result {
+        Ok(code) => println!("Code: {}", code),
+        Err(error) => println!("Error: {}", error),
+    }
+    // unwrap
+    let code = result.unwrap();
+    println!("Code: {}", code);
+    // map
+    let mut mode: Result<i32, String> = Ok(4);
+    mode = mode.map(|c| c + 1);
+    // unwrap\_or
+    let mode = mode.unwrap_or(-1);
+\end{rustcode}
+\endobrl{Ukázka zpracování chyb}{result showcase}
+
+\podsekce{Operátor ?}
+
+Protože často chceme ve funkci řešit pouze případ bez chyby a předat chybu volajícímu,
+vznikl operátor \irust{?}. Pokud naše funkce vrací stejný typ, jako námi volaná
+funkce\footnote{~? ve skutečnosti umí provádět i~lehké typové konverze}, můžeme za
+závorky přidat \irust{?}. Tento otazník vrátí chybovou hodnotu, pokud ji dostane; jinak
+pokračuje dál. Výhodou je, že při programování funkce se staráme pouze o~bezchybovou
+cestu. \cite[sekce\,9.2]{thebook}
+
+Otazník můžeme použít i~v~\irust{main} funkci, pokud změníme její návratový typ
+z~implicitního \irust{()} (prázdný typ) na \irust{Result<(), E>} a na jejím konci vrátíme
+\irust{Ok(())}. Pokud v~tomto případě \irust{main} vrátí \irust{Err} variantu, vypíše se.
+
+Na obr.\,\ref{? operator showcase} můžeme vidět příklad používající \irust{?}.
+
+\obrazek
+\begin{rustcode}
+fn error_fn() -> Result<i32, String> {
+    Ok(5)
+}
+
+fn do_stuff(num: i32) -> Result<i32, String> {
+    let result = error_fn()?;
+    if num == result {
+        return Err(format!("{} is equal to {}", num, result));
+    }
+    Ok(result + num)
+}
+
+fn main() -> Result<(), String> {
+    let code = do_stuff(5)?;
+    println!("Code: {}", code);
+    Ok(())
+}
+\end{rustcode}
+\newline
+\vlozobr{images/return-error-panic.png}{0.27}
+\endobrl{Ukázka použití \irust{?}}{? operator showcase}
+
 \sekce{Paralelní programování}
 \begin{itemize}
     \item read/write safety

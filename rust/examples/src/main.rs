@@ -286,4 +286,53 @@ fn main() {
         // ------------------------------------
         main();
     }
+    {
+        //* panic
+        fn main() {
+            panic!("crash and burn");
+        }
+        // ------------------------------------
+        // main(); // we know what this does
+    }
+    {
+        //* result
+        let result: Result<i32, String> = Ok(200);
+        // match
+        match &result {
+            Ok(code) => println!("Code: {}", code),
+            Err(error) => println!("Error: {}", error),
+        }
+        // unwrap
+        let code = result.unwrap();
+        println!("Code: {}", code);
+        // map
+        let mut mode: Result<i32, String> = Ok(4);
+        mode = mode.map(|c| c + 1);
+        // unwrap_or
+        let code = mode.unwrap_or(-1);
+        // ------------------------------------
+    }
+    {
+        //* ? operator
+        fn error_fn() -> Result<i32, String> {
+            Ok(5)
+        }
+
+        fn do_stuff(num: i32) -> Result<i32, String> {
+            let result = error_fn()?;
+            if num == result {
+                return Err(format!("{} is equal to {}", num, result));
+            }
+            Ok(result + num)
+        }
+
+        fn main() -> Result<(), String> {
+            let code = do_stuff(5)?;
+            println!("Code: {}", code);
+            Ok(())
+        }
+        // ------------------------------------
+        let x = main();
+        println!("{:?}", x);
+    }
 }
