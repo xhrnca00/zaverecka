@@ -292,8 +292,8 @@ funkce, nebo můžeme vytvořit tzv. closure (anonymní funkci).
 Syntax vytváření anonymní funkce je poměrně složitý. Mezi svislé čáry (\texttt{|})
 napíšeme parametry. Za čárami následuje tělo, většinou ohraničené složenými závorkami
 (pokud se nejedná o~jediný výraz). Při vytváření funkcí pro jiná vlákna před první
-svislou čáru píšeme kl. slovo \irust{move}, které říká, že všechny vnější proměnné, které
-anonymní funkce používá, se mají přesunout do funkce. Toto je nutné, protože jinak
+svislou čáru píšeme klíčové slovo \irust{move}, které říká, že všechny vnější proměnné,
+které anonymní funkce používá, se mají přesunout do funkce. Toto je nutné, protože jinak
 kompilátor nemůže poznat, zda jsou reference validní po celou dobu běhu vlákna.
 \cite[sekce\,13.1]{thebook}
 
@@ -319,7 +319,8 @@ píše do standardního výstupu.
 \podsekce{Atomické proměnné}
 
 Rust má atomické typy jako \irust{AtomicU32}, podobně jako C++ (\icpp{atomic_uint32_t}).
-Operace s~těmito hodnotami berou parametr typu \irust{Ordering}, jejichž hodnoty jsou stejné jako řazení z~C++20 \cite[sync/atomic]{ruststd}.
+Operace s~těmito hodnotami berou parametr typu \irust{Ordering}, jejichž hodnoty jsou
+stejné jako řazení z~C++20 (\icpp{std::memory_order}) \cite[sync/atomic]{ruststd}.
 
 \podsekce{Značící traity}
 
@@ -333,13 +334,13 @@ Pro přístup z~více vláken je potřeba trait \irust{Sync}. Typ~\irust{T} impl
 \irust{Sync}, pokud \irust{&T} implementuje \irust{Send}.
 \cite[marker/trait.Sync]{ruststd}
 
-Tyto dva traity umožňují kompilátoru zajistit bezpečnost jen pomocí traitů a generik.
+Tyto dva traity umožňují kompilátoru zajistit bezpečnost jen pomocí generik.
 
 \podsekce{Chytré ukazatele}
 
 Pokud chceme z~více vláken modifikovat jednu proměnnou, musíme použít vzájemné vyloučení
 (angl. mutual exclusion, zkráceně mutex). Na rozdíl od C++ se ale nejedná o~\uv{hodnotu},
-ale o~. Metoda \irust{lock} pak vrací hodnotu\footnote{~ve skutečnosti
+ale o~chytrý ukazatel. Metoda \irust{lock} pak vrací hodnotu\footnote{~ve skutečnosti
     vrací \irust{Result}. O~možnost \irust{Err} se jedná tehdy, když nějaké vlákno spadlo,
     zatímco mělo vlastnictví zámku.
 } Abychom ale mohli použít hodnotu \irust{Mutex<T>}, musíme ji přesunout do vlákna. Když
@@ -350,9 +351,9 @@ Tento ukazatel je \irust{Arc<T>}\footnote{~atomically reference counted}. Má st
 funkcionalitu jako \irust{Rc<T>}, pouze používá atomické proměnné k~udržování počtů
 referencí. \cite[sekce\,16.3]{thebook}
 
-Na obr.\,\ref{threading showcase} je krátký program, který vytvoří 3\,vlákna, z~nichž
-každé přičte jedničku k~hodnotě uložené v~proměnné \irust{data}. Kdybychom nepoužili
-\irust{Arc<T>} a \irust{Mutex<T>}, \emph{kód by se nezkompiloval}.
+Na následujícím obrázku je krátký program, který vytvoří 3\,vlákna, z~nichž každé přičte
+jedničku k~hodnotě uložené v~proměnné \irust{data}. Kdybychom nepoužili \irust{Arc<T>} a
+\irust{Mutex<T>}, \emph{kód by se nezkompiloval}.
 
 \obrazek
 \begin{rustcode}

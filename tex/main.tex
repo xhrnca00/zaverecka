@@ -1,6 +1,6 @@
 \documentclass[
-    % FIXME: add twoside back when printing
-    % twoside,
+    % -FIXME: add twoside back when printing
+    twoside,
     12pt
 ]{article}
 % pro tisk po jedné straně papíru je potřebné odstranit volbu twoside
@@ -113,20 +113,6 @@
 }{Specificky se práce soustředí na zásadnější změny ve~stylu programování (práce
     s~řetězci, zpracování chyb, objektově orientované programování).
 }
-% \abstract{This thesis investigates the pros and cons of the Rust programming
-%     language compared to C++. This thesis tries to focus more on larger projects,
-%     as the differences are more apparent.
-% }{Specifically, this thesis focuses on the safety features of Rust, developer tooling,
-%     (testing, language servers, documentation, package management) and productivity
-%     with them. It also looks at reliability of these languages in the future.
-% }
-% \abstrakt{Tato závěrečná práce posuzuje výhody a nevýhody programovacího jazyka Rust
-%     v~porovnání s~C++. Práce se snaží soustředit spíše na větší projekty, při kterých
-%     se rozdíly mezi jazyky projeví více.
-% }{Specificky se práce soustředí na bezpečnostní prvky Rustu, nástroje pro vývojáře
-%     (testování, language servery, dokumentace, package management) a produktivitu
-%     s~nimi. Také se zabírá spolehlivostí těchto jazyků do~budoucna.
-% }
 
 \klslova{Programovací Jazyk Rust, C++, porovnání jazyků, objektově orientované
     programování, práce s~řetězci, softwarová spolehlivost a bezpečnost
@@ -137,16 +123,16 @@
 
 %* tables of contents
 \obsah{}
-% TODO: delete at the end if necessary
+% -TODO: delete at the end if necessary
 \listoffigures
-\listoftables
+% \listoftables
 
 \subfile{introduction.tex}
 \subfile{syntax.tex}
 \subfile{oop.tex}
 \subfile{strings.tex}
 \subfile{safety.tex}
-\subfile{tools.tex}
+% \subfile{tools.tex}
 \subfile{conclusion.tex}
 
 \begin{literatura}
@@ -159,8 +145,8 @@
     [cit. 2023-06-07]. Dostupné z~WWW: <\url{https://doc.rust-lang.org/rust-by-example/}>}
     \citace{ruststd}{Rust STD}{\nazev{The Rust Standard Library} [online].
     [cit. 2023-06-07]. Dostupné z~WWW: <\url{https://doc.rust-lang.org/std/}>}
-    \citace{cargobook}{The Cargo Book}{\nazev{The Cargo Book} [online].
-    [cit. 2023-06-07]. Dostupné z~WWW: <\url{https://doc.rust-lang.org/cargo/}>}
+    % \citace{cargobook}{The Cargo Book}{\nazev{The Cargo Book} [online].
+    % [cit. 2023-06-07]. Dostupné z~WWW: <\url{https://doc.rust-lang.org/cargo/}>}
     \citace{thebook}{The Book}{\autor{KLABNIK, Steve} a \autor{Carol NICHOLS}.
         \nazev{The Rust programming language} [online]. 2nd\,Edition.
         San Francisco: No Starch Press, 2023 [cit. 2023-06-06]. ISBN~9781718503106.
