@@ -343,7 +343,7 @@ Pokud chceme z~více vláken modifikovat jednu proměnnou, musíme použít vzá
 ale o~chytrý ukazatel. Metoda \irust{lock} pak vrací hodnotu\footnote{~ve skutečnosti
     vrací \irust{Result}. O~možnost \irust{Err} se jedná tehdy, když nějaké vlákno spadlo,
     zatímco mělo vlastnictví zámku.
-} Abychom ale mohli použít hodnotu \irust{Mutex<T>}, musíme ji přesunout do vlákna. Když
+}. Abychom ale mohli použít hodnotu \irust{Mutex<T>}, musíme ji přesunout do vlákna. Když
 ji ale přesuneme, ztratíme možnost ji poslat do dalšího~-- je tedy potřeba jej zabalit
 do sdíleného ukazatele.
 
