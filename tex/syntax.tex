@@ -33,7 +33,7 @@ V~Rustu často není potřeba udávat typ vytvářené proměnné~-- velmi dobř
 proměnných odvodit z~hodnot, popřípadě jejich dalšího používání. Toto ale platí pouze
 pro deklarace pomocí slova \irust{let}~-- u~ostatních je typová anotace povinná. Pokud
 si kompilátor neumí typ odvodit, je nutné typ explicitně uvést. Toho docílíme pomocí
-dnes častějšího \uv{dvojtečkového syntaxu}. \cite[sekce\,3.2]{thebook}
+dnes častější \uv{dvojtečkové syntaxe}. \cite[sekce\,3.2]{thebook}
 
 Celá deklarace proměnné tedy vypadá takto:
 
@@ -47,14 +47,14 @@ Celá deklarace proměnné tedy vypadá takto:
 \sekce{Funkce}
 
 Stejně jako u~proměnných nezačínají deklarace funkcí jejich návratovým typem, ale
-klíčovým slovem \irust{fn}. Následuje syntax velmi podobný C++, až na \uv{dvojtečkový
+klíčovým slovem \irust{fn}. Následuje syntax velmi podobná C++, až na \uv{dvojtečkovou
     syntax} deklarace typů. Za uzavírací závorkou následuje šipka (\texttt{->}) a za ní
 návratový typ. Pokud funkce nevrací nic (typ \icpp{void} v~C++), můžeme za šipku napsat
 \uv{prázdný typ} \irust{()} nebo šipku vůbec nepsat.
 
 V~Rustu je povinné zároveň s~deklarací uvést i~definici (tělo) funkce\footnote{~Pokud
     se tedy nejedná o~deklaraci funkce v~Trait definici nebo v~\irust{extern} bloku.
-} To je obsaženo ve~složených závorkách, stejně jako v~C++.
+}. To je obsaženo ve~složených závorkách, stejně jako v~C++.
 
 Jednou z~méně intuitivních věcí pro začátečníky jsou takzvané \uv{implicit returns}.
 Pokud nedáme na konec výrazu středník, bude tento výraz vrácen jako hodnota. Toto se
@@ -74,8 +74,8 @@ Takto by vypadala definice funkce, která sečte dvě čísla a vrátí výslede
 \sekce{Pattern matching}
 
 Rust má velmi silný pattern matching. Pomocí něj je možné \uv{vytahovat} hodnoty
-z~enumů, datových struktur a n-tic (anglicky tuple). Vždy je nutné použít klíčové
-slovo \irust{let}. \cite[sekce\,18.1]{thebook}
+z~výčtů (anglicky enum), datových struktur a n-tic (anglicky tuple). Vždy je nutné použít
+klíčové slovo \irust{let}. \cite[sekce\,18.1]{thebook}
 
 \obrazek
 \begin{rustcode}
@@ -84,7 +84,7 @@ slovo \irust{let}. \cite[sekce\,18.1]{thebook}
 \endobrl{Ukázka jednoduchého pattern matchingu}{simple pattern matching showcase}
 
 Po tomto řádku můžeme používat proměnnou \irust{number}, která je typu \irust{i32} a
-proměnnou \irust{text} typu \irust{&str} (práci se stringy je věnována vlastní kapitola).
+proměnnou \irust{text} typu \irust{&str} (práci s~řetězci je věnována vlastní kapitola).
 
 Rust má také klíčové slovo \irust{match}:
 
@@ -100,7 +100,7 @@ Rust má také klíčové slovo \irust{match}:
 
 V tomto případě používáme \irust{match} na proměnnou \irust{number}. Pokud je hodnota
 2 nebo 3, vratí \irust{match} hodnotu \irust{true}. Znak \irust{_} znamená
-\uv{vše ostatní}, rameno s~hodnotou 12 je tedy zbytečné. Výsledek se zde uloží do
+\uv{vše ostatní}, varianta s~hodnotou 12 je tedy zbytečná. Výsledek se zde uloží do
 proměnné, v~jednotlivých ramenech (anglicky match arms) lze ale napsat libovolný kód.
 Pokud \irust{match} nepočítá s~každou možností, kód se nezkompiluje.
 \cite[sekce\,8.2.16]{reference}
@@ -108,9 +108,9 @@ Pokud \irust{match} nepočítá s~každou možností, kód se nezkompiluje.
 V~tomto případě se jedná o~zbytečnou komplikaci kódu. \irust{match} a pattern matching
 obecně je ale velmi užitečný pří implementování komplexnější logiky.
 
-\sekce{Smyčky a kontrolní bloky}
+\sekce{Cykly a řídící bloky}
 
-\podsekce{Smyčky a kontrolní bloky shodné s~C++}
+\podsekce{Cykly a řídící bloky shodné s~C++}
 
 Klíčová slova \irust{while} a \irust{if}, \irust{else if}, \irust{else} fungují stejně
 jako v~jazyce C++. Jediným rozdílem je, že závorky kolem výrazů za klíčovými slovy
@@ -120,7 +120,7 @@ Dalším detailem je využitelnost pattern matchingu. Ke~zjištění struktury m
 slova \irust{if let} a \irust{while let}. Pokud se match podaří, výraz vrátí
 \irust{true} a proměnná je k~dispozici k~použití v~daném bloku. Toto se často vyskytuje
 při práci s~možnými chybami. Následuje ukázka použítí \irust{if let} bloku. V~proměnné
-\irust{calculation_result} je uložen enum \irust{Option<i32>}~-- jedná se o~návratovou
+\irust{calculation_result} je uložen výčet \irust{Option<i32>}~-- jedná se o~návratovou
 hodnotu nějaké funkce, která \emph{může} (ale nemusí) vrátit výsledek. Pokud výsledek
 existuje (proměnná má hodnotu \irust{Some}), vypíšeme jej do konzole.
 
@@ -136,12 +136,12 @@ existuje (proměnná má hodnotu \irust{Some}), vypíšeme jej do konzole.
 \end{rustcode}
 \endobrl{Ukázka \irust{if let} výrazu}{if let showcase}
 
-\podsekce{Smyčka for}
+\podsekce{Cyklus for}
 
-Smyčka \irust{for} funguje jinak než v~C++. Používá se na cyklení přes tzv. iterátory.
+Cyklus \irust{for} funguje jinak než v~C++. Používá se na cyklení přes tzv. iterátory.
 Iterátory jako takové jsou návrhovým vzorem, který se částečně vyskytuje i~v~C++.
 V~Rustu jsou ale daleko mocnější~-- jedná se o~nejpoužívanější návrhový vzor tohoto
-jazyka. \uv{Klasický} for loop přes čísla můžeme napsat pomocí tzv. rozsahu
+jazyka. \uv{Klasický} cyklus for přes čísla můžeme napsat pomocí tzv. rozsahu
 (anglicky range). Jeho syntax je následující:
 
 \obrazek
@@ -150,16 +150,16 @@ jazyka. \uv{Klasický} for loop přes čísla můžeme napsat pomocí tzv. rozsa
         println!("{}", i);
     }
 \end{rustcode}
-\endobrl{Ukázka for smyčky přes Range objekt}{for loop over range showcase}
+\endobrl{Ukázka for cyklu přes Range objekt}{for loop over range showcase}
 
 Tato smyčka vypíše celá čísla od 0 do 9 včetně. Pokud bychom chtěli vypsat i~hodnotu 10,
-museli bychom range napsat takto: \irust{0..=10}. Můžeme si všimnout, že proměnná
+museli bychom rozsah napsat takto: \irust{0..=10}. Můžeme si všimnout, že proměnná
 \irust{i} se postupně nastaví na každou hodnotu iterátoru. Lze zde použít i~pattern
 matching. \cite[sekce\,8.2.13]{reference}
 
-\podsekce{Smyčka loop}
+\podsekce{Cyklus loop}
 
-V~Rustu se nachází ještě jeden typ smyčky. Jedná se o~nekonečnou smyčku, vytvořenou
+V~Rustu se nachází ještě jeden typ cyklu. Jedná se o~nekonečný cyklus, vytvořený
 pomocí klíčového slova \irust{loop}. Funguje stejně jako \icpp{while (true)} v~C++.
 
 \sekce{Makra}
@@ -219,8 +219,8 @@ pouze o~kladná čísla (\icpp{unsigned}), stačí nahradit \irust{i} za \irust{
 tedy \irust{u32}.
 
 Výhodou tohoto způsobu je, že jsme si vždy vědomi jejich velikosti (například typ
-\icpp{int} může mít různou velikost podle platformy). Jejich ekvivalentem by tedy byly
-spíš typy jako \icpp{int32_t}, dostupné od C++11.
+\icpp{int} může mít různou velikost podle platformy \cite[language/types]{cppreference}).
+Jejich ekvivalentem by tedy byly spíš typy jako \icpp{int32_t}, dostupné od C++11.
 
 Pro desetinná čísla existují typy \irust{f32} a \irust{f64}. Čísla opět reprezentují
 jejich velikost v~paměti. \cite[sekce\,3.2]{thebook}
@@ -269,7 +269,7 @@ umožňující modifikaci jdou dělat pouze na modifikovatelné proměnné.
 Pokud chceme referenci na blok paměti, pošleme tzv. řez (anglicky slice). Jedná se
 o~speciální objekt, který si pamatuje ukazatel na začátek a délku úseku. Jeho zápis je
 \irust{&[T]} a \irust{&mut [T]}. Získáme jej pomocí operátoru \irust{[]}, ve kterém ale
-neuvedeme index, ale range. \cite[sekce\,4.3]{thebook}
+neuvedeme index, ale rozsah. \cite[sekce\,4.3]{thebook}
 
 \obrazek
 \begin{rustcode}
@@ -297,25 +297,25 @@ z~toho, že referenci na proměnnou posíláme funkci, která bere referenci na 
 Dále vytváříme vektor o~třech prvcích. Referenci na všechny \emph{stávající}\footnote{~
     Kdybychom do vektoru poté přidali nový prvek, řez by měl stále délku~2.
 } prvky vektoru s~indexem~1 a dále ukládáme do proměnné \irust{number_slice}. Používáme
-\irust{1..}~-- zprava nekonečný range (když neuvedeme jeden krajní prvek, bude range tím
-směrem zasahovat do nekonečna). Měníme druhý prvek range (tedy třetí prvek vektoru), ten
+\irust{1..}~-- zprava nekonečný rozsah (když neuvedeme jeden krajní prvek, bude rozsah tím
+směrem zasahovat do nekonečna). Měníme druhý prvek řezu (tedy třetí prvek vektoru), ten
 následně tiskneme (pomocí vektoru, ne řezu).
 
 \podsekce{Řetězce}
 
 Situace s~řetězci je dost podobná C++. Existují dva typy: \irust{&str} a \irust{String}.
-Protože Rust používá UTF-8, velikost typu \irust{char} jsou 4\,byty.
-\cite[primitive.char]{ruststd} Pokud chceme typ reprezentující jeden byte (a tedy i~paměť
+Protože Rust používá UTF-8, velikost typu \irust{char} jsou 4\,bajty.
+\cite[primitive.char]{ruststd} Pokud chceme typ reprezentující jeden bajt (a tedy i~paměť
 do které se řetězce ukládají), použijeme \irust{u8}. Pokud chceme používat ASCII, můžeme
-používat \uv{byte string} (\irust{b""}). Jeho charaktery můžeme psát jako \irust{b'a'}
+používat \uv{bajtový řetězec} (\irust{b""}). Jeho znaky můžeme psát jako \irust{b'a'}
 apod. \cite[sekce\,19.3]{byexample}
 
 \irust{&str} je reference na konstantní řetězec, podobně jako \icpp{const char *}.
 Na~pozadí se jedná o~\irust{&[u8]}, kde je vždy uložena \emph{validní} UTF-8 sekvence.
 
 \irust{String}, stejně jako \icpp{std::string} je dynamicky alokovaný řetězec. Funguje
-stejně jako v~C++, akorát jeho buffer je \irust{Vec<u8>} (tj. dynamické pole bytů) a jeho
-velikost je 24\,bytů (nikoliv 32). \cite[sekce\,8.2]{thebook}
+stejně jako v~C++, akorát jeho buffer je \irust{Vec<u8>} (tj. dynamické pole bajtů) a jeho
+velikost je 24\,bajtů (nikoliv 32). \cite[sekce\,8.2]{thebook}
 
 Vytvářet řetězce můžeme více způsoby:
 
@@ -376,7 +376,7 @@ Příklad funkcí na struktuře \irust{Person}:
 \end{rustcode}
 \endobrl{Ukázka \irust{impl} bloku}{struct impl showcase}
 
-Rust má také enumy. Oproti C++ ale mohou držet i~další hodnoty, a to buď jako n-tici, nebo
+Rust má také výčty. Oproti C++ ale mohou držet i~další hodnoty, a to buď jako n-tici, nebo
 jako strukturu. Můžeme jim také přidávat asociované funkce pomocí \irust{impl} bloků.
 \cite[sekce\,6.1]{thebook} Příklad na obr.\,\ref{enum showcase}.
 
@@ -405,9 +405,9 @@ jako strukturu. Můžeme jim také přidávat asociované funkce pomocí \irust{
         }
     }
 \end{rustcode}
-\endobrl{Ukázka enumů}{enum showcase}
+\endobrl{Ukázka výčtů}{enum showcase}
 
-\sekce{Generiky}
+\sekce{Generické bloky}
 
 Na spoustě míst lze použít generiky~-- kompilátor dosadí přesný typ až při kompilaci,
 stejně jako v~C++. Používání generik je poněkud jednodušší (není potřeba psát

@@ -9,8 +9,8 @@ sekvenci, program spadne.
 
 \sekce{UTF-8}
 
-Jeden kódový bod (znak) má 1--4\,byty. Jeho velikost je dána pozicí první nuly v~prvním
-bytu. Některé kódové body označují pouze diakritiku~-- je nutné spojit znaky do větších
+Jeden kódový bod (znak) má 1--4\,bajty. Jeho velikost je dána pozicí první nuly v~prvním
+bajtu. Některé kódové body označují pouze diakritiku~-- je nutné spojit znaky do větších
 celků (angličtina jim říká \uv{grapheme clusters}). Standardní knihovna tuto spojovací
 funkcionalitu nemá (kódovací tabulky jsou hodně velké). Pokud je tato funkcionalita
 žádaná, je nutné použít externí knihovnu. \cite[sekce\,8.2]{thebook}
@@ -18,11 +18,11 @@ funkcionalitu nemá (kódovací tabulky jsou hodně velké). Pokud je tato funkc
 \sekce{Indexování}
 
 Problém nastává, když indexujeme do řetězce. Mělo by se jednat o~konstantní operaci, ale
-to není možné, když máme různě dlouhé znaky. Mohli bychom indexovat přímo do bytů, ale ne
+to není možné, když máme různě dlouhé znaky. Mohli bychom indexovat přímo do bajtů, ale ne
 vše, co nám takové indexování vrátí, je validní znak. Proto
 \emph{nejde číselně indexovat do řetězců}.
 
-Můžeme ale indexovat pomocí range, což nám vrátí \irust{&str}. \emph{Pokud ale naše
+Můžeme ale indexovat pomocí rozsahu, což nám vrátí \irust{&str}. \emph{Pokud ale naše
     indexace nezačne a neskončí na hranicích kódových bodů, program spadne.} Implementace
 různých metod na řetězcích je tedy poněkud komplikovanější. Práci nám poněkud usnadňují
 iterátory, například \irust{chars()} nebo \irust{bytes()}. \cite[sekce\,8.2]{thebook}
@@ -44,14 +44,14 @@ Proměnné následně uvedeme za formátovací řetězec, podobně jako napřík
 také můžeme uvést formátovací možnosti, například již dříve jsme použili \irust{"{:.2}"},
 což znamená, že zaokrouhlujeme na 2\,desetinná místa.
 
-\sekce{Tisknutí do standardního výstupu}
+\sekce{Tisk do standardního výstupu}
 
 Můžeme použít makra \irust{println!()} a \irust{print!()}. První z~maker je časteji
 používané, protože na konec tisknutého řetězce automaticky přidá nový řádek. Do maker
 dáváme formátovací řetězce. Existuje také makro \irust{eprintln!()}, které tiskne do
-standardního erroru. Tato makra byla často i~v~předhozích kódových ukázkách. Syntax
-tisknutí je poměrně jednodušší než u~streamů v~C++, hlavně pro uživatele jiných jazyků
-jako například Python (f-stringy).
+standardního chybového výstupu. Tato makra byla často i~v~předchozích kódových ukázkách.
+Syntax tisknutí je poměrně jednodušší než u~streamů v~C++, hlavně pro uživatele jiných
+jazyků jako například Python (f-stringy).
 
 Následuje ukázka konceptů, o~kterých tato kapitola pojednává. Na konci tiskneme proměnnou
 \irust{greeting} po jednotlivých znacích a \irust{debug} přímo přes formátovací řetězec.

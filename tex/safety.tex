@@ -162,11 +162,11 @@ pro vytvoření lepší API nebo zlepšení výkonu. Některé objekty ve standa
 
 \sekce{Zpracování chyb}
 
-V~C++ jsme zvyklí vrhat chybové objekty pomocí \icpp{throw} a chytat je pomocí
+V~C++ jsme zvyklí vyvolávat chybové objekty pomocí \icpp{throw} a chytat je pomocí
 \icpp{catch}. Tento přístup je špatně sledovatelný, jelikož bez pohledu na dokumentaci
-nevíme, která funkce hází jakou chybu. Také můžeme mít problémy, když chybu zachytí nějaká
-centrálnější funkce a nevíme, v~jakém stavu je náš program. Rust proto má zcela jiný
-přístup k~práci s~chybami.
+nevíme, která funkce vyvolává jakou chybu. Také můžeme mít problémy, když chybu zachytí
+nějaká centrálnější funkce a nevíme, v~jakém stavu je náš program. Rust proto má zcela
+jiný přístup k~práci s~chybami.
 
 \podsekce{Nenávratné chyby, aneb panika!}
 
@@ -190,29 +190,30 @@ používá, když se nemáme jak vyrovnat s~chybou.
 \podsekce{Obnovitelné chyby}
 
 Druhým typem chyb jsou obnovitelné chyby. Funkce, ve kterých se může nějaká taková chyba
-stát nevracejí přímo návratový typ~\texttt{T}, ale vracejí buď \irust{Option<T>}, nebo
-\irust{Result<T, E>}, kde \texttt{E} je typ chyby. Tyto dva typy jsou enumy.
+stát nevracejí přímo návratový typ~T, ale vracejí buď \irust{Option<T>}, nebo
+\irust{Result<T, E>}, kde E je typ chyby. Tyto dva typy jsou výčty.
 \cite[sekce\,9.2]{thebook}
 
-Enum \irust{Option<T>} má dvě varianty: \irust{Some(T)} a \irust{None}. Používá se, když
+Výčet \irust{Option<T>} má dvě varianty: \irust{Some(T)} a \irust{None}. Používá se, když
 nevíme, zda funkce vrátí hodnotu, nebo ne. \emph{Tento typ je také náhrada za hodnotu
     \texttt{null}, která v~Rustu neexistuje}.
 
 \irust{Result<T, E>} má rovněž dvě varianty: \irust{Ok(T)} a \irust{Err(E)}. Tento typ
-použijeme v~případě, že někde může nastat chyba, kterou chceme sdělit volajícímu. Typ
-\texttt{E} může být cokoliv~-- enum (například u~I/O operací), řetězec,\dots
+použijeme v~případě, že někde může nastat chyba, kterou chceme sdělit volajícímu. Typ~E
+může být cokoliv~-- výčet (například u~I/O operací), řetězec,\dots
 
 \podsekce{Práce s~chybovými hodnotami}
 
 \emph{Pokud chceme získat typ~T, musíme jej dostat z~vrácené hodnoty}. Díky tomu jsme,
-jakožto volající, \emph{nuceni} něco s~potenciální chybou udělat. Samozřejmě můžeme vždy použít \irust{match}, ale díky velkému množství pomocných metod to většinou není potřeba.
+jakožto volající, \emph{nuceni} něco s~potenciální chybou udělat. Samozřejmě můžeme vždy
+použít \irust{match}, ale díky velkému množství pomocných metod to většinou není potřeba.
 Jelikož jsou metody na obou typech funkčně ekvivalentní, budeme se dále zabírat pouze
 typem \irust{Result}.
 
-Asi nejlehčí, co můžeme udělat, je použít metodu \irust{unwrap}. Tato metoda nám vrátí typ
-\texttt{T}. Pokud se ale jedná o~chybovou variantu, spustí se panika a program spadne.
-Další metody, jako například \irust{map} a \irust{and_then} nám dovolují řetězit funkce
-vracející \irust{Result}. Pokud chceme hodnotu \texttt{T} nebo nějakou výchozí hodnotu,
+Asi nejlehčí, co můžeme udělat, je použít metodu \irust{unwrap}. Tato metoda nám vrátí
+typ~T. Pokud se ale jedná o~chybovou variantu, spustí se panika a program spadne. Další
+metody, jako například \irust{map} a \irust{and_then} nám dovolují řetězit funkce
+vracející \irust{Result}. Pokud chceme hodnotu~T nebo nějakou výchozí hodnotu,
 máme metodu \irust{unwrap_or}. \cite[result]{ruststd}
 
 \obrazek
@@ -289,7 +290,7 @@ Funkce \irust{thread::spawn} bere  parametr, který implementuje trait \irust{Fn
 (tedy je funkcí, kterou jde zavolat aspoň jednou). Buď zde můžeme napsat přímo název
 funkce, nebo můžeme vytvořit tzv. closure (anonymní funkci).
 
-Syntax vytváření anonymní funkce je poměrně složitý. Mezi svislé čáry (\texttt{|})
+Syntax vytváření anonymní funkce je poměrně složitá. Mezi svislé čáry (\texttt{|})
 napíšeme parametry. Za čárami následuje tělo, většinou ohraničené složenými závorkami
 (pokud se nejedná o~jediný výraz). Při vytváření funkcí pro jiná vlákna před první
 svislou čáru píšeme klíčové slovo \irust{move}, které říká, že všechny vnější proměnné,
@@ -327,12 +328,11 @@ stejné jako řazení z~C++20 (\icpp{std::memory_order}) \cite[sync/atomic]{rust
 Abychom mohli mezi vlákny posílat hodnoty, musejí implementovat \irust{Send}. Toto
 zaručuje, že se více vláken nedostane k~hodnotě, která na to není připravena. Například se
 jedná o~ukazatel \irust{Rc<T>}, který nepoužívá atomické proměnné pro udržování
-referenčních počtů. Pokud všechny části typu~\irust{T} implementují \irust{Send},
-implementuje jej i~typ~\irust{T}. \cite[marker/trait.Send]{ruststd}
+referenčních počtů. Pokud všechny části typu~T implementují \irust{Send}, implementuje jej
+i~typ~T. \cite[marker/trait.Send]{ruststd}
 
-Pro přístup z~více vláken je potřeba trait \irust{Sync}. Typ~\irust{T} implementuje
-\irust{Sync}, pokud \irust{&T} implementuje \irust{Send}.
-\cite[marker/trait.Sync]{ruststd}
+Pro přístup z~více vláken je potřeba trait \irust{Sync}. Typ~T implementuje \irust{Sync},
+pokud \irust{&T} implementuje \irust{Send}. \cite[marker/trait.Sync]{ruststd}
 
 Tyto dva traity umožňují kompilátoru zajistit bezpečnost jen pomocí generik.
 
@@ -378,7 +378,7 @@ jedničku k~hodnotě uložené v~proměnné \irust{data}. Kdybychom nepoužili \
         println!("{}", data); // 3
     }
 \end{rustcode}
-\endobrl{Ukázka používání měnění proměnné z~více vláken}{threading showcase}
+\endobrl{Ukázka měnění proměnné z~více vláken}{threading showcase}
 
 \podsekce{Message passing}
 
